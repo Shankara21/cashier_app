@@ -33,7 +33,7 @@
                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="assets/images/cashier_person.png" class="user-img" alt="user avatar">
                     <div class="user-info">
-                        <p class="user-name mb-0" style="color: white">Testing User</p>
+                        <p class="user-name mb-0" style="color: white">{{ Auth::user()->name }}</p>
                         <p class="designattion mb-0" style="color: rgb(163, 163, 163)">Kasir</p>
                     </div>
                 </a>
@@ -56,8 +56,13 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                    <li><li><a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                 class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                     </li>
                 </ul>
             </div>

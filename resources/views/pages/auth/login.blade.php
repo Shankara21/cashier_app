@@ -1,72 +1,57 @@
 @extends('components.layouts.auth')
 @section('title', 'Login')
 @section('content')
-<div class="container">
+<div class="container ">
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
         <div class="col mx-auto">
-            <div class="card mb-0">
+            <div class="card mb-0" style="background: #ec1271;color:white;">
                 <div class="card-body">
                     <div class="p-4">
                         <div class="mb-3 text-center">
-                            <img src="assets/images/logo-icon.png" width="60" alt="" />
+                            <img src="assets/images/cashier-machine.png" width="60" alt="" />
                         </div>
                         <div class="text-center mb-4">
-                            <h5 class="">Syndron Admin</h5>
+                            <h5 class="text-white">Cashier App</h5>
                             <p class="mb-0">Please log in to your account</p>
                         </div>
                         <div class="form-body">
-                            <form class="row g-3">
+                            <form class="row g-3" action="{{ route('login') }}" method="POST">
+                                @csrf
                                 <div class="col-12">
                                     <label for="inputEmailAddress" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmailAddress"
-                                        placeholder="jhon@example.com">
+                                    <input type="email" class="form-control @error('email')
+                                        is-invalid
+                                    @enderror" id="inputEmailAddress" placeholder="Email Address" name="email">
+
+                                    @error('email')
+                                    <span class="invalid-feedback text-white" role="alert">
+                                        <strong>*{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="col-12">
                                     <label for="inputChoosePassword" class="form-label">Password</label>
                                     <div class="input-group" id="show_hide_password">
-                                        <input type="password" class="form-control border-end-0"
-                                            id="inputChoosePassword" value="12345678" placeholder="Enter Password"> <a
+                                        <input type="password" class="form-control border-end-0 @error('password')
+is-invalid
+                                        @enderror"
+                                            id="inputChoosePassword" placeholder="Enter Password" name="password"> <a
                                             href="javascript:;" class="input-group-text bg-transparent"><i
                                                 class='bx bx-hide'></i></a>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-end"> <a href="auth-basic-forgot-password.html">Forgot
-                                        Password ?</a>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="col-12">
                                     <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary">Sign in</button>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="text-center ">
-                                        <p class="mb-0">Don't have an account yet? <a href="auth-basic-signup.html">Sign
-                                                up here</a>
-                                        </p>
+                                        <button type="submit" class="btn " style="background: #FFBF00">Sign in</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-                            <hr />
-                        </div>
-                        <div class="list-inline contacts-social text-center">
-                            <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0 rounded-3"><i
-                                    class="bx bxl-facebook"></i></a>
-                            <a href="javascript:;" class="list-inline-item bg-twitter text-white border-0 rounded-3"><i
-                                    class="bx bxl-twitter"></i></a>
-                            <a href="javascript:;" class="list-inline-item bg-google text-white border-0 rounded-3"><i
-                                    class="bx bxl-google"></i></a>
-                            <a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i
-                                    class="bx bxl-linkedin"></i></a>
-                        </div>
-
                     </div>
                 </div>
             </div>
