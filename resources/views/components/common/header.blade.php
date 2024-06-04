@@ -34,7 +34,7 @@
                     <img src="assets/images/cashier_person.png" class="user-img" alt="user avatar">
                     <div class="user-info">
                         <p class="user-name mb-0" style="color: white">{{ Auth::user()->name }}</p>
-                        <p class="designattion mb-0" style="color: rgb(163, 163, 163)">Kasir</p>
+                        <p class="designattion mb-0 " style="color: rgb(163, 163, 163);text-transform: capitalize;">{{ Auth::user()->roles[0]->name }}</p>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -56,7 +56,8 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><li><a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    <li>
+                    <li><a onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                             class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                 class="bx bx-log-out-circle"></i><span>Logout</span></a>
                     </li>
