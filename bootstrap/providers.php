@@ -5,4 +5,5 @@ return [
     App\Providers\FortifyServiceProvider::class,
     Spatie\Permission\PermissionServiceProvider::class,
     RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+    Milon\Barcode\BarcodeServiceProvider::class,
 ];

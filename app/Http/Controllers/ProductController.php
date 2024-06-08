@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
@@ -17,6 +19,22 @@ class ProductController extends Controller
     {
         $datas = Product::all();
         return view('pages.product.index', compact('datas'));
+    }
+
+    public function getProductByCode(Request $request)
+    {
+        $data = Product::where('code', $request->code)->first();
+        if ($data) {
+            return response()->json([
+                'data' => new ProductResource($data),
+                'success' => true
+            ]);
+        } else {
+            return response()->json([
+                'data' => null,
+                'success' => false
+            ]);
+        }
     }
 
     /**

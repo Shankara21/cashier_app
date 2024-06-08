@@ -10,7 +10,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('welcome');
     })->name('dashboard');
-
+    Route::get('/cashier', function () {
+        return view('pages.cashier.index');
+    })->name('cashier');
     // Category
     Route::resource('categories', CategoryController::class);
 
@@ -19,4 +21,5 @@ Route::middleware(['auth'])->group(function () {
 
     // Product
     Route::resource('products', ProductController::class);
+    Route::post('/products/code', [ProductController::class, 'getProductByCode'])->name('products.code');
 });

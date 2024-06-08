@@ -20,7 +20,7 @@
         </li>
         <li class="menu-label" style="color: #EEEEEE">Main Menu</li>
         <li>
-            <a class="" href="javascript:;">
+            <a class="" href="{{ route('cashier') }}">
                 <div class="parent-icon"><i class='bx bx-money'></i>
                 </div>
                 <div class="menu-title">Transaction</div>

@@ -79,7 +79,7 @@
     if (result.isConfirmed) {
     var form = document.getElementById('deleteForm');
     if (form) {
-    form.action = '/users/' + id;
+    form.action = '/products/' + id;
     form.submit();
     } else {
     console.error("Form with ID 'deleteForm' not found.");
