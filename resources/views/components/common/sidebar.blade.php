@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper " style="background: #ec1271" data-simplebar="true">
     <div class="sidebar-header" style="background: #ec1271">
         <div>
-            <img src="assets/images/cashier-machine.png" class="logo-icon" alt="logo icon">
+            <img src="/assets/images/cashier-machine.png" class="logo-icon" alt="logo icon">
         </div>
         <div>
             <h4 class="logo-text">Cashier</h4>
@@ -36,7 +36,7 @@
         @role('admin')
         <li class="menu-label" style="color: #EEEEEE">Master Data</li>
         <li>
-            <a href="{{ route('category.index') }}">
+            <a href="{{ route('categories.index') }}">
                 <div class="parent-icon"><i class='bx bx-category-alt'></i>
                 </div>
                 <div class="menu-title">Category</div>

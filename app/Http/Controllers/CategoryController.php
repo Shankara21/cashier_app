@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -22,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.category.create');
     }
 
     /**
@@ -30,7 +31,15 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = $request->validated();
+        try {
+            Category::create($data);
+            Alert::success('Success', 'Data has been created');
+            return redirect()->route('categories.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -46,7 +55,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('pages.category.edit', compact('category'));
     }
 
     /**
@@ -54,7 +63,15 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $data = $request->validated();
+        try {
+            $category->update($data);
+            Alert::success('Success', 'Data has been updated');
+            return redirect()->route('categories.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -62,6 +79,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            Alert::success('Success', 'Data has been deleted');
+            return redirect()->route('categories.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 }

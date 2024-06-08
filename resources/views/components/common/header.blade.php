@@ -32,10 +32,10 @@
                 <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#"
                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     @role('admin')
-                    <img src="assets/images/admin.png" class="user-img" alt="user avatar">
+                    <img src="/assets/images/admin.png" class="user-img" alt="user avatar">
                     @endrole
                     @role('cashier')
-                    <img src="assets/images/cashier_person.png" class="user-img" alt="user avatar">
+                    <img src="/assets/images/cashier_person.png" class="user-img" alt="user avatar">
                     @endrole
                     <div class="user-info">
                         <p class="user-name mb-0" style="color: white">{{ Auth::user()->name }}</p>

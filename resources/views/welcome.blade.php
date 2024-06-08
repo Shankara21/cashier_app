@@ -144,7 +144,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/chair.png" alt="" />
+                                <img src="/assets/images/icons/chair.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Light Blue Chair</h6>
@@ -164,7 +164,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/user-interface.png" alt="" />
+                                <img src="/assets/images/icons/user-interface.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Honor Mobile 7x</h6>
@@ -184,7 +184,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/watch.png" alt="" />
+                                <img src="/assets/images/icons/watch.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Hand Watch</h6>
@@ -204,7 +204,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/idea.png" alt="" />
+                                <img src="/assets/images/icons/idea.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Mini Laptop</h6>
@@ -224,7 +224,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/tshirt.png" alt="" />
+                                <img src="/assets/images/icons/tshirt.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Slim-T-Shirt</h6>
@@ -244,7 +244,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/headphones.png" alt="" />
+                                <img src="/assets/images/icons/headphones.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Smart Headphones</h6>
@@ -264,7 +264,7 @@
                     <div class="col-sm-6">
                         <div class="d-flex align-items-center">
                             <div class="product-img">
-                                <img src="assets/images/icons/shoes.png" alt="" />
+                                <img src="/assets/images/icons/shoes.png" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1">Green Sports Shoes</h6>
@@ -327,7 +327,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-1.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-1.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -347,7 +347,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-2.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-2.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -368,7 +368,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-3.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-3.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -388,7 +388,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-4.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-4.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -408,7 +408,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-7.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-7.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -429,7 +429,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-8.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-8.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -449,7 +449,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-9.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-9.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -469,7 +469,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-10.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-10.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -489,7 +489,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-11.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-11.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -509,7 +509,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-12.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-12.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -529,7 +529,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-13.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-13.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -550,7 +550,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="">
-                                            <img src="assets/images/avatars/avatar-14.png" class="rounded-circle"
+                                            <img src="/assets/images/avatars/avatar-14.png" class="rounded-circle"
                                                 width="46" height="46" alt="" />
                                         </div>
                                         <div class="ms-2">
@@ -757,7 +757,7 @@
             <div class="customers-list p-3 mb-3">
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-3.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-3.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -772,7 +772,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-4.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-4.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -787,7 +787,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-23.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-23.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -802,7 +802,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-24.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-24.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -817,7 +817,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-20.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-20.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -832,7 +832,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-16.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-16.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -847,7 +847,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-25.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-25.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -862,7 +862,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-11.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-11.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -877,7 +877,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-17.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-17.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -892,7 +892,7 @@
                 </div>
                 <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                     <div class="">
-                        <img src="assets/images/avatars/avatar-7.png" class="rounded-circle" width="46" height="46"
+                        <img src="/assets/images/avatars/avatar-7.png" class="rounded-circle" width="46" height="46"
                             alt="" />
                     </div>
                     <div class="ms-2">
@@ -980,7 +980,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/chair.png" alt="">
+                                    <img src="/assets/images/icons/chair.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">Light Blue Chair</h6>
@@ -1008,7 +1008,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/shoes.png" alt="">
+                                    <img src="/assets/images/icons/shoes.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">Green Sport Shoes</h6>
@@ -1036,7 +1036,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/headphones.png" alt="">
+                                    <img src="/assets/images/icons/headphones.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">Red Headphone 07</h6>
@@ -1064,7 +1064,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/idea.png" alt="">
+                                    <img src="/assets/images/icons/idea.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">Mini Laptop Device</h6>
@@ -1092,7 +1092,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/user-interface.png" alt="">
+                                    <img src="/assets/images/icons/user-interface.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">Purple Mobile Phone</h6>
@@ -1120,7 +1120,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/watch.png" alt="">
+                                    <img src="/assets/images/icons/watch.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">Smart Hand Watch</h6>
@@ -1148,7 +1148,7 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="recent-product-img">
-                                    <img src="assets/images/icons/tshirt.png" alt="">
+                                    <img src="/assets/images/icons/tshirt.png" alt="">
                                 </div>
                                 <div class="ms-2">
                                     <h6 class="mb-1 font-14">T-Shirt Blue</h6>
