@@ -33,9 +33,10 @@
                 <div class="menu-title">Report</div>
             </a>
         </li>
+        @role('admin')
         <li class="menu-label" style="color: #EEEEEE">Master Data</li>
         <li>
-            <a href="widgets.html">
+            <a href="{{ route('category.index') }}">
                 <div class="parent-icon"><i class='bx bx-category-alt'></i>
                 </div>
                 <div class="menu-title">Category</div>
@@ -48,7 +49,7 @@
                 <div class="menu-title">User</div>
             </a>
             <ul class="bg-transparent">
-                <li> <a href="table-basic-table.html"><i class='bx bx-radio-circle'></i>Basic Table</a>
+                <li> <a href="table-basic-table.html"><i class='bx bx-radiofea-circle'></i>Basic Table</a>
                 </li>
                 <li> <a href="table-datatable.html"><i class='bx bx-radio-circle'></i>Data Table</a>
                 </li>
@@ -61,7 +62,7 @@
                 <div class="menu-title">Product</div>
             </a>
         </li>
-
+        @endrole
     </ul>
     <!--end navigation-->
 </div>
