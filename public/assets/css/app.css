@@ -1975,7 +1975,7 @@ form select.error:focus {
 }
 
 .email-navigation a.list-group-item.active {
-    color: #0b5ed7;
+    color: #ec1271;
 
     font-weight: 600;
 
@@ -2521,7 +2521,7 @@ form select.error:focus {
 .btn-inverse-primary {
     color: #ec1271;
 
-    background-color: rgba(0, 140, 255, 0.18);
+    background-color: ec1271;
 
     border-color: rgb(209, 234, 255);
 }
@@ -2529,19 +2529,19 @@ form select.error:focus {
 .btn-inverse-primary:hover {
     color: #ec1271;
 
-    background-color: rgba(0, 140, 255, 0.18);
+    background-color: ec1271;
 
-    border-color: rgba(0, 140, 255, 0.18);
+    border-color: ec1271;
 }
 
 .btn-inverse-primary:focus {
     color: #ec1271;
 
-    background-color: rgba(0, 140, 255, 0.18);
+    background-color: ec1271;
 
-    border-color: rgba(0, 140, 255, 0.18);
+    border-color: ec1271;
 
-    box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.3);
+    box-shadow: 0 0 0 0.25rem #ec1271;
 }
 
 .btn-inverse-secondary {

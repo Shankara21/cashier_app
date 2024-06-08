@@ -14,10 +14,33 @@
         </nav>
     </div>
     <div class="ms-auto">
-        <div class="btn-group">
+        {{-- <div class="btn-group">
             <a href="{{ route('category.create') }}" class="btn btn-primary">Create New</a>
+    </div> --}}
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#exampleVerticallycenteredModal">Create New</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleVerticallycenteredModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                    in a
+                    piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a
+                    Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin
+                    words,
+                    consectetur.</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </div>
 <!--end breadcrumb-->
 <h6 class="mb-0 text-uppercase">List Category</h6>
@@ -71,7 +94,7 @@
     if (result.isConfirmed) {
     var form = document.getElementById('deleteForm');
     if (form) {
-    form.action = '/datas/' + id;
+    form.action = '/category/' + id;
     form.submit();
     } else {
     console.error("Form with ID 'deleteForm' not found.");
