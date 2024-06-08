@@ -526,7 +526,7 @@ a {
 
     right: 12px;
 
-    background-color: #008cff;
+    background-color: #ec1271;
 
     z-index: 5;
 }
@@ -792,7 +792,7 @@ a {
 }
 
 .fm-menu .list-group a:hover {
-    background: #008cff;
+    background: #ec1271;
 
     color: #fff;
 
@@ -1307,7 +1307,7 @@ form select.error:focus {
 
     margin-bottom: 20px;
 
-    border-bottom: 1px solid #008cff;
+    border-bottom: 1px solid #ec1271;
 }
 
 .invoice .company-details {
@@ -1341,7 +1341,7 @@ form select.error:focus {
 .invoice .invoice-details .invoice-id {
     margin-top: 0;
 
-    color: #008cff;
+    color: #ec1271;
 }
 
 .invoice main {
@@ -1359,7 +1359,7 @@ form select.error:focus {
 .invoice main .notices {
     padding-left: 6px;
 
-    border-left: 6px solid #008cff;
+    border-left: 6px solid #ec1271;
 
     background: #e7f2ff;
 
@@ -1402,7 +1402,7 @@ form select.error:focus {
 
     font-weight: 400;
 
-    color: #008cff;
+    color: #ec1271;
 
     font-size: 1.2em;
 }
@@ -1420,7 +1420,7 @@ form select.error:focus {
 
     font-size: 1.6em;
 
-    background: #008cff;
+    background: #ec1271;
 }
 
 .invoice table .unit {
@@ -1428,7 +1428,7 @@ form select.error:focus {
 }
 
 .invoice table .total {
-    background: #008cff;
+    background: #ec1271;
 
     color: #fff;
 }
@@ -1458,11 +1458,11 @@ form select.error:focus {
 }
 
 .invoice table tfoot tr:last-child td {
-    color: #008cff;
+    color: #ec1271;
 
     font-size: 1.4em;
 
-    border-top: 1px solid #008cff;
+    border-top: 1px solid #ec1271;
 }
 
 .invoice table tfoot tr td:first-child {
@@ -1703,7 +1703,7 @@ form select.error:focus {
 
 .chat-tab-menu .nav-pills .nav-link.active,
 .chat-tab-menu .nav-pills .show > .nav-link {
-    color: #008cff;
+    color: #ec1271;
 
     background-color: rgb(0 123 255 / 0%);
 }
@@ -2133,9 +2133,9 @@ form select.error:focus {
 }
 
 .nav-primary.nav-tabs .nav-link.active {
-    color: #008cff;
+    color: #ec1271;
 
-    border-color: #008cff #008cff #fff;
+    border-color: #ec1271 #ec1271 #fff;
 }
 
 .nav-danger.nav-tabs .nav-link.active {
@@ -2329,9 +2329,9 @@ form select.error:focus {
 }
 
 .split-bg-primary {
-    background-color: #0c62e0;
+    background-color: #ec1271;
 
-    border-color: #0c62e0;
+    border-color: #ec1271;
 }
 
 .split-bg-secondary {
@@ -2519,7 +2519,7 @@ form select.error:focus {
 }
 
 .btn-inverse-primary {
-    color: #008cff;
+    color: #ec1271;
 
     background-color: rgba(0, 140, 255, 0.18);
 
@@ -2527,7 +2527,7 @@ form select.error:focus {
 }
 
 .btn-inverse-primary:hover {
-    color: #008cff;
+    color: #ec1271;
 
     background-color: rgba(0, 140, 255, 0.18);
 
@@ -2535,7 +2535,7 @@ form select.error:focus {
 }
 
 .btn-inverse-primary:focus {
-    color: #008cff;
+    color: #ec1271;
 
     background-color: rgba(0, 140, 255, 0.18);
 
@@ -2838,7 +2838,7 @@ input::placeholder {
 .topbar .navbar .navbar-nav .nav-link:focus {
     background-color: #f2f9ff;
 
-    color: #008cff;
+    color: #ec1271;
 }
 
 .dropdown-toggle-nocaret:after {
@@ -3036,7 +3036,7 @@ input::placeholder {
 .dropdown-large .msg-header-badge {
     background-color: rgb(0 140 255 / 12%);
 
-    color: #008cff;
+    color: #ec1271;
 
     padding: 2px 8px;
 
@@ -3364,7 +3364,7 @@ input::placeholder {
 
     font-size: 24px;
 
-    background: #008cff;
+    background: #ec1271;
 
     box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.13);
 
