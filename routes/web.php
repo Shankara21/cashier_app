@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
 Route::redirect('/', '/dashboard');
@@ -15,4 +16,7 @@ Route::middleware(['auth'])->group(function () {
 
     // User
     Route::resource('users', UserController::class);
+
+    // Product
+    Route::resource('products', ProductController::class);
 });

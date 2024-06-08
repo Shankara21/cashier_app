@@ -62,7 +62,7 @@
             </ul>
         </li>
         <li>
-            <a href="widgets.html">
+            <a href="{{ route('products.index') }}">
                 <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
                 </div>
                 <div class="menu-title">Product</div>
