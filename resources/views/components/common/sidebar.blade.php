@@ -49,9 +49,15 @@
                 <div class="menu-title">User</div>
             </a>
             <ul class="bg-transparent">
-                <li> <a href="table-basic-table.html"><i class='bx bx-radiofea-circle'></i>Basic Table</a>
+                <li>
+                    <a href="{{ route('users.index', ['role' => 'admin']) }}">
+                        <i class='bx bx-radio-circle'></i>Admin
+                    </a>
                 </li>
-                <li> <a href="table-datatable.html"><i class='bx bx-radio-circle'></i>Data Table</a>
+                <li>
+                    <a href="{{ route('users.index', ['role' => 'cashier']) }}">
+                        <i class='bx bx-radio-circle'></i>Cashier
+                    </a>
                 </li>
             </ul>
         </li>

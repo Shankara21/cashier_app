@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 Route::redirect('/', '/dashboard');
 Route::middleware(['auth'])->group(function () {
@@ -11,4 +12,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Category
     Route::resource('categories', CategoryController::class);
+
+    // User
+    Route::resource('users', UserController::class);
 });
