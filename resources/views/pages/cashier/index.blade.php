@@ -5,18 +5,18 @@
     <div class="col-8">
         <div class="card p-3">
             <div class="d-flex justify-content-end">
-                <button id="removeAllButton" class="btn btn-danger my-3" style="display: none;">Remove All</button>
+                <button id="removeAllButton" class="btn btn-danger my-3" style="display: none;">Hapus semua</button>
             </div>
             <div class="table-responsive">
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <table class="table table-hover" style="width:100%">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 7%">No</th>
-                            <th class="text-center">Name</th>
-                            <th class="text-center" style="width: 10%">Amount</th>
+                            <th class="text-center">Nama Produk</th>
+                            <th class="text-center" style="width: 10%">Jumlah</th>
                             <th class="text-center" style="width: 30%">Total</th>
-                            <th class="text-center" style="width: 10%">Discount</th>
-                            <th class="text-center" style="width: 10%">Action</th>
+                            <th class="text-center" style="width: 10%">Diskon</th>
+                            <th class="text-center" style="width: 10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="productTableBody">
@@ -26,12 +26,12 @@
         </div>
     </div>
     <div class="col-4 card p-3">
-        <h5 class="mt-3">Insert product code</h5>
+        <h5 class="mt-3">Masukkan Kode Produk</h5>
         <form id="productForm" class="row align-items-end my-3">
             @csrf
             <div class="col-10">
                 <input type="text" class="form-control @error('code') is-invalid @enderror" id="input1"
-                    placeholder="Code" name="code" value="{{ old('code') }}" autofocus>
+                    placeholder="Kode produk" name="code" value="{{ old('code') }}" autofocus>
                 @error('code')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -48,17 +48,29 @@
             <hr>
         </div>
         <div class="mt-4">
-            <p>Total: <span id="total-price">Rp. 0</span></p>
-            <p>Discount: <span id="total-discount">Rp. 0</span></p>
-            <p>Final Price: <span id="final-price">Rp. 0</span></p>
-
+            <table class="table mb-0">
+                <tbody>
+                    <tr>
+                        <td class="text-start">Total</td>
+                        <th scope="row" class="text-end" id="total-price">Rp. 0</th>
+                    </tr>
+                    <tr>
+                        <td class="text-start">Diskon</td>
+                        <th scope="row" class="text-end" id="total-discount">Rp. 0</th>
+                    </tr>
+                    <tr>
+                        <td class="text-start">Total Bayar</td>
+                        <th scope="row" class="text-end" id="final-price" style="font-size: 20px">Rp. 0</th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="mt-4">
-            <h5>Choose Payment Method:</h5>
+            <h5>Pilih metode pembayaran</h5>
             <div class="payment-options">
                 <div id="cash-option" class="payment-card" onclick="selectPaymentMethod('cash')">
                     <img src="{{ asset('assets/images/cash.png') }}" alt="" style="width: 100px">
-                    <h5>Cash</h5>
+                    <h5>Tunai</h5>
                 </div>
                 <div id="qris-option" class="payment-card" onclick="selectPaymentMethod('qris')">
                     <img src="{{ asset('assets/images/qr.png') }}" alt="" style="width: 100px">
@@ -68,13 +80,13 @@
         </div>
         <div class="mt-4">
             <div id="paymentInput" style="display: none;">
-                <label for="paymentAmount">Enter Payment Amount:</label>
-                <input type="number" id="paymentAmount" class="form-control" autofocus>
-                <button id="confirmPaymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px">Confirm
-                    Payment</button>
+                <label for="paymentAmount">Masukkan Jumlah Pembayaran</label>
+                <input type="text" id="paymentAmount" class="form-control" min="0">
+                <button id="confirmPaymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px">Konfirmasi
+                    Pembayaran</button>
             </div>
-            <button id="paymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px; display: none">Confirm
-                Payment</button>
+            <button id="paymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px; display: none">Konfirmasi
+                Pembayaran</button>
         </div>
     </div>
 </div>
@@ -111,8 +123,31 @@
     document.addEventListener('DOMContentLoaded', function() {
         if (datas.length > 0) {
             updateTable(datas);
+        } else {
+            displayNoDataMessage();
         }
     });
+
+    document.getElementById('paymentAmount').addEventListener('input', function(e) {
+        let value = e.target.value;
+
+        value = value.replace(/[^0-9]/g, '');
+
+        if (value) {
+            value = formatIDR(value);
+        }
+
+        e.target.value = value;
+    });
+
+    function formatIDR(value) {
+        const number = parseInt(value, 10);
+        return number.toLocaleString('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        });
+    }
 
     document.getElementById('productForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -158,6 +193,8 @@
     }
 
     function updateTable(datas) {
+        const prevDataLength = datas.length; // Simpan jumlah data sebelum operasi
+
         const tableBody = document.getElementById('productTableBody');
         tableBody.innerHTML = '';
 
@@ -180,27 +217,25 @@
                     <td class="text-center">${index + 1}</td>
                     <td class="text-center">${product.name}</td>
                     <td class="text-center">
-                        <input type="number" class="form-control amount-input" value="${product.amount}" min="1" data-price="${product.selling_price}" data-index="${index}" data-discount="${productDiscount}">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary" onclick="decreaseAmount(${index})">-</button>
+                            <button type="button" class="btn btn-outline-primary" disabled>${product.amount}</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="increaseAmount(${index})">+</button>
+                        </div>
                     </td>
                     <td class="text-center" id="total-${index}">Rp. ${productFinal.toLocaleString()}</td>
                     <td class="text-center">${discountText}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-outline-danger" onclick="removeRow(${index})"><i class='bx bx-trash
-me-0'></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="removeRow(${index})"><i class='bx bx-trash me-0'></i></button>
                     </td>
                 </tr>
             `;
             tableBody.insertAdjacentHTML('beforeend', row);
         });
 
-        document.querySelectorAll('.amount-input').forEach(input => {
-            input.addEventListener('input', function() {
-                const index = this.dataset.index;
-                const price = this.dataset.price;
-                const discount = this.dataset.discount;
-                updateTotal(this.value, price, discount, index);
-            });
-        });
+        if (datas.length === 0) {
+            displayNoDataMessage();
+        }
 
         updateRemoveAllButton();
         saveToLocalStorage();
@@ -213,11 +248,9 @@ me-0'></i></button>
         return total;
     }
 
-    function updateTotal(amount, price, discount, index) {
-        const productTotal = amount * price;
-        const productFinal = calculateTotal(amount, price, discount);
-
-        datas[index].amount = parseInt(amount);
+    function updateTotal(index) {
+        const product = datas[index];
+        const productFinal = calculateTotal(product.amount, product.selling_price, product.discount || 0);
 
         total = datas.reduce((sum, product) => sum + (product.amount * product.selling_price), 0);
         discount = datas.reduce((sum, product) => sum + ((product.amount * product.selling_price) -
@@ -246,7 +279,6 @@ me-0'></i></button>
         }else {
             paymentInput.style.display = 'none';
         }
-
     }
 
     function removeRow(index) {
@@ -263,6 +295,7 @@ me-0'></i></button>
         datas = [];
         updateTable(datas);
         localStorage.removeItem('datas');
+        window.location.reload();
     });
 
     function updateRemoveAllButton() {
@@ -285,6 +318,27 @@ me-0'></i></button>
             document.getElementById('qris-option').classList.add('selected');
         }
         updateSummary();
+    }
+
+    function displayNoDataMessage() {
+        const tableBody = document.getElementById('productTableBody');
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="text-center">Tidak ada data</td>
+            </tr>
+        `;
+    }
+
+    function increaseAmount(index) {
+        datas[index].amount += 1;
+        updateTable(datas);
+    }
+
+    function decreaseAmount(index) {
+        if (datas[index].amount > 1) {
+            datas[index].amount -= 1;
+            updateTable(datas);
+        }
     }
 </script>
 @endsection

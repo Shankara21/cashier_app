@@ -11,8 +11,8 @@
                             <img src="/assets/images/cashier-machine.png" width="60" alt="" />
                         </div>
                         <div class="text-center mb-4">
-                            <h5 class="text-white">Cashier App</h5>
-                            <p class="mb-0">Please log in to your account</p>
+                            <h5 class="text-white">Kasir Nibras House Wungu</h5>
+                            <p class="mb-0">Silahkan masuk untuk melanjutkan.</p>
                         </div>
                         <div class="form-body">
                             <form class="row g-3" action="{{ route('login') }}" method="POST">
@@ -21,7 +21,7 @@
                                     <label for="inputEmailAddress" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email')
                                         is-invalid
-                                    @enderror" id="inputEmailAddress" placeholder="Email Address" name="email">
+                                    @enderror" id="inputEmailAddress" placeholder="Masukkan Alamat Email" name="email" value="{{ old('email') }}">
 
                                     @error('email')
                                     <span class="invalid-feedback text-white" role="alert">
@@ -34,7 +34,7 @@
                                     <div class="input-group" id="show_hide_password">
                                         <input type="password" class="form-control border-end-0 @error('password')
 is-invalid
-                                        @enderror" id="inputChoosePassword" placeholder="Enter Password"
+                                        @enderror" id="inputChoosePassword" placeholder="Masukkan Password"
                                             name="password"> <a href="javascript:;"
                                             class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                     </div>
@@ -46,7 +46,7 @@ is-invalid
                                 </div>
                                 <div class="col-12">
                                     <div class="d-grid">
-                                        <button type="submit" class="btn " style="background: #FFBF00">Sign in</button>
+                                        <button type="submit" class="btn " style="background: #FFBF00">Masuk</button>
                                     </div>
                                 </div>
                             </form>
