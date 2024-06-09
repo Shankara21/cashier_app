@@ -25,4 +25,13 @@ class UpdateCategoryRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'unique:categories,name,' . $this->category->id],
         ];
     }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama kategori wajib diisi.',
+            'name.string' => 'Nama kategori harus berupa teks.',
+            'name.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
+            'name.unique' => 'Nama kategori sudah ada, silakan pilih yang lain.',
+        ];
+    }
 }

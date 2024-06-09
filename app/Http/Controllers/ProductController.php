@@ -54,7 +54,7 @@ class ProductController extends Controller
         $data = $request->validated();
         try {
             Product::create($data);
-            Alert::success('Success', 'Product has been created');
+            Alert::success('Success', 'Produk berhasil ditambahkan');
             return redirect()->route('products.index');
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
@@ -87,7 +87,7 @@ class ProductController extends Controller
         $data = $request->validated();
         try {
             $product->update($data);
-            Alert::success('Success', 'Product has been updated');
+            Alert::success('Success', 'Produk berhasil diubah');
             return redirect()->route('products.index');
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
@@ -102,7 +102,7 @@ class ProductController extends Controller
     {
         try {
             $product->delete();
-            Alert::success('Success', 'Product has been deleted');
+            Alert::success('Success', 'Produk berhasil dihapus');
             return redirect()->route('products.index');
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());

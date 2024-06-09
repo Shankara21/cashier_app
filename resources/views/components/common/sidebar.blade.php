@@ -18,19 +18,19 @@
                 <div class="menu-title">Dashboard</div>
             </a>
         </li>
-        <li class="menu-label" style="color: #EEEEEE">Main Menu</li>
+        <li class="menu-label" style="color: #EEEEEE">Menu Utama</li>
         <li>
             <a class="" href="{{ route('cashier') }}">
                 <div class="parent-icon"><i class='bx bx-money'></i>
                 </div>
-                <div class="menu-title">Transaction</div>
+                <div class="menu-title">Transaksi</div>
             </a>
         </li>
         <li>
             <a class="" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-file"></i>
                 </div>
-                <div class="menu-title">Report</div>
+                <div class="menu-title">Laporan</div>
             </a>
         </li>
         @role('admin')
@@ -39,14 +39,14 @@
             <a href="{{ route('categories.index') }}">
                 <div class="parent-icon"><i class='bx bx-category-alt'></i>
                 </div>
-                <div class="menu-title">Category</div>
+                <div class="menu-title">Kategori</div>
             </a>
         </li>
         <li>
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-user"></i>
                 </div>
-                <div class="menu-title">User</div>
+                <div class="menu-title">Pengguna</div>
             </a>
             <ul class="bg-transparent">
                 <li>
@@ -56,7 +56,7 @@
                 </li>
                 <li>
                     <a href="{{ route('users.index', ['role' => 'cashier']) }}">
-                        <i class='bx bx-radio-circle'></i>Cashier
+                        <i class='bx bx-radio-circle'></i>Kasir
                     </a>
                 </li>
             </ul>
@@ -65,7 +65,7 @@
             <a href="{{ route('products.index') }}">
                 <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
                 </div>
-                <div class="menu-title">Product</div>
+                <div class="menu-title">Produk</div>
             </a>
         </li>
         @endrole

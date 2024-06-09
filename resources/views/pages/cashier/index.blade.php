@@ -85,8 +85,29 @@
                 <button id="confirmPaymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px">Konfirmasi
                     Pembayaran</button>
             </div>
-            <button id="paymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px; display: none">Konfirmasi
+            <button id="paymentButton" type="button" class="btn btn-primary mt-3 w-100" data-bs-toggle="modal"
+                data-bs-target="#exampleVerticallycenteredModal" style="height: 50px; display: none">Konfirmasi
                 Pembayaran</button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleVerticallycenteredModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pembayaran QRIS</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-center">
+                                <img src="https://cms.dailysocial.id/wp-content/uploads/2023/03/QRIS.png" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-primary">Selesaikan Pembayaran</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

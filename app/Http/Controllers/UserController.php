@@ -51,7 +51,7 @@ class UserController extends Controller
         try {
             $user = User::create($data);
             $user->assignRole($role);
-            Alert::success('Success', 'User has been created');
+            Alert::success('Success', 'Pengguna berhasil ditambahkan');
             return redirect()->route('users.index', ['role' => $role]);
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
@@ -84,7 +84,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'role' => ['required', 'string', 'in:admin,cashier'],
-            ]);
+        ]);
         if ($request->password) {
             $request->validate([
                 'password' => ['required', 'string', 'min:8'],
@@ -97,7 +97,7 @@ class UserController extends Controller
         try {
             $user->update($data);
             $user->syncRoles($role);
-            Alert::success('Success', 'User has been updated');
+            Alert::success('Success', 'Pengguna berhasil diubah');
             return redirect()->route('users.index', ['role' => $role]);
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
@@ -113,7 +113,7 @@ class UserController extends Controller
         try {
             $role = $user->roles[0]->name;
             $user->delete();
-            Alert::success('Success', 'User has been deleted');
+            Alert::success('Success', 'Pengguna berhasil dihapus');
             return redirect()->route('users.index', ['role' => $role]);
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());

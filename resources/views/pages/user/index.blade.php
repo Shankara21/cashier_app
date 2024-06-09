@@ -9,13 +9,14 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page" style="text-transform: capitalize">List {{ $role ?? 'User' }}</li>
+                <li class="breadcrumb-item active" aria-current="page" style="text-transform: capitalize">List
+                    {{ $role ?? 'User' }}</li>
             </ol>
         </nav>
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <a href="{{ route('users.create', ['role' => $role]) }}" class="btn btn-primary">Create New</a>
+            <a href="{{ route('users.create', ['role' => $role]) }}" class="btn btn-primary">Buat Data Baru</a>
         </div>
     </div>
 </div>

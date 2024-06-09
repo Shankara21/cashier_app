@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $data = $request->validated();
         try {
             Category::create($data);
-            Alert::success('Success', 'Data has been created');
+            Alert::success('Success', 'Kategori berhasil ditambahkan');
             return redirect()->route('categories.index');
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $data = $request->validated();
         try {
             $category->update($data);
-            Alert::success('Success', 'Data has been updated');
+            Alert::success('Success', 'Kategori berhasil diubah');
             return redirect()->route('categories.index');
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
@@ -81,7 +81,7 @@ class CategoryController extends Controller
     {
         try {
             $category->delete();
-            Alert::success('Success', 'Data has been deleted');
+            Alert::success('Success', 'Kategori berhasil dihapus');
             return redirect()->route('categories.index');
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());

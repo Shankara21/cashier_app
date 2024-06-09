@@ -28,9 +28,9 @@
     <link rel="stylesheet" href="/assets/css/header-colors.css" />
     <title>
         @hasSection('title')
-        @yield('title') - Cashier App
+        @yield('title') - Kasir Nibras
         @else
-        Cashier App
+        Kasir Nibras
         @endif
     </title>
 
