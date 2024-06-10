@@ -47,7 +47,7 @@
                         <td class="text-center">{{ $data->brand }}</td>
                         <td class="text-center">{{ number_format($data->buying_price) }}</td>
                         <td class="text-center">
-                            <a href="{{ route('users.edit', $data->id) }}" class="btn btn-outline-warning"><i
+                            <a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-warning"><i
                                     class='bx bx-edit me-0'></i>
                             </a>
                             <button onclick="confirmDelete({{ $data->id }})" type="button"
