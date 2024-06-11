@@ -29,8 +29,8 @@
                 <label for="input35" class="col-sm-3 col-form-label">Kode Produk</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control @error('code')
-                    is-invalid
-                    @enderror" id="input35" placeholder="Masukkan Kode Produk" autofocus name="code"
+                            is-invalid
+                            @enderror" id="input35" placeholder="Masukkan Kode Produk" autofocus name="code"
                         value="{{ old('code') }}">
                     @error('code')
                     <div class="invalid-feedback">
@@ -43,8 +43,9 @@
                 <label for="input36" class="col-sm-3 col-form-label">Nama Produk</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control @error('name')
-                    is-invalid
-                    @enderror" id="input36" placeholder="Masukkan Nama Produk" name="name" value="{{ old('name') }}">
+                            is-invalid
+                            @enderror" id="input36" placeholder="Masukkan Nama Produk" name="name"
+                        value="{{ old('name') }}">
                     @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -56,8 +57,9 @@
                 <label for="input37" class="col-sm-3 col-form-label">Merk</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control @error('brand')
-                    is-invalid
-                    @enderror" id="input37" placeholder="Masukkan Merk" name="brand" value="{{ old('brand') }}">
+                            is-invalid
+                            @enderror" id="input37" placeholder="Masukkan Merk" name="brand"
+                        value="{{ old('brand') }}">
                     @error('brand')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -68,9 +70,8 @@
             <div class="row mb-3">
                 <label for="input38" class="col-sm-3 col-form-label">Harga Beli</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control @error('buying_price')
-                    is-invalid
-                    @enderror" id="input38" placeholder="Masukkan Harga Beli" name="buying_price"
+                    <input type="text" class="form-control @error('buying_price') is-invalid @enderror"
+                        id="inputBuyingPrice" placeholder="Masukkan Harga Beli" name="buying_price"
                         value="{{ old('buying_price') }}">
                     @error('buying_price')
                     <div class="invalid-feedback">
@@ -82,9 +83,8 @@
             <div class="row mb-3">
                 <label for="input38" class="col-sm-3 col-form-label">Harga Jual</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control @error('selling_price')
-                    is-invalid
-                    @enderror" id="input38" placeholder="Masukkan Harga Jual" name="selling_price"
+                    <input type="text" class="form-control @error('selling_price') is-invalid @enderror"
+                        id="inputSellingPrice" placeholder="Masukkan Harga Jual" name="selling_price"
                         value="{{ old('selling_price') }}">
                     @error('selling_price')
                     <div class="invalid-feedback">
@@ -96,9 +96,8 @@
             <div class="row mb-3">
                 <label for="input38" class="col-sm-3 col-form-label">Stok</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control @error('stock')
-                    is-invalid
-                    @enderror" id="input38" placeholder="Masukkan Stok" name="stock" value="{{ old('stock') }}">
+                    <input type="text" class="form-control @error('stock') is-invalid @enderror" id="inputStock"
+                        placeholder="Masukkan Stok" name="stock" value="{{ old('stock') }}">
                     @error('stock')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -124,7 +123,8 @@
                 <div class="col-sm-9">
                     <input type="number" class="form-control @error('discount')
                     is-invalid
-                    @enderror" id="input38" placeholder="Masukkan Diskon" name="discount" value="{{ old('discount') }}">
+                    @enderror" id="input38" placeholder="Masukkan Diskon" name="discount"
+                        value="{{ old('discount') }}">
                     @error('discount')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -162,4 +162,38 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var buyingPriceInput = document.getElementById('inputBuyingPrice');
+    var sellingPriceInput = document.getElementById('inputSellingPrice');
+    var stockInput = document.getElementById('inputStock');
+
+    function formatCurrency(input) {
+        var value = input.value.replace(/[^,\d]/g, '').toString();
+        if (value) {
+            input.value = 'Rp ' + value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+    }
+
+    function formatNumber(input) {
+        var value = input.value.replace(/[^,\d]/g, '').toString();
+        if (value) {
+            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+    }
+
+    buyingPriceInput.addEventListener('input', function() {
+        formatCurrency(buyingPriceInput);
+    });
+
+    sellingPriceInput.addEventListener('input', function() {
+        formatCurrency(sellingPriceInput);
+    });
+
+    stockInput.addEventListener('input', function() {
+        formatNumber(stockInput);
+    });
+});
+</script>
 @endsection

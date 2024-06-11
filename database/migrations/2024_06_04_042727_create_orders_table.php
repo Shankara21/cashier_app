@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('qty');
-            $table->integer('total');
+            $table->integer('final_price');
+            $table->integer('total_price');
+            $table->integer('change');
+            $table->string('payment_method');
             $table->timestamps();
         });
     }
