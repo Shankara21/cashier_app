@@ -27,7 +27,7 @@
             </a>
         </li>
         <li>
-            <a class="" href="javascript:;">
+            <a class="" href="{{ route('orders.index') }}">
                 <div class="parent-icon"><i class="bx bx-file"></i>
                 </div>
                 <div class="menu-title">Laporan</div>

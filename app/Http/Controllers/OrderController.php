@@ -15,7 +15,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $month = date('F');
+        $date = $this->translateMonth($month) . ' ' . date('Y');
+        $orderDetails = OrderDetails::where('created_at', 'like', '%' . date('Y-m-d') . '%')->get();
+        return view('pages.order.index', compact('orderDetails', 'date'));
     }
 
     /**
@@ -111,5 +114,37 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         return view('pages.cashier.invoice', compact('order'));
+    }
+
+    function translateMonth($month)
+    {
+        switch ($month) {
+            case 'January':
+                return 'Januari';
+            case 'February':
+                return 'Februari';
+            case 'March':
+                return 'Maret';
+            case 'April':
+                return 'April';
+            case 'May':
+                return 'Mei';
+            case 'June':
+                return 'Juni';
+            case 'July':
+                return 'Juli';
+            case 'August':
+                return 'Agustus';
+            case 'September':
+                return 'September';
+            case 'October':
+                return 'Oktober';
+            case 'November':
+                return 'November';
+            case 'December':
+                return 'Desember';
+            default:
+                return $month;
+        }
     }
 }
