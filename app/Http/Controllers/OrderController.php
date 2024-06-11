@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Models\OrderDetails;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
@@ -29,7 +31,48 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $datas = $request['datas'];
+        $final_price = $request['final_price'];
+        $paymentAmount = $request['paymentAmount'];
+        $paymentMethod = $request['paymentMethod'];
+        $total_discount = $request['total_discount'];
+        $total_price = $request['total_price'];
+        $amount = 0;
+        foreach ($datas as $data) {
+            $amount += $data['amount'];
+        }
+        $change = $paymentAmount - $final_price;
+        try {
+            $order =   Order::create([
+                'user_id' => auth()->user()->id,
+                'qty' => $amount,
+                'final_price' => $final_price,
+                'payment_method' => $paymentMethod,
+                'total_discount' => $total_discount,
+                'total_price' => $total_price,
+                'payment_amount' => $paymentAmount,
+                'change' => $change,
+            ]);
+
+            foreach ($datas as $data) {
+                OrderDetails::create([
+                    'order_id' => $order->id,
+                    'product_id' => $data['id'],
+                    'qty' => $data['amount'],
+                    'discount' => $data['discount'],
+                    'total' => $data['final_price'],
+                ]);
+            }
+
+            Alert::success('Success', 'Order berhasil ditambahkan');
+            return response()->json([
+                'success' => true,
+                'redirect' => route('invoice', $order->id)
+            ]);
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -62,5 +105,11 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function invoice($id)
+    {
+        $order = Order::find($id);
+        return view('pages.cashier.invoice', compact('order'));
     }
 }

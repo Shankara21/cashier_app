@@ -41,6 +41,14 @@
     @include('sweetalert::alert')
     <!--wrapper-->
     <div class="wrapper">
+        @if (Request::is('*invoice*'))
+        <!-- Tampilkan hanya content -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                @yield('content')
+            </div>
+        </div>
+        @else
         <!--sidebar wrapper -->
         @include('components.common.sidebar')
         <!--end sidebar wrapper -->
@@ -61,6 +69,7 @@
         <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
         <!--End Back To Top Button-->
         @include('components.common.footer')
+        @endif
     </div>
 
     <!-- Bootstrap JS -->

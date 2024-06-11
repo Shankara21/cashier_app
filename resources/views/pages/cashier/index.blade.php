@@ -79,12 +79,18 @@
             </div>
         </div>
         <div class="mt-4">
-            <div id="paymentInput" style="display: none;">
-                <label for="paymentAmount">Masukkan Jumlah Pembayaran</label>
-                <input type="text" id="paymentAmount" class="form-control" min="0">
-                <button id="confirmPaymentButton" class="btn btn-primary mt-3 w-100" style="height: 50px">Konfirmasi
-                    Pembayaran</button>
-            </div>
+            <form action="{{ route('orders.store') }}" method="POST" id="paymentForm">
+                @csrf
+                <div id="paymentInput" style="display: none;">
+                    <label for="paymentAmount">Masukkan Jumlah Pembayaran</label>
+                    <input type="text" id="paymentAmount" class="form-control" min="0" required>
+                    <input type="text" id="valueAmount" class="form-control d-none" min="0" name="valueAmount">
+                    <input type="hidden" id="datas" name="datas">
+                    <button id="confirmPaymentButton" type="submit" class="btn btn-primary mt-3 w-100"
+                        style="height: 50px">Konfirmasi
+                        Pembayaran</button>
+                </div>
+            </form>
             <button id="paymentButton" type="button" class="btn btn-primary mt-3 w-100" data-bs-toggle="modal"
                 data-bs-target="#exampleVerticallycenteredModal" style="height: 50px; display: none">Konfirmasi
                 Pembayaran</button>
@@ -112,28 +118,6 @@
     </div>
 </div>
 
-<style>
-    .payment-options {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .payment-card {
-        flex: 1;
-        padding: 15px;
-        text-align: center;
-        border: 1px solid #ddd;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .payment-card.selected {
-        border: 2px solid #ec1271;
-        background-color: #fce4ec;
-    }
-</style>
-
 <script>
     let datas = JSON.parse(localStorage.getItem('datas')) || [];
     let total = 0;
@@ -148,17 +132,75 @@
             displayNoDataMessage();
         }
     });
+    document.getElementById('confirmPaymentButton').addEventListener('click', function(event) {
+        event.preventDefault();
 
+        if (document.getElementById('valueAmount').value == 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Pembayaran tidak boleh 0!'
+            });
+            return;
+        }
+        if (document.getElementById('valueAmount').value < final_price) {
+            Swal.fire({
+                icon: 'error' ,
+                title: 'Oops...' ,
+                text: 'Jumlah pembayaran kurang dari total bayar!'
+            });
+            return;
+        }
+        let datas=JSON.parse(localStorage.getItem('datas')) || []; document.getElementById('datas').value=JSON.stringify(datas);
+        let paymentAmount=document.getElementById('paymentAmount').value;
+        fetch('{{ route("orders.store") }}', {
+            method: 'POST' , headers:
+            {
+                'Content-Type' : 'application/json' ,
+                'X-CSRF-TOKEN' : document.querySelector('input[name=_token]').value
+            },
+            body: JSON.stringify({
+                datas: datas,
+                paymentAmount: currencyToInt(paymentAmount),
+                paymentMethod: selectedPaymentMethod,
+                total_discount: discount,
+                final_price: final_price,
+                total_price: total
+            })
+        }).then(response=> {
+            if (!response.ok) {
+                console.log(response);
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            localStorage.removeItem('datas');
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Order has been placed successfully!'
+            });
+            window.location.href = data.redirect;
+        }).catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+        });
+    });
     document.getElementById('paymentAmount').addEventListener('input', function(e) {
         let value = e.target.value;
 
         value = value.replace(/[^0-9]/g, '');
+        realValue = value
 
         if (value) {
             value = formatIDR(value);
-        }
-
-        e.target.value = value;
+            }
+            e.target.value = value;
+            document.getElementById('valueAmount').value = realValue;
     });
 
     function formatIDR(value) {
@@ -168,6 +210,12 @@
             currency: 'IDR',
             minimumFractionDigits: 0
         });
+    }
+    function currencyToInt(currency) {
+    // Hapus karakter non-digit
+    let value = currency.replace(/\D/g, '');
+    // Ubah ke integer
+    return parseInt(value);
     }
 
     document.getElementById('productForm').addEventListener('submit', function(event) {
@@ -231,6 +279,8 @@
             total += productTotal;
             discount += productTotal - productFinal;
             final_price += productFinal;
+
+            product.final_price = productFinal;
 
             const discountText = productDiscount ? `${productDiscount}%` : '0%';
             const row = `

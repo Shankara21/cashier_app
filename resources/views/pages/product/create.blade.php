@@ -115,7 +115,7 @@
             <div class="row mb-3">
                 <label for="input38" class="col-sm-3 col-form-label">Diskon</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control @error('discount') is-invalid @enderror" id="input38"
+                    <input type="number" class="form-control @error('discount') is-invalid @enderror" id="input38"
                         placeholder="Masukkan Diskon" name="discount" value="{{ old('discount') }}">
                     @error('discount')
                     <div class="invalid-feedback">
