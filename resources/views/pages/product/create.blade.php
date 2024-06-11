@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<h6 class="mb-0 text-uppercase">Buat Data Baru product</h6>
+<a href="{{ route('products.index') }}" class="btn btn-primary"><i class="bx bx-arrow-back"></i> Kembali</a>
 <hr />
 <div class="card">
     <div class="card-body">

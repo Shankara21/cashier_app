@@ -19,8 +19,7 @@
     </div>
 </div>
 
-<h6 class="mb-0 text-uppercase">Edit {{ $user->roles[0]->name }}</h6>
-<hr />
+<a href="{{ route('users.index') }}" class="btn btn-primary"><i class="bx bx-arrow-back"></i> Kembali</a><hr />
 <div class="card">
     <div class="card-body">
         <form action="{{ route('users.update', $user->id) }}" method="POST" class="row">
