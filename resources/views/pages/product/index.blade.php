@@ -31,10 +31,13 @@
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
-                        <th class="text-center">Code</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Brand</th>
+                        <th class="text-center">Kode</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Merk</th>
                         <th class="text-center">Harga beli</th>
+                        <th class="text-center">Harga jual</th>
+                        <th class="text-center">Stok</th>
+                        <th class="text-center">Diskon</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -45,7 +48,10 @@
                         <td class="text-center">{{ $data->code }}</td>
                         <td class="text-center">{{ $data->name }}</td>
                         <td class="text-center">{{ $data->brand }}</td>
-                        <td class="text-center">{{ number_format($data->buying_price) }}</td>
+                        <td class="text-center">Rp {{ number_format($data->buying_price, 0, ',', '.') }}</td>
+                        <td class="text-center">Rp {{ number_format($data->selling_price, 0, ',', '.') }}</td>
+                        <td class="text-center">{{ number_format($data->stock, 0, ',', '.') }}</td>
+                        <td class="text-center">{{ $data->discount }}%</td>
                         <td class="text-center">
                             <a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-warning"><i
                                     class='bx bx-edit me-0'></i>

@@ -23,17 +23,19 @@
     <div class="card-body">
         <form action="{{ route('categories.store') }}" method="POST">
             @csrf
-            <div class="col-md-6 mb-3">
-                <label for="input1" class="form-label">Name</label>
-                <input type="text" class="form-control @error('name')
-                                                        is-invalid
-                                                        @enderror" id="input1" placeholder="Name" name="name" required
-                    value="{{ old('name') }}">
-                @error('name')
-                <div class="invalid-feedback">
-                    {{ $message }}
+            <div class="row mb-3">
+                <label for="input35" class="col-sm-3 col-form-label">Nama Kategori</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control @error('name')
+                                                                            is-invalid
+                                                                            @enderror" id="input1"
+                        placeholder="Nama Kategori" name="name" required value="{{ old('name') }}">
+                    @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
-                @enderror
             </div>
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">Submit</button>
