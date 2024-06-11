@@ -16,8 +16,12 @@ class OrderController extends Controller
     public function index()
     {
         $month = date('F');
+        $year = date('Y');
+        $monthName = date('m');
         $date = $this->translateMonth($month) . ' ' . date('Y');
-        $orderDetails = OrderDetails::where('created_at', 'like', '%' . date('Y-m-d') . '%')->get();
+        $orderDetails = OrderDetails::whereYear('created_at', $year)
+            ->whereMonth('created_at', $monthName)
+            ->get();
         return view('pages.order.index', compact('orderDetails', 'date'));
     }
 

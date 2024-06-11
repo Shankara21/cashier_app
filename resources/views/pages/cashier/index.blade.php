@@ -91,25 +91,50 @@
                         Pembayaran</button>
                 </div>
             </form>
-            <button id="paymentButton" type="button" class="btn btn-primary mt-3 w-100" data-bs-toggle="modal"
-                data-bs-target="#exampleVerticallycenteredModal" style="height: 50px; display: none">Konfirmasi
-                Pembayaran</button>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleVerticallycenteredModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            <div id="paymentButton" class="payment-options" style="display: none;">
+                <div id="bca-option" class="payment-card" onclick="selectBank('bca')" data-bs-toggle="modal"
+                    data-bs-target="#bcaOption">
+                    <img src="{{ asset('assets/images/bca.png') }}" alt="" style="width: 100px">
+                </div>
+                <div id="mandiri-option" class="payment-card" onclick="selectBank('mandiri')" data-bs-toggle="modal"
+                    data-bs-target="#mandiriOption">
+                    <img src="{{ asset('assets/images/mandiri.png') }}" alt="" style="width: 100px">
+                </div>
+            </div>
+            <div class="modal fade" id="bcaOption" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Pembayaran QRIS</h5>
+                            <h5 class="modal-title">Pembayaran QRIS Bank BCA</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="d-flex justify-content-center">
-                                <img src="https://cms.dailysocial.id/wp-content/uploads/2023/03/QRIS.png" alt="">
+                                <img src="{{ asset('assets/images/qr-bca.jpeg') }}" alt="" style="width: 500px">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <button type="button" class="btn btn-primary">Selesaikan Pembayaran</button>
+                            <button type="button" class="btn btn-primary" onclick="submitQris(event)">Selesaikan Pembayaran</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="mandiriOption" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pembayaran QRIS Bank Mandiri</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ asset('assets/images/qr-mandiri.jpeg') }}" alt="" style="width: 500px">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-primary" onclick="submitQris(event)">Selesaikan Pembayaran</button>
                         </div>
                     </div>
                 </div>
@@ -124,6 +149,7 @@
     let discount = 0;
     let final_price = 0;
     let selectedPaymentMethod = '';
+    let bankName = '';
 
     document.addEventListener('DOMContentLoaded', function() {
         if (datas.length > 0) {
@@ -132,6 +158,7 @@
             displayNoDataMessage();
         }
     });
+
     document.getElementById('confirmPaymentButton').addEventListener('click', function(event) {
         event.preventDefault();
 
@@ -151,7 +178,8 @@
             });
             return;
         }
-        let datas=JSON.parse(localStorage.getItem('datas')) || []; document.getElementById('datas').value=JSON.stringify(datas);
+        let datas=JSON.parse(localStorage.getItem('datas')) || [];
+        document.getElementById('datas').value=JSON.stringify(datas);
         let paymentAmount=document.getElementById('paymentAmount').value;
         fetch('{{ route("orders.store") }}', {
             method: 'POST' , headers:
@@ -190,6 +218,56 @@
             });
         });
     });
+
+    function submitQris(event) {
+        event.preventDefault();
+        console.log({
+            bankName, discount, total, final_price
+        });
+        let datas = JSON.parse(localStorage.getItem('datas')) || [];
+        let paymentAmount = final_price;
+        let paymentMethod = bankName;
+        let total_discount = discount;
+        let total_price = total;
+
+        fetch('{{ route("orders.store") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value
+            },
+            body: JSON.stringify({
+                datas: datas,
+                paymentAmount: paymentAmount,
+                paymentMethod,
+                total_discount: discount,
+                final_price,
+                total_price: total
+            })
+        }).then(response => {
+            if (!response.ok) {
+                console.log(response);
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            localStorage.removeItem('datas');
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Order has been placed successfully!'
+            });
+            window.location.href = data.redirect;
+        }).catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+        });
+    }
+
     document.getElementById('paymentAmount').addEventListener('input', function(e) {
         let value = e.target.value;
 
@@ -341,12 +419,17 @@
         document.getElementById('final-price').innerText = `Rp. ${final_price.toLocaleString()}`;
         const paymentInput = document.getElementById('paymentInput');
         const paymentButton = document.getElementById('paymentButton');
+        const optionBca = document.getElementById('bca-option');
+        const optionMandiri = document.getElementById('mandiri-option');
         if (selectedPaymentMethod === 'cash') {
             paymentInput.style.display = 'block';
             paymentButton.style.display = 'none';
+            optionBca.classList.remove('selected');
+            optionMandiri.classList.remove('selected');
+            bankName = '';
         } else if (selectedPaymentMethod === 'qris') {
             paymentInput.style.display = 'none';
-            paymentButton.style.display = 'block';
+            paymentButton.style.display = 'flex';
         }else {
             paymentInput.style.display = 'none';
         }
@@ -387,6 +470,19 @@
             document.getElementById('cash-option').classList.add('selected');
         } else if (method === 'qris') {
             document.getElementById('qris-option').classList.add('selected');
+        }
+        updateSummary();
+    }
+
+    function selectBank(bank) {
+        bankName = bank;
+        document.getElementById('bca-option').classList.remove('selected');
+        document.getElementById('mandiri-option').classList.remove('selected');
+
+        if (bank === 'bca') {
+            document.getElementById('bca-option').classList.add('selected');
+        } else if (bank === 'mandiri') {
+            document.getElementById('mandiri-option').classList.add('selected');
         }
         updateSummary();
     }
