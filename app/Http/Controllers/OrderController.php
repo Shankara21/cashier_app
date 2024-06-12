@@ -15,14 +15,92 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $reqMonth = request('bulan');
+        $reqYear = request('tahun');
+        $reqDate = request('tanggal');
+
         $month = date('F');
-        $year = date('Y');
-        $monthName = date('m');
+        $selectedYear = date('Y');
+        $monthNumber = date('m');
+        $formattedMonth = $this->translateMonth($month);
         $date = $this->translateMonth($month) . ' ' . date('Y');
-        $orderDetails = OrderDetails::whereYear('created_at', $year)
-            ->whereMonth('created_at', $monthName)
-            ->get();
-        return view('pages.order.index', compact('orderDetails', 'date'));
+
+        $orderDetails = OrderDetails::query();
+
+        $reqMonth = $this->convertToInteger($reqMonth);
+
+        if ($reqMonth && $reqYear && $reqDate) {
+            $orderDetails->whereDate('created_at', $reqYear . '-' . $reqMonth . '-' . $reqDate);
+            $selectedYear = $reqYear;
+            $formattedMonth = $this->convertToMonth($reqMonth);
+        } elseif ($reqMonth && $reqYear) {
+            $orderDetails->whereYear('created_at', $reqYear)->whereMonth('created_at', $reqMonth);
+            $selectedYear = $reqYear;
+            $formattedMonth = $this->convertToMonth($reqMonth);
+        } elseif ($reqDate) {
+            $orderDetails->whereDate('created_at', $reqDate);
+        } elseif ($reqMonth) {
+            $orderDetails->whereMonth('created_at', $reqMonth);
+            $formattedMonth = $this->convertToMonth($reqMonth);
+        } elseif ($reqYear) {
+            $orderDetails->whereYear('created_at', $reqYear);
+            $selectedYear = $reqYear;
+        } else {
+            $orderDetails->whereYear('created_at', $selectedYear)
+                ->whereMonth('created_at', $monthNumber);
+        }
+
+        $orderDetails = $orderDetails->get();
+
+        $years = [];
+        $monthNames = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember',
+        ];
+        $allDatas = OrderDetails::all();
+        foreach ($allDatas as $data) {
+            $year = date('Y', strtotime($data->created_at));
+            if (!in_array($year, $years)) {
+                array_push($years, $year);
+            }
+        }
+        $orderAmount = 0;
+        $total = 0;
+        $capital = 0;
+        $profit = 0;
+        foreach ($orderDetails as $orderDetail) {
+            $orderAmount += $orderDetail->qty;
+            $capital += $orderDetail->product->buying_price;
+            $total += $orderDetail->total;
+        }
+        $profit = $total - $capital;
+        $selectedDate = '';
+        if($reqDate){
+            $selectedDate = $reqDate;
+        }
+        return view('pages.order.index', compact(
+            'orderDetails',
+            'date',
+            'years',
+            'formattedMonth',
+            'monthNames',
+            'orderAmount',
+            'capital',
+            'total',
+            'profit',
+            'selectedYear',
+            'selectedDate'
+        ));
     }
 
     /**
@@ -118,6 +196,70 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         return view('pages.cashier.invoice', compact('order'));
+    }
+
+    function convertToInteger($month)
+    {
+        switch ($month) {
+            case 'Januari':
+                return 1;
+            case 'Februari':
+                return 2;
+            case 'Maret':
+                return 3;
+            case 'April':
+                return 4;
+            case 'Mei':
+                return 5;
+            case 'Juni':
+                return 6;
+            case 'Juli':
+                return 7;
+            case 'Agustus':
+                return 8;
+            case 'September':
+                return 9;
+            case 'Oktober':
+                return 10;
+            case 'November':
+                return 11;
+            case 'Desember':
+                return 12;
+            default:
+                return $month;
+        }
+    }
+
+    function convertToMonth($month)
+    {
+        switch ($month) {
+            case 1:
+                return 'Januari';
+            case 2:
+                return 'Februari';
+            case 3:
+                return 'Maret';
+            case 4:
+                return 'April';
+            case 5:
+                return 'Mei';
+            case 6:
+                return 'Juni';
+            case 7:
+                return 'Juli';
+            case 8:
+                return 'Agustus';
+            case 9:
+                return 'September';
+            case 10:
+                return 'Oktober';
+            case 11:
+                return 'November';
+            case 12:
+                return 'Desember';
+            default:
+                return $month;
+        }
     }
 
     function translateMonth($month)

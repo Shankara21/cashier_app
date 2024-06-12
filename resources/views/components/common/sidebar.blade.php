@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="menu-label" style="color: #EEEEEE">Menu Utama</li>
-        <li>
+        <li >
             <a class="" href="{{ route('cashier') }}">
                 <div class="parent-icon"><i class='bx bx-money'></i>
                 </div>
