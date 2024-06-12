@@ -88,6 +88,7 @@ class OrderController extends Controller
         if($reqDate){
             $selectedDate = $reqDate;
         }
+
         return view('pages.order.index', compact(
             'orderDetails',
             'date',

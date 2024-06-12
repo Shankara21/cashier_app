@@ -18,7 +18,13 @@ use Carbon\Carbon;
         </nav>
     </div>
 </div>
-<h5 class="mb-0 text-uppercase">Daftar laporan penjualan {{ $date }}</h5>
+<h5 class="mb-0 text-uppercase">Daftar laporan penjualan
+    @if($selectedDate != '')
+    {{ Carbon::parse($selectedDate)->translatedFormat('d F Y') }}
+    @else
+    {{ $formattedMonth }} {{ $selectedYear }}   
+    @endif
+</h5>
 <hr>
 <div class="card">
     <div class="card-body p-4">
