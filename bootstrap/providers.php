@@ -6,4 +6,5 @@ return [
     Spatie\Permission\PermissionServiceProvider::class,
     RealRashid\SweetAlert\SweetAlertServiceProvider::class,
     Milon\Barcode\BarcodeServiceProvider::class,
+    Maatwebsite\Excel\ExcelServiceProvider::class,
 ];

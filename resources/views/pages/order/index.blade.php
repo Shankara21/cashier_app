@@ -22,7 +22,7 @@ use Carbon\Carbon;
     @if($selectedDate != '')
     {{ Carbon::parse($selectedDate)->translatedFormat('d F Y') }}
     @else
-    {{ $formattedMonth }} {{ $selectedYear }}   
+    {{ $formattedMonth }} {{ $selectedYear }}
     @endif
 </h5>
 <hr>
@@ -105,7 +105,7 @@ use Carbon\Carbon;
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="3">Name</th>
+                        <th colspan="3">Total Terjual</th>
                         <th>{{ number_format($orderAmount, 0, ',', '.') }}</th>
                         <th>Rp. {{ number_format($capital, 0, ',', '.') }}</th>
                         <th>Rp. {{ number_format($total, 0, ',', '.') }}</th>
