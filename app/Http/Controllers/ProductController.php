@@ -51,8 +51,13 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        $variants = json_decode($request['variants_data'], true);
         $data = $request->validated();
         try {
+            if (count($variants) == 0) {
+                Alert::error('Error', 'Produk gagal ditambahkan, tambahkan minimal 1 variant');
+                return redirect()->back();
+            }
             Product::create($data);
             Alert::success('Success', 'Produk berhasil ditambahkan');
             return redirect()->route('products.index');
