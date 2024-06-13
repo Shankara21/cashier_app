@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->string('variant');
-            $table->integer('price');
+            $table->integer('buying_price');
+            $table->integer('selling_price');
             $table->integer('stock');
             $table->timestamps();
         });

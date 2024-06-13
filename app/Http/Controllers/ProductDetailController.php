@@ -16,6 +16,13 @@ class ProductDetailController extends Controller
         //
     }
 
+    public function byProduct($id){
+        $data = ProductDetail::where('product_id', $id)->get();
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

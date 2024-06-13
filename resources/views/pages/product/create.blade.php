@@ -119,7 +119,7 @@
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th style="width: 15%">Stok</th>
-                                    <th style="width: 10%">Aksi</th>
+                                    <th style="width: 10%" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -188,7 +188,7 @@
             <td>
                 <input type="number" class="form-control" placeholder="Stok" name="stock" required>
             </td>
-            <td>
+            <td class="d-flex justify-content-center">
                 <button type="button" class="btn btn-danger btn-sm remove-variant-btn">Hapus</button>
             </td>
         `;

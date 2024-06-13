@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -49,6 +50,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function convertCurrencyToNumber($currency)
+    {
+        $number = preg_replace("/[^0-9.]/", "", $currency);
+
+        return (float) $number;
+    }
     public function store(StoreProductRequest $request)
     {
         $variants = json_decode($request['variants_data'], true);
@@ -58,7 +65,16 @@ class ProductController extends Controller
                 Alert::error('Error', 'Produk gagal ditambahkan, tambahkan minimal 1 variant');
                 return redirect()->back();
             }
-            Product::create($data);
+            $product = Product::create($data);
+            foreach ($variants as $key => $value) {
+                ProductDetail::create([
+                    'product_id' => $product->id,
+                    'variant' => $value['variant'],
+                    'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
+                    'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
+                    'stock' => $value['stock'],
+                ]);
+            }
             Alert::success('Success', 'Produk berhasil ditambahkan');
             return redirect()->route('products.index');
         } catch (\Throwable $th) {
@@ -72,7 +88,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('pages.product.show', compact('product'));
     }
 
     /**
@@ -89,9 +105,23 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
+        $variants = json_decode($request['variants_data'], true);
         $data = $request->validated();
+        // dd(count($variants), count($product->productDetails));
+        dd($variants);
+        // dd($request->all());
         try {
             $product->update($data);
+            foreach ($variants as $key => $value) {
+                $productDetail = ProductDetail::find($value['id']);
+                $productDetail->update([
+                    'product_id' => $product->id,
+                    'variant' => $value['variant'],
+                    'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
+                    'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
+                    'stock' => $value['stock'],
+                ]);
+            }
             Alert::success('Success', 'Produk berhasil diubah');
             return redirect()->route('products.index');
         } catch (\Throwable $th) {

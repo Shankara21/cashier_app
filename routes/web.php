@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductDetailController;
 
 Route::redirect('/', '/dashboard');
 Route::middleware(['auth'])->group(function () {
@@ -28,4 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Order
     Route::resource('orders', OrderController::class);
+
+    Route::resource('product-detail', ProductDetailController::class);
+    Route::get('/product-detail/product/{id}', [ProductDetailController::class, 'byProduct'])->name('product-detail.by-product');
 });
