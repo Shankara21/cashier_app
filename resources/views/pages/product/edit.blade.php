@@ -72,18 +72,7 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <label for="input38" class="col-sm-3 col-form-label">Satuan</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control @error('unit') is-invalid @enderror" id="input38"
-                        placeholder="Masukkan Satuan" name="unit" value="{{ old('unit', $product->unit) }}">
-                    @error('unit')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
+
             <div class="row mb-3">
                 <label for="input38" class="col-sm-3 col-form-label">Diskon</label>
                 <div class="col-sm-9">
@@ -97,7 +86,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="input39" class="col-sm-3 col-form-label">Category</label>
+                <label for="input39" class="col-sm-3 col-form-label">Kategori</label>
                 <div class="col-sm-9">
                     <select class="form-select @error('category_id') is-invalid @enderror" id="input39"
                         name="category_id">
@@ -117,7 +106,7 @@
 
             <!-- Variants Section -->
             <div class="row mb-3">
-                <label for="variantSection" class="col-sm-3 col-form-label">Variant</label>
+                <label for="variantSection" class="col-sm-3 col-form-label">Varian</label>
                 <div class="col-sm-9">
                     <div class="d-flex justify-content-end mb-2">
                         <button type="button" class="btn" style="background: #511f5a;color:white;"

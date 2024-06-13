@@ -26,7 +26,6 @@ class UpdateProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $this->product->id],
             'code' => ['required', 'string', 'max:255', 'unique:products,code,' . $this->product->id],
             'brand' => ['required', 'string', 'max:255'],
-            'unit' => ['required', 'string', 'max:255'],
             'discount' => ['required', 'numeric'],
         ];
     }
@@ -47,8 +46,6 @@ class UpdateProductRequest extends FormRequest
             'brand.required' => 'Merek wajib diisi.',
             'brand.string' => 'Merek harus berupa teks.',
             'brand.max' => 'Merek tidak boleh lebih dari 255 karakter.',
-            'unit.required' => 'Satuan wajib diisi.',
-            'unit.string' => 'Satuan harus berupa teks.',
             'discount.required' => 'Diskon wajib diisi.',
             'discount.numeric' => 'Diskon harus berupa angka.',
         ];

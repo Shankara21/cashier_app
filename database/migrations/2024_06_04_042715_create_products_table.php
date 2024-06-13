@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->string('brand');
-            $table->string('unit');
             $table->integer('discount')->default(0);
             $table->timestamps();
         });

@@ -107,20 +107,39 @@ class ProductController extends Controller
     {
         $variants = json_decode($request['variants_data'], true);
         $data = $request->validated();
-        // dd(count($variants), count($product->productDetails));
-        dd($variants);
-        // dd($request->all());
+        $variantIds = array_map(function ($variant) {
+            return $variant['id'];
+        }, $variants);
+        $productDetailIds = $product->productDetails->pluck('id')->toArray();
         try {
             $product->update($data);
-            foreach ($variants as $key => $value) {
-                $productDetail = ProductDetail::find($value['id']);
-                $productDetail->update([
-                    'product_id' => $product->id,
-                    'variant' => $value['variant'],
-                    'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
-                    'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
-                    'stock' => $value['stock'],
-                ]);
+            if (count($variants) == count($product->productDetails)) {
+                foreach ($variants as $key => $value) {
+                    $productDetail = ProductDetail::find($value['id']);
+                    $productDetail->update([
+                        'product_id' => $product->id,
+                        'variant' => $value['variant'],
+                        'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
+                        'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
+                        'stock' => $value['stock'],
+                    ]);
+                }
+            } elseif (count($variants) > count($product->productDetails)) {
+                $missingIds = array_diff($variantIds, $productDetailIds);
+                foreach ($variants as $key => $value) {
+                    if (in_array($value['id'], $missingIds)) {
+                        ProductDetail::create([
+                            'product_id' => $product->id,
+                            'variant' => $value['variant'],
+                            'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
+                            'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
+                            'stock' => $value['stock'],
+                        ]);
+                    }
+                }
+            } elseif (count($variants) < count($product->productDetails)) {
+                $missingIds = array_diff($productDetailIds, $variantIds);
+                ProductDetail::whereIn('id', $missingIds)->delete();
             }
             Alert::success('Success', 'Produk berhasil diubah');
             return redirect()->route('products.index');

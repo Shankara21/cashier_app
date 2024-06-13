@@ -37,10 +37,6 @@
                     <th>{{ $product->brand }}</th>
                 </tr>
                 <tr>
-                    <td scope="row">Satuan</td>
-                    <th>{{ $product->unit }}</th>
-                </tr>
-                <tr>
                     <td scope="row">Diskon</td>
                     <th>{{ $product->discount }}%</th>
                 </tr>
