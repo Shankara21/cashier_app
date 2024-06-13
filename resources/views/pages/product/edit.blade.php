@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<a href="{{ route('products.index') }}" class="btn btn-primary"><i class="bx bx-arrow-back"></i> Kembali</a>
+<a href="{{ route('products.index') }}" class="btn btn-light"><i class="bx bx-arrow-back"></i> Kembali</a>
 <hr />
 <div class="card">
     <div class="card-body">
@@ -141,7 +141,7 @@
                 <div class="col-sm-9">
                     <div class="d-md-flex d-grid align-items-center justify-content-end gap-3">
                         <button type="button" class="btn btn-primary px-4" id="submitForm">Submit</button>
-                        <button type="reset" class="btn btn-light px-4">Reset</button>
+                        {{-- <button type="reset" class="btn btn-light px-4">Reset</button> --}}
                     </div>
                 </div>
             </div>

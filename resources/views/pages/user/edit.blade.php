@@ -19,7 +19,8 @@
     </div>
 </div>
 
-<a href="{{ route('users.index', ['role' => $user->roles[0]->name]) }}" class="btn btn-primary"><i class="bx bx-arrow-back"></i> Kembali</a>
+<a href="{{ route('users.index', ['role' => $user->roles[0]->name]) }}" class="btn btn-light"><i
+        class="bx bx-arrow-back"></i> Kembali</a>
 <hr />
 <div class="card">
     <div class="card-body">
@@ -61,7 +62,8 @@
                                                                         is-invalid
                                                                     @enderror" name="role" name="role">
                         <option value="admin" {{ $user->roles[0]->name == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="cashier" {{ $user->roles[0]->name == 'cashier' ? 'selected' : '' }}>Cashier</option>
+                        <option value="cashier" {{ $user->roles[0]->name == 'cashier' ? 'selected' : '' }}>Cashier
+                        </option>
                     </select>
                     @error('role')
                     <div class="invalid-feedback">

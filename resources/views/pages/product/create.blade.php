@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<a href="{{ route('products.index') }}" class="btn btn-primary"><i class="bx bx-arrow-back"></i> Kembali</a>
+<a href="{{ route('products.index') }}" class="btn btn-light"><i class="bx bx-arrow-back"></i> Kembali</a>
 <hr />
 <div class="card">
     <div class="card-body">
@@ -108,17 +108,18 @@
                 <label for="variantSection" class="col-sm-3 col-form-label">Variant</label>
                 <div class="col-sm-9">
                     <div class="d-flex justify-content-end mb-2">
-                        <button type="button" class="btn" style="background: #511f5a;color:white;" id="addVariantBtn">Tambah Variant</button>
+                        <button type="button" class="btn" style="background: #511f5a;color:white;"
+                            id="addVariantBtn">Tambah Variant</button>
                     </div>
                     <div class="table-responsive" id="variantTableWrapper" style="display: none;">
                         <table class="table " id="variantTable">
                             <thead>
                                 <tr>
-                                    <th>Variant</th>
-                                    <th>Buying Price</th>
-                                    <th>Selling Price</th>
-                                    <th>Stock</th>
-                                    <th>Actions</th>
+                                    <th style="width: 10%">Ukuran</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th style="width: 15%">Stok</th>
+                                    <th style="width: 10%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,7 +137,7 @@
                 <div class="col-sm-9">
                     <div class="d-md-flex d-grid align-items-center justify-content-end gap-3">
                         <button type="submit" class="btn btn-primary px-4">Submit</button>
-                        <button type="reset" class="btn btn-light px-4">Reset</button>
+                        {{-- <button type="reset" class="btn btn-light px-4">Reset</button> --}}
                     </div>
                 </div>
             </div>
@@ -176,16 +177,16 @@
         row.classList.add('variant-item');
         row.innerHTML = `
             <td>
-                <input type="text" class="form-control" placeholder="Variant" name="variant" required>
+                <input type="text" class="form-control" placeholder="Ukuran" name="variant" required>
             </td>
             <td>
-                <input type="text" class="form-control buying_price" placeholder="Buying Price" name="buying_price" required>
+                <input type="text" class="form-control buying_price" placeholder="Harga Beli" name="buying_price" required>
             </td>
             <td>
-                <input type="text" class="form-control selling_price" placeholder="Selling Price" name="selling_price" required>
+                <input type="text" class="form-control selling_price" placeholder="Harga Jual" name="selling_price" required>
             </td>
             <td>
-                <input type="number" class="form-control" placeholder="Stock" name="stock" required>
+                <input type="number" class="form-control" placeholder="Stok" name="stock" required>
             </td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm remove-variant-btn">Hapus</button>

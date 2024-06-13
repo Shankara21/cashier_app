@@ -19,7 +19,8 @@
     </div>
 </div>
 
-<a href="{{ route('users.index', ['role' => $role]) }}" class="btn btn-primary"><i class="bx bx-arrow-back"></i> Kembali</a>
+<a href="{{ route('users.index', ['role' => $role]) }}" class="btn btn-light"><i class="bx bx-arrow-back"></i>
+    Kembali</a>
 <hr />
 <div class="card">
     <div class="card-body">
