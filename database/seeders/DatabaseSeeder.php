@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Hamcrest\Core\Set;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             CategorySeeder::class,
+            SettingSeeder::class,
         ]);
         User::factory()->create([
             'name' => 'Admin',
@@ -25,7 +27,7 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('admin');
         User::factory()->create([
             'name' => 'Budi',
-            'email' => 'budi@gmailcom',
+            'email' => 'budi@gmail.com',
             'password' => Hash::make('password'),
         ])->assignRole('cashier');
     }

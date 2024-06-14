@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="menu-label" style="color: #EEEEEE">Menu Utama</li>
-        <li >
+        <li>
             <a class="" href="{{ route('cashier') }}">
                 <div class="parent-icon"><i class='bx bx-money'></i>
                 </div>
@@ -60,6 +60,30 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li>
+            <a href="{{ route('products.index') }}">
+                <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
+                </div>
+                <div class="menu-title">Produk</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('settings.index') }}">
+                <div class="parent-icon"><i class='bx bx-cog'></i>
+                </div>
+                <div class="menu-title">Setting</div>
+            </a>
+        </li>
+        @endrole
+        @role('cashier')
+        <li class="menu-label" style="color: #EEEEEE">Master Data</li>
+        <li>
+            <a href="{{ route('categories.index') }}">
+                <div class="parent-icon"><i class='bx bx-category-alt'></i>
+                </div>
+                <div class="menu-title">Kategori</div>
+            </a>
         </li>
         <li>
             <a href="{{ route('products.index') }}">
