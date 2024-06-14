@@ -35,6 +35,7 @@
                         <th class="text-center">Nama</th>
                         <th class="text-center">Merk</th>
                         <th class="text-center">Diskon</th>
+                        <th class="text-center">Kategori</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -46,6 +47,7 @@
                         <td class="text-center">{{ $data->name }}</td>
                         <td class="text-center">{{ $data->brand }}</td>
                         <td class="text-center">{{ $data->discount }}%</td>
+                        <td class="text-center">{{ $data->category->name }}</td>
                         <td class="text-center">
                             <a href="{{ route('products.show', $data->id) }}" class="btn btn-outline-info"><i
                                     class='bx bx-show me-0'></i>

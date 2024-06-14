@@ -7,11 +7,20 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductDetailController;
+use App\Models\Category;
+use App\Models\Product;
 
 Route::redirect('/', '/dashboard');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('welcome');
+        $amount_category = Category::count();
+        $amount_product = Product::count();
+        $categories = Category::all();
+        return view('welcome', [
+            'categories' => $categories,
+            'amount_product' => $amount_product,
+            'amount_category' => $amount_category
+        ]);
     })->name('dashboard');
     Route::get('/cashier', function () {
         return view('pages.cashier.index');
