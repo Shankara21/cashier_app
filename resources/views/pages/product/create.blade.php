@@ -91,34 +91,99 @@
                 </div>
             </div>
 
-            <!-- Variants Section -->
             <div class="row mb-3">
-                <label for="variantSection" class="col-sm-3 col-form-label">Varian</label>
-                <div class="col-sm-9">
-                    <div class="d-flex justify-content-end mb-2">
-                        <button type="button" class="btn" style="background: #511f5a;color:white;"
-                            id="addVariantBtn">Tambah Variant</button>
+                <label for="buying" class="col-3 col-form-label">Pilih Opsi</label>
+                <div class="col-9 row justify-content-center">
+                    <div class="col-6 ">
+                        <div id="hargaCard" class="card card-option">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Harga</h5>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-responsive" id="variantTableWrapper" style="display: none;">
-                        <table class="table " id="variantTable">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%">Ukuran</th>
-                                    <th>Harga Beli</th>
-                                    <th>Harga Jual</th>
-                                    <th style="width: 15%">Stok</th>
-                                    <th style="width: 10%" class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                    <div class="col-6 ">
+                        <div id="variantCard" class="card card-option">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Varian</h5>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Hidden input for variants data -->
+            <div id="hargaDetail" class="" style="display: none;">
+                <div class="row mb-3">
+                    <label for="buying" class="col-sm-3 col-form-label">Harga Jual</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control @error('buying_price') is-invalid @enderror" id="buying"
+                            placeholder="Masukkan Harga Jual" name="buying_price" value="{{ old('buying_price') }}">
+                        @error('buying_price')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="selling" class="col-sm-3 col-form-label">Harga Beli</label>
+                    <div class="col-sm-9">
+                        <input id="selling" type="text"
+                            class="form-control @error('selling_price') is-invalid @enderror"
+                            placeholder="Masukkan Harga Beli" name="selling_price" value="{{ old('selling_price') }}">
+                        @error('selling_price')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="input40" class="col-sm-3 col-form-label">Stok</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control @error('stock') is-invalid @enderror" id="input40"
+                            placeholder="Masukkan Stok" name="stock" value="{{ old('stock') }}">
+                        @error('stock')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div id="variantDetail" class="" style="display: none;">
+                <div class="row mb-3">
+                    <label for="variantSection" class="col-sm-3 col-form-label">Varian</label>
+                    <div class="col-sm-9">
+                        <div class="d-flex justify-content-end mb-2">
+                            <button type="button" class="btn" style="background: #511f5a;color:white;"
+                                id="addVariantBtn">Tambah
+                                Variant</button>
+                        </div>
+                        <div class="table-responsive" id="variantTableWrapper">
+                            <table class="table" id="variantTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Ukuran</th>
+                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
+                                        <th style="width: 15%">Stok</th>
+                                        <th style="width: 10%" class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Add variant rows here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <input type="hidden" name="variants_data" id="variantsData">
+
+            <input type="hidden" name="selected_option" id="selectedOption">
 
             <div class="row">
                 <label class="col-sm-3 col-form-label"></label>
@@ -132,101 +197,142 @@
         </form>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    let variantIndex = 0;
-
-    document.getElementById('addVariantBtn').addEventListener('click', function() {
-        addVariant();
-    });
-
-    function formatRupiah(angka, prefix) {
-        var number_string = angka.replace(/[^,\d]/g, '').toString(),
-            split = number_string.split(','),
-            sisa = split[0].length % 3,
-            rupiah = split[0].substr(0, sisa),
-            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-        if (ribuan) {
-            separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
-
-        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+<style>
+    .card-option {
+        cursor: pointer;
+        transition: transform 0.3s;
     }
 
-    function addVariant() {
-        variantIndex++;
-        const variantTable = document.getElementById('variantTable').querySelector('tbody');
+    .card-option:hover {
+        transform: scale(1.05);
+    }
 
-        const row = document.createElement('tr');
-        row.classList.add('variant-item');
-        row.innerHTML = `
-            <td>
-                <input type="text" class="form-control" placeholder="Ukuran" name="variant" required>
-            </td>
-            <td>
-                <input type="text" class="form-control buying_price" placeholder="Harga Beli" name="buying_price" required>
-            </td>
-            <td>
-                <input type="text" class="form-control selling_price" placeholder="Harga Jual" name="selling_price" required>
-            </td>
-            <td>
-                <input type="number" class="form-control" placeholder="Stok" name="stock" required>
-            </td>
-            <td class="d-flex justify-content-center">
-                <button type="button" class="btn btn-danger btn-sm remove-variant-btn">Hapus</button>
-            </td>
-        `;
+    .card-selected {
+        border: 2px solid #511f5a;
+    }
+</style>
+<script>
+    document.getElementById('hargaCard').addEventListener('click', function () {
+        document.getElementById('hargaDetail').style.display = 'block';
+        document.getElementById('variantDetail').style.display = 'none';
+        this.classList.add('card-selected');
+        document.getElementById('variantCard').classList.remove('card-selected');
+        document.getElementById('selectedOption').value = 'harga';
+    });
 
-        variantTable.appendChild(row);
+    document.getElementById('variantCard').addEventListener('click', function () {
+        document.getElementById('hargaDetail').style.display = 'none';
+        document.getElementById('variantDetail').style.display = 'block';
+        this.classList.add('card-selected');
+        document.getElementById('hargaCard').classList.remove('card-selected');
+        document.getElementById('selectedOption').value = 'variant';
+    });
 
-        row.querySelector('.remove-variant-btn').addEventListener('click', function() {
-            row.remove();
-            // Check if there are any variants left
-            if (variantTable.querySelectorAll('.variant-item').length === 0) {
-                document.getElementById('variantTableWrapper').style.display = 'none';
+    document.addEventListener('DOMContentLoaded', function () {
+        let variantIndex = 0;
+
+        document.getElementById('addVariantBtn').addEventListener('click', function () {
+            addVariant();
+        });
+
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        function addVariant() {
+            variantIndex++;
+            const variantTable = document.getElementById('variantTable').querySelector('tbody');
+
+            const row = document.createElement('tr');
+            row.classList.add('variant-item');
+            row.innerHTML = `
+                <td>
+                    <input type="text" class="form-control" placeholder="Ukuran" name="variant" required>
+                </td>
+                <td>
+                    <input type="text" class="form-control buying_price" placeholder="Harga Beli" name="buying_price" required>
+                </td>
+                <td>
+                    <input type="text" class="form-control selling_price" placeholder="Harga Jual" name="selling_price" required>
+                </td>
+                <td>
+                    <input type="number" class="form-control" placeholder="Stok" name="stock" required>
+                </td>
+                <td class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger btn-sm remove-variant-btn">Hapus</button>
+                </td>
+            `;
+
+            variantTable.appendChild(row);
+
+            row.querySelector('.remove-variant-btn').addEventListener('click', function () {
+                row.remove();
+                // Check if there are any variants left
+                if (variantTable.querySelectorAll('.variant-item').length === 0) {
+                    document.getElementById('variantTableWrapper').style.display = 'none';
+                }
+            });
+
+            row.querySelector('.buying_price').addEventListener('input', function (e) {
+                e.target.value = formatRupiah(e.target.value, 'Rp. ');
+            });
+
+            row.querySelector('.selling_price').addEventListener('input', function (e) {
+                e.target.value = formatRupiah(e.target.value, 'Rp. ');
+            });
+
+            // Show the table if it's hidden
+            if (variantTable.querySelectorAll('.variant-item').length === 1) {
+                document.getElementById('variantTableWrapper').style.display = 'block';
+            }
+        }
+
+        document.getElementById('productForm').addEventListener('submit', function (e) {
+            const variants = [];
+            document.querySelectorAll('.variant-item').forEach(function (variantItem) {
+                const variantData = {
+                    variant: variantItem.querySelector('input[name="variant"]').value,
+                    buying_price: variantItem.querySelector('input[name="buying_price"]').value.replace(/[^,\d]/g, '').toString(),
+                    selling_price: variantItem.querySelector('input[name="selling_price"]').value.replace(/[^,\d]/g, '').toString(),
+                    stock: variantItem.querySelector('input[name="stock"]').value
+                };
+                variants.push(variantData);
+            });
+
+            document.getElementById('variantsData').value = JSON.stringify(variants);
+        });
+
+        // Initial check if there are any variants on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const variantTable = document.getElementById('variantTable');
+            if (variantTable && variantTable.querySelectorAll('.variant-item').length > 0) {
+                document.getElementById('variantTableWrapper').style.display = 'block';
             }
         });
 
-        row.querySelector('.buying_price').addEventListener('input', function(e) {
+        // Format buying_price and selling_price on initial load
+        const buyingPriceInput = document.getElementById('buying');
+        const sellingPriceInput = document.getElementById('selling');
+
+        buyingPriceInput.addEventListener('input', function (e) {
             e.target.value = formatRupiah(e.target.value, 'Rp. ');
         });
 
-        row.querySelector('.selling_price').addEventListener('input', function(e) {
-                e.target.value = formatRupiah(e.target.value, 'Rp. ');
-                });
-
-                // Show the table if it's hidden
-                if (variantTable.querySelectorAll('.variant-item').length === 1) {
-                document.getElementById('variantTableWrapper').style.display = 'block';
-                }
-                }
-
-                document.getElementById('productForm').addEventListener('submit', function(e) {
-                const variants = [];
-                document.querySelectorAll('.variant-item').forEach(function(variantItem) {
-                const variantData = {
-                variant: variantItem.querySelector('input[name="variant"]').value,
-                buying_price: variantItem.querySelector('input[name="buying_price"]').value.replace(/[^,\d]/g, '').toString(),
-                selling_price: variantItem.querySelector('input[name="selling_price"]').value.replace(/[^,\d]/g, '').toString(),
-                stock: variantItem.querySelector('input[name="stock"]').value
-                };
-                variants.push(variantData);
-                });
-
-                document.getElementById('variantsData').value = JSON.stringify(variants);
-                });
-
-                // Initial check if there are any variants on page load
-                document.addEventListener('DOMContentLoaded', function() {
-                const variantTable = document.getElementById('variantTable');
-                if (variantTable && variantTable.querySelectorAll('.variant-item').length > 0) {
-                document.getElementById('variantTableWrapper').style.display = 'block';
-                }
-                });
-                });
+        sellingPriceInput.addEventListener('input', function (e) {
+            e.target.value = formatRupiah(e.target.value, 'Rp. ');
+        });
+    });
 </script>
 @endsection

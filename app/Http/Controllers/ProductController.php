@@ -56,24 +56,36 @@ class ProductController extends Controller
 
         return (float) $number;
     }
+    function convertToInteger($formattedCurrency)
+    {
+        return (int) preg_replace('/[^0-9]/', '', $formattedCurrency);
+    }
     public function store(StoreProductRequest $request)
     {
         $variants = json_decode($request['variants_data'], true);
         $data = $request->validated();
+
+        if ($request['selected_option'] == 'harga') {
+            $data['buying_price'] = $this->convertToInteger($request['buying_price']);
+            $data['selling_price'] = $this->convertToInteger($request['selling_price']);
+            $data['stock'] = $request['stock'];
+        }
         try {
-            if (count($variants) == 0) {
-                Alert::error('Error', 'Produk gagal ditambahkan, tambahkan minimal 1 variant');
-                return redirect()->back();
-            }
             $product = Product::create($data);
-            foreach ($variants as $key => $value) {
-                ProductDetail::create([
-                    'product_id' => $product->id,
-                    'variant' => $value['variant'],
-                    'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
-                    'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
-                    'stock' => $value['stock'],
-                ]);
+            if ($request['selected_option'] == 'variant') {
+                if (count($variants) == 0) {
+                    Alert::error('Error', 'Produk gagal ditambahkan, tambahkan minimal 1 variant');
+                    return redirect()->back();
+                }
+                foreach ($variants as $key => $value) {
+                    ProductDetail::create([
+                        'product_id' => $product->id,
+                        'variant' => $value['variant'],
+                        'buying_price' => $this->convertCurrencyToNumber($value['buying_price']),
+                        'selling_price' => $this->convertCurrencyToNumber($value['selling_price']),
+                        'stock' => $value['stock'],
+                    ]);
+                }
             }
             Alert::success('Success', 'Produk berhasil ditambahkan');
             return redirect()->route('products.index');
