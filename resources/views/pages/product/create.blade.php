@@ -183,7 +183,8 @@
 
             <input type="hidden" name="variants_data" id="variantsData">
 
-            <input type="hidden" name="selected_option" id="selectedOption">
+            <input type="hidden" name="selected_option" id="selectedOption"
+                >
 
             <div class="row">
                 <label class="col-sm-3 col-form-label"></label>

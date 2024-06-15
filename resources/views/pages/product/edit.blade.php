@@ -104,34 +104,102 @@
                 </div>
             </div>
 
-            <!-- Variants Section -->
             <div class="row mb-3">
-                <label for="variantSection" class="col-sm-3 col-form-label">Varian</label>
-                <div class="col-sm-9">
-                    <div class="d-flex justify-content-end mb-2">
-                        <button type="button" class="btn" style="background: #511f5a;color:white;"
-                            id="addVariantBtn">Tambah Variant</button>
+                <label for="buying" class="col-3 col-form-label">Pilih Opsi</label>
+                <div class="col-9 row justify-content-center">
+                    <div class="col-6 ">
+                        <div id="hargaCard"
+                            class="card card-option {{ count($product->productDetails) > 0 ? '' : 'card-selected' }}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Harga </h5>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-responsive" id="variantTableWrapper" style="display: none;">
-                        <table class="table " id="variantTable">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%">Ukuran</th>
-                                    <th>Harga Beli</th>
-                                    <th>Harga Jual</th>
-                                    <th style="width: 15%">Stok</th>
-                                    <th style="width: 10%" class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                    <div class="col-6 ">
+                        <div id="variantCard"
+                            class="card card-option {{ count($product->productDetails) > 0 ? 'card-selected' : '' }}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Varian </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="hargaDetail" class=""
+                style="{{ count($product->productDetails) > 0 ? 'display: none;' : 'display: block;' }}">
+                <div class="row mb-3">
+                    <label for="buying" class="col-sm-3 col-form-label">Harga Jual</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control @error('buying_price') is-invalid @enderror" id="buying"
+                            placeholder="Masukkan Harga Jual" name="buying_price"
+                            value="{{ old('buying_price', $product->buying_price) }}">
+                        @error('buying_price')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="selling" class="col-sm-3 col-form-label">Harga Beli</label>
+                    <div class="col-sm-9">
+                        <input id="selling" type="text"
+                            class="form-control @error('selling_price') is-invalid @enderror"
+                            placeholder="Masukkan Harga Beli" name="selling_price"
+                            value="{{ old('selling_price', $product->selling_price) }}">
+                        @error('selling_price')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="input40" class="col-sm-3 col-form-label">Stok</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control @error('stock') is-invalid @enderror" id="input40"
+                            placeholder="Masukkan Stok" name="stock" value="{{ old('stock', $product->stock) }}">
+                        @error('stock')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div id="variantDetail" class=""
+                style="{{ count($product->productDetails) > 0 ? 'display: block;' : 'display: none;' }}">
+                <div class="row mb-3">
+                    <label for="variantSection" class="col-sm-3 col-form-label">Varian</label>
+                    <div class="col-sm-9">
+                        <div class="d-flex justify-content-end mb-2">
+                            <button type="button" class="btn" style="background: #511f5a;color:white;"
+                                id="addVariantBtn">Tambah
+                                Variant</button>
+                        </div>
+                        <div class="table-responsive" id="variantTableWrapper">
+                            <table class="table" id="variantTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Ukuran</th>
+                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
+                                        <th style="width: 15%">Stok</th>
+                                        <th style="width: 10%" class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Add variant rows here -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Hidden input for variants data -->
             <input type="hidden" name="variants_data" id="variantsData">
+            <input type="hidden" name="selected_option" id="selectedOption" value="{{ count($product->productDetails) > 0 ?'variant' : 'harga' }}">
 
             <div class="row">
                 <label class="col-sm-3 col-form-label"></label>
@@ -144,8 +212,56 @@
         </form>
     </div>
 </div>
+<style>
+    .card-option {
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
 
+    .card-option:hover {
+        transform: scale(1.05);
+    }
+
+    .card-selected {
+        border: 2px solid #511f5a;
+    }
+</style>
 <script>
+    const buyingPriceInput = document.getElementById('buying');
+    const sellingPriceInput = document.getElementById('selling');
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+    buyingPriceInput.value = formatRupiah('{{ $product->buying_price }}', 'Rp. ');
+    sellingPriceInput.value = formatRupiah('{{ $product->selling_price }}', 'Rp. ');
+    document.getElementById('hargaCard').addEventListener('click', function () {
+        document.getElementById('hargaDetail').style.display = 'block';
+        document.getElementById('variantDetail').style.display = 'none';
+        this.classList.add('card-selected');
+        document.getElementById('variantCard').classList.remove('card-selected');
+        document.getElementById('selectedOption').value = 'harga';
+    });
+
+    document.getElementById('variantCard').addEventListener('click', function () {
+        document.getElementById('hargaDetail').style.display = 'none';
+        document.getElementById('variantDetail').style.display = 'block';
+        this.classList.add('card-selected');
+        document.getElementById('hargaCard').classList.remove('card-selected');
+        document.getElementById('selectedOption').value = 'variant';
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         fetch('{{ route('product-detail.by-product', $product->id) }}')
             .then(response => response.json())
@@ -175,21 +291,9 @@
             addVariant();
         });
 
-        function formatRupiah(angka, prefix) {
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
 
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-        }
+
 
         function addVariant(variantData = null) {
             variantIndex++;
@@ -283,6 +387,14 @@
             if (variantTable && variantTable.querySelectorAll('.variant-item').length > 0) {
                 document.getElementById('variantTableWrapper').style.display = 'block';
             }
+        });
+
+        buyingPriceInput.addEventListener('input', function (e) {
+        e.target.value = formatRupiah(e.target.value, 'Rp. ');
+        });
+
+        sellingPriceInput.addEventListener('input', function (e) {
+        e.target.value = formatRupiah(e.target.value, 'Rp. ');
         });
     });
 </script>

@@ -40,8 +40,23 @@
                     <td scope="row">Diskon</td>
                     <th>{{ $product->discount }}%</th>
                 </tr>
+                @if ($product->buying_price && $product->selling_price)
+                <tr>
+                    <td scope="row">Harga Beli</td>
+                    <th>Rp. {{ number_format($product->buying_price, 0, ',', '.') }}</th>
+                </tr>
+                <tr>
+                    <td scope="row">Harga Jual</td>
+                    <th>Rp. {{ number_format($product->selling_price, 0, ',', '.') }}</th>
+                </tr>
+                <tr>
+                    <td scope="row">Stok</td>
+                    <th>{{ $product->stock ?? 0 }}</th>
+                </tr>
+                @endif
             </tbody>
         </table>
+        @if (count($product->productDetails) > 0)
         <hr>
         <h4>Daftar Ukuran</h4>
         <div class="table-responsive">
@@ -66,6 +81,7 @@
                 </tbody>
             </table>
         </div>
+        @endif
     </div>
 </div>
 
