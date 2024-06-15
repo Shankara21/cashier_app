@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\User;
 use Hamcrest\Core\Set;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;

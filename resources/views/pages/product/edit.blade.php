@@ -316,7 +316,8 @@
                     <input type="number" class="form-control" placeholder="Stok" name="stock${variantIndex}" value="${variantData ? variantData.stock : ''}" required>
                 </td>
                 <td class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-danger btn-sm remove-variant-btn">Hapus</button>
+                    <button type="button" class="btn btn-danger  remove-variant-btn">
+                        <i class='bx bx-trash me-0'></i></button>
                 </td>
             `;
 

@@ -117,6 +117,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+        dd($request->all());
         $datas = $request['datas'];
         $final_price = $request['final_price'];
         $paymentAmount = $request['paymentAmount'];
