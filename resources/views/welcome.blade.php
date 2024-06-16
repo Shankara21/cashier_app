@@ -9,11 +9,9 @@
                     <div>
                         <p class="mb-0 text-secondary">Total products</p>
                         <h4 class="my-1">{{ $amount_product }}</h4>
-                        <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>$34
-                            Since last week</p>
+
                     </div>
-                    <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-wallet'></i>
-                    </div>
+                    
                 </div>
                 <div id="chart1"></div>
             </div>
@@ -26,11 +24,9 @@
                     <div>
                         <p class="mb-0 text-secondary">Total Categories</p>
                         <h4 class="my-1">{{ $amount_category }}</h4>
-                        <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>14%
-                            Since last week</p>
+
                     </div>
-                    <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bxs-group'></i>
-                    </div>
+
                 </div>
                 <div id="chart2"></div>
             </div>
@@ -41,12 +37,21 @@
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div>
-                        <p class="mb-0 text-secondary">Store Visitors</p>
-                        <h4 class="my-1">59K</h4>
-                        <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>12.4%
-                            Since last week</p>
+                        <p class="mb-0 text-secondary">Total Penjualan Minggu Ini</p>
+                        <h4 class="my-1">
+                            {{ $penjualan['orderMingguIni'] }}
+                        </h4>
+                        <p
+                            class="mb-0 font-13 {{ $penjualan['status'] == 'Naik' ? 'text-success' : ($penjualan['status'] == 'Turun' ? 'text-danger' : 'text-secondary') }}">
+                            @if ($penjualan['status'] == 'Tidak ada')
+                            Penjualan minggu ini sama dengan minggu lalu
+                            @else
+                            <i class='bx bxs-up-arrow align-middle'></i>{{ $penjualan['persentase'] }}%
+                            Sejak minggu lalu
+                            @endif
+                        </p>
                     </div>
-                    <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bxs-binoculars'></i>
+                    <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-wallet'></i>
                     </div>
                 </div>
                 <div id="chart3"></div>

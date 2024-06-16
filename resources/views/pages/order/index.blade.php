@@ -58,9 +58,10 @@ use Carbon\Carbon;
         <h5 class="mb-3">Cari Laporan Per Hari</h5>
         <form class="row g-3 mb-4">
             <div class="col-md-8">
-                <label for="input15" class="form-label">Phone</label>
+                <label for="input15" class="form-label">Tanggal</label>
                 <div class="position-relative input-icon">
-                    <input type="date" class="form-control" id="input15" placeholder="Phone" name="tanggal" value="{{ $selectedDate }}">
+                    <input type="date" class="form-control" id="input15" placeholder="Phone" name="tanggal"
+                        value="{{ $selectedDate }}">
                     <span class="position-absolute top-50 translate-middle-y"><i class='bx bx-calendar'></i></span>
                 </div>
             </div>
@@ -93,13 +94,17 @@ use Carbon\Carbon;
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $order->product->code }}</td>
-                        <td>{{ $order->product->name }}</td>
+                        <td>{{ $order->product->name }} {{ $order->variant ? '(' . $order->variant . ')' : '' }}</td>
                         <td>{{ number_format($order->qty, 0, ',', '.') }}</td>
+                        @if ($order->product_details_id == null)
                         <td>Rp. {{ number_format($order->product->buying_price, 0, ',', '.') }}</td>
+                        @else
+                        <td>Rp. {{ number_format($order->product_detail->buying_price, 0, ',', '.') }}</td>
+                        @endif
                         <td>Rp. {{ number_format($order->total, 0, ',', '.') }}</td>
                         <td>{{ $order->order->user->name }}</td>
                         <td style="text-transform: capitalize">{{ $order->order->payment_method }}</td>
-                        <td>{{ Carbon::parse($order->created_at)->translatedFormat('d F Y H:i') }}</td>
+                        <td>{{ Carbon::parse($order->created_at)->translatedFormat('d F Y, H:i') }}</td>
                     </tr>
                     @endforeach
                 </tbody>

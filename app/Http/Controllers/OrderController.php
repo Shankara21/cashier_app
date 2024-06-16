@@ -6,6 +6,8 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\Product;
+use App\Models\ProductDetail;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
@@ -85,7 +87,7 @@ class OrderController extends Controller
         }
         $profit = $total - $capital;
         $selectedDate = '';
-        if($reqDate){
+        if ($reqDate) {
             $selectedDate = $reqDate;
         }
 
@@ -117,7 +119,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $datas = $request['datas'];
         $final_price = $request['final_price'];
         $paymentAmount = $request['paymentAmount'];
@@ -133,22 +135,35 @@ class OrderController extends Controller
             $order =   Order::create([
                 'user_id' => auth()->user()->id,
                 'qty' => $amount,
-                'final_price' => $final_price,
                 'payment_method' => $paymentMethod,
-                'total_discount' => $total_discount,
                 'total_price' => $total_price,
-                'payment_amount' => $paymentAmount,
+                'total_discount' => $total_discount,
+                'final_price' => $final_price,
                 'change' => $change,
+                'payment_amount' => $paymentAmount,
             ]);
 
             foreach ($datas as $data) {
                 OrderDetails::create([
                     'order_id' => $order->id,
                     'product_id' => $data['id'],
+                    'product_details_id' => $data['selected_variant'] ? $data['selected_variant']['id'] : null,
                     'qty' => $data['amount'],
                     'discount' => $data['discount'],
+                    'buying_price' => $data['selected_variant'] ? $data['selected_variant']['buying_price'] : $data['buying_price'],
+                    'selling_price' => $data['selected_variant'] ? $data['selected_variant']['selling_price'] : $data['selling_price'],
+                    'variant' => $data['selected_variant'] ? $data['selected_variant']['variant'] : null,
                     'total' => $data['final_price'],
                 ]);
+                if ($data['selected_variant'] == null) {
+                    $product = Product::find($data['id']);
+                    $product->stock -= $data['amount'];
+                    $product->save();
+                } else {
+                    $productDetail = ProductDetail::find($data['selected_variant']['id']);
+                    $productDetail->stock -= $data['amount'];
+                    $productDetail->save();
+                }
             }
 
             Alert::success('Success', 'Order berhasil ditambahkan');

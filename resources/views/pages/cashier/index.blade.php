@@ -466,9 +466,7 @@
         .getElementById("removeAllButton")
         .addEventListener("click", function () {
         datas = [];
-        updateTable(datas);
         localStorage.removeItem("datas");
-        window.location.reload();
         });
 
         function updateRemoveAllButton() {
@@ -510,7 +508,7 @@
         const tableBody = document.getElementById("productTableBody");
         tableBody.innerHTML = `
         <tr>
-            <td colspan="6" class="text-center">Tidak ada data</td>
+            <td colspan="10" class="text-center">Tidak ada data</td>
         </tr>
         `;
         }
