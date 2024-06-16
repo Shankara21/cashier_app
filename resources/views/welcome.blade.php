@@ -11,9 +11,8 @@
                         <h4 class="my-1">{{ $amount_product }}</h4>
 
                     </div>
-                    
+
                 </div>
-                <div id="chart1"></div>
             </div>
         </div>
     </div>
@@ -28,7 +27,6 @@
                     </div>
 
                 </div>
-                <div id="chart2"></div>
             </div>
         </div>
     </div>
@@ -54,9 +52,16 @@
                     <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-wallet'></i>
                     </div>
                 </div>
-                <div id="chart3"></div>
             </div>
         </div>
+    </div>
+</div>
+<div class="d-flex gap-3">
+    <div class=" card" style="width: 75%">
+        <div class="card-body" id="chart"></div>
+    </div>
+    <div class="card" style="width: 25%">
+        <div class="card-body" id="barchart"></div>
     </div>
 </div>
 <div class="row row-cols-2">
@@ -94,14 +99,106 @@
     @endforeach
 </div>
 
+
+
 @endsection
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.49.1/apexcharts.min.js"
+    integrity="sha512-qiVW4rNFHFQm0jHli5vkdEwP4GPSzCSp85J7JRHdgzuuaTg31tTMC8+AHdEC5cmyMFDByX639todnt6cxEc1lQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
     $(document).ready(function() {
       @foreach ($categories as $category)
       $('#table{{ $loop->iteration }}').DataTable();
       @endforeach
     });
+</script>
+<script>
+    const amountOrderJson = {{ $amountOrder }};
+    console.log(amountOrderJson);
+    var options = {
+    series: [{
+    name: "Jumlah Penjualan",
+    data: amountOrderJson
+    }],
+    chart: {
+    height: 350,
+    type: 'line',
+    zoom: {
+    enabled: false
+    }
+    },
+    dataLabels: {
+    enabled: false
+    },
+    stroke: {
+    curve: 'straight'
+    },
+    title: {
+    text: 'Penjualan Minggu Ini',
+    align: 'left'
+    },
+    grid: {
+    // row: {
+    // colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+    // opacity: 0.5
+    // },
+    },
+    xaxis: {
+    categories: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+</script>
+
+<script>
+    const orderThisWeek = {{ $orderThisWeek }};
+    var options = {
+    series: [{
+    data: orderThisWeek
+    }],
+    chart: {
+    height: 350,
+    type: 'bar',
+    events: {
+    click: function(chart, w, e) {
+
+    }
+    }
+    },
+    colors: ['#00E396'],
+    plotOptions: {
+    bar: {
+    columnWidth: '45%',
+    distributed: true,
+    }
+    },
+    dataLabels: {
+    enabled: false
+    },
+    legend: {
+    show: false
+    },
+    xaxis: {
+    categories: [
+    'Cash',
+    'QRIS BCA',
+    'QRIS Mandiri',
+    ],
+    labels: {
+    style: {
+    colors: ['#000'],
+    fontSize: '12px'
+    }
+    }
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#barchart"), options);
+    chart.render();
 </script>
 @endsection

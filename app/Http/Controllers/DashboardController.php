@@ -51,6 +51,7 @@ class DashboardController extends Controller
 
         // Buatkan list tanggal senin sampai minggu ini kemudian cari satu persatu jumlah order dari setiap tanggal kemudian masukkan ke dalam sebuah array
         $orders = [];
+        $amountOrder = [];
 
         $startDate = new DateTime($senin);
         $endDate = new DateTime($minggu);
@@ -65,6 +66,7 @@ class DashboardController extends Controller
                 $this->translateDayToIndonesian(date('l', strtotime($currentDateStart))),
                 'jumlah' => Order::whereBetween('created_at', [$currentDateStart, $currentDateEnd])->count(),
             ];
+            $amountOrder[] = Order::whereBetween('created_at', [$currentDateStart, $currentDateEnd])->count();
 
             // Move to the next day
             $startDate->modify('+1 day');
@@ -80,6 +82,10 @@ class DashboardController extends Controller
             ['payment_method' => 'BCA', 'total' => $ordersQris],
             ['payment_method' => 'Mandiri', 'total' => $ordersMandiri]
         ];
+        // dd($amountOrder);
+        $orderThisWeek = [$ordersCash, $ordersQris, $ordersMandiri];
+        $jsonOrderThisWeek = json_encode($orderThisWeek);
+        $jsonAmountOrder = json_encode($amountOrder);
         return view('welcome', [
             'categories' => $categories,
             'amount_product' => $amount_product,
@@ -90,7 +96,9 @@ class DashboardController extends Controller
                 'status' => $status
             ],
             'orders' => $orders,
-            'dataPayment' => $dataPayment
+            'dataPayment' => $dataPayment,
+            'amountOrder' => $jsonAmountOrder,
+            'orderThisWeek' => $jsonOrderThisWeek,
         ]);
     }
     function translateDayToIndonesian($englishDay)
