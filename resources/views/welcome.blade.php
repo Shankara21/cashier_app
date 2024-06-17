@@ -44,7 +44,7 @@
                             @if ($penjualan['status'] == 'Tidak ada')
                             Penjualan minggu ini sama dengan minggu lalu
                             @else
-                            <i class='bx bxs-up-arrow align-middle'></i>{{ $penjualan['persentase'] }}%
+                            <i class='bx {{ $penjualan['status'] == 'Naik' ? 'bxs-up-arrow' : 'bxs-down-arrow' }} align-middle'></i>{{ $penjualan['persentase'] }}%
                             Sejak minggu lalu
                             @endif
                         </p>
