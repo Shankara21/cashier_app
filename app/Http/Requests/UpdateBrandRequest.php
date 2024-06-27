@@ -11,7 +11,7 @@ class UpdateBrandRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class UpdateBrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255|unique:brands,name,' . $this->brand->id,
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'Kategori wajib diisi.',
+            'category_id.exists' => 'Kategori tidak valid.',
+            'name.required' => 'Nama wajib diisi.',
+            'name.string' => 'Nama harus berupa teks.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+            'name.unique' => 'Nama sudah ada, silakan pilih yang lain.',
         ];
     }
 }

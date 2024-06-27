@@ -62,6 +62,13 @@
             </ul>
         </li>
         <li>
+            <a href="{{ route('brands.index') }}">
+                <div class="parent-icon"><i class='bx bx-receipt'></i>
+                </div>
+                <div class="menu-title">Merk</div>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('products.index') }}">
                 <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
                 </div>

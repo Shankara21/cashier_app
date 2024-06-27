@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
@@ -36,4 +37,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product-detail/product/{id}', [ProductDetailController::class, 'byProduct'])->name('product-detail.by-product');
 
     Route::resource('settings', SettingController::class);
+
+    Route::resource('brands', BrandController::class);
 });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brand;
+use App\Models\Category;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
 {
@@ -13,7 +15,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Brand::all();
+        return view('pages.brand.index', compact('datas'));
     }
 
     /**
@@ -21,7 +24,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('pages.brand.create', compact('categories'));
     }
 
     /**
@@ -29,7 +33,15 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        try {
+            $data = $request->validated();
+            Brand::create($data);
+            Alert::success('Success', 'Brand has been created');
+            return redirect()->route('brands.index');
+        } catch (\Throwable $th) {
+            Alert::error($th->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -45,7 +57,8 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        $categories = Category::all();
+        return view('pages.brand.edit', compact('categories', 'brand'));
     }
 
     /**
@@ -53,7 +66,15 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        //
+        try {
+            $data = $request->validated();
+            $brand->update($data);
+            Alert::success('Success', 'Brand has been updated');
+            return redirect()->route('brands.index');
+        } catch (\Throwable $th) {
+            Alert::error($th->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -61,6 +82,13 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        try {
+            $brand->delete();
+            Alert::success('Success', 'Brand has been deleted');
+            return redirect()->route('brands.index');
+        } catch (\Throwable $th) {
+            Alert::error($th->getMessage());
+            return redirect()->back();
+        }
     }
 }
