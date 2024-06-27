@@ -14,12 +14,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->string('code')->unique();
+            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
+            $table->foreignId('variant_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('brand');
-            $table->integer('buying_price')->nullable();
-            $table->integer('selling_price')->nullable();
-            $table->integer('stock')->nullable();
             $table->integer('discount')->default(0);
             $table->timestamps();
         });

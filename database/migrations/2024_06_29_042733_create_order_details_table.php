@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('discount');
             $table->integer('buying_price');
             $table->integer('selling_price');
-            $table->string('variant')->nullable();
             $table->integer('total');
             $table->timestamps();
         });
