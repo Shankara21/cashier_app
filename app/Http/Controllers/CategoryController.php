@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Variant;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
@@ -27,13 +28,20 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storasge.
      */
     public function store(StoreCategoryRequest $request)
     {
         $data = $request->validated();
+        $variants = json_decode($request->input('variants'), true);
         try {
-            Category::create($data);
+            $category =  Category::create($data);
+            foreach ($variants as $key => $value) {
+                Variant::create([
+                    'category_id' => $category->id,
+                    'name' => $value,
+                ]);
+            }
             Alert::success('Success', 'Kategori berhasil ditambahkan');
             return redirect()->route('categories.index');
         } catch (\Throwable $th) {
@@ -64,8 +72,15 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $data = $request->validated();
+        $variants = json_decode($request->input('variants'), true);
         try {
             $category->update($data);
+            foreach ($variants as $key => $value) {
+                Variant::create([
+                    'category_id' => $category->id,
+                    'name' => $value,
+                ]);
+            }
             Alert::success('Success', 'Kategori berhasil diubah');
             return redirect()->route('categories.index');
         } catch (\Throwable $th) {
@@ -80,6 +95,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            $category->variants()->delete();
             $category->delete();
             Alert::success('Success', 'Kategori berhasil dihapus');
             return redirect()->route('categories.index');

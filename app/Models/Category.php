@@ -18,4 +18,9 @@ class Category extends Model
     {
         return $this->hasMany(Brand::class);
     }
+
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
 }

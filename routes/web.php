@@ -9,6 +9,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductDetailController;
+use App\Http\Controllers\VariantController;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -37,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product-detail/product/{id}', [ProductDetailController::class, 'byProduct'])->name('product-detail.by-product');
 
     Route::resource('settings', SettingController::class);
+
+    Route::resource('variants', VariantController::class);
 
     Route::resource('brands', BrandController::class);
 });

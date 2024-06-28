@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->constrained();
+            $table->foreignId('category_id')->constrained();
             $table->string('name');
             $table->timestamps();
         });

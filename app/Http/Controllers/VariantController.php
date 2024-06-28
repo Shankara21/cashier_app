@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVariantRequest;
 use App\Http\Requests\UpdateVariantRequest;
 use App\Models\Variant;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VariantController extends Controller
 {
@@ -61,6 +62,13 @@ class VariantController extends Controller
      */
     public function destroy(Variant $variant)
     {
-        //
+        try {
+            $variant->delete();
+            Alert::success('Success', 'Varian berhasil dihapus');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 }
