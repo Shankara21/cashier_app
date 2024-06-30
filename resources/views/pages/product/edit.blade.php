@@ -215,38 +215,40 @@
             document.getElementById('buying').value = parseRupiah(document.getElementById('buying').value);
             document.getElementById('selling').value = parseRupiah(document.getElementById('selling').value);
         });
-
-        if ({{$product->category_id}}) {
-            $.ajax({
-                url: '/brands/category/' + {{$product->category_id}},
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('#input37').empty();
-                    $('#input37').append('<option value="">Pilih Merk</option>');
-                    $.each(data.brands, function(key, value) {
-                        $('#input37').append('<option value="' + value.id + '">' + value.name + '</option>');
-                    });
-                    $('#input37').val("{{ old('brand_id', $product->brand_id) }}");
-
-                    $('#variantOptions').empty();
-                    if (data.variants && data.variants.length > 0) {
-                        $.each(data.variants, function(key, variant) {
-                            $('#variantOptions').append(
-                                '<div class="col-1 mb-1">' +
-                                '<div class="form-check">' +
-                                '<input class="form-check-input" type="radio" name="variant_id" id="variant_' + variant.id + '" value="' + variant.id + '">' +
-                                '<label class="form-check-label" for="variant_' + variant.id + '">' + variant.name + '</label>' +
-                                '</div>' +
-                                '</div>'
-                            );
-                        });
-                    } else {
-                        $('#variantOptions').append('<p>Kategori ini tidak memiliki ukuran</p>');
-                    }
-                }
+        const variant_id = {{ $product->variant_id }};
+if ({{$product->category_id}}) {
+    $.ajax({
+        url: '/brands/category/' + {{$product->category_id}},
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            $('#input37').empty();
+            $('#input37').append('<option value="">Pilih Merk</option>');
+            $.each(data.brands, function(key, value) {
+                $('#input37').append('<option value="' + value.id + '">' + value.name + '</option>');
             });
+            $('#input37').val("{{ old('brand_id', $product->brand_id) }}");
+
+            $('#variantOptions').empty();
+            if (data.variants && data.variants.length > 0) {
+                $.each(data.variants, function(key, variant) {
+                    let checked = variant.id == variant_id ? 'checked' : '';
+                    $('#variantOptions').append(
+                        '<div class="col-1 mb-1">' +
+                        '<div class="form-check">' +
+                        '<input class="form-check-input" type="radio" name="variant_id" id="variant_' + variant.id + '" value="' + variant.id + '" ' + checked + '>' +
+                        '<label class="form-check-label" for="variant_' + variant.id + '">' + variant.name + '</label>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                });
+            } else {
+                $('#variantOptions').append('<p>Kategori ini tidak memiliki ukuran</p>');
+            }
         }
+    });
+}
+
 
         $('#input39').on('change', function() {
             var categoryId = $(this).val();

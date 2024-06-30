@@ -23,10 +23,14 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'exists:categories,id'],
+            'brand_id' => ['required', 'exists:brands,id'],
+            'variant_id' => ['nullable', 'exists:variants,id'],
             'name' => ['required', 'string', 'max:255', 'unique:products,name,' . $this->product->id],
             'code' => ['required', 'string', 'max:255', 'unique:products,code,' . $this->product->id],
-            'brand' => ['required', 'string', 'max:255'],
             'discount' => ['required', 'numeric'],
+            'buying_price' => ['required'],
+            'selling_price' => ['required'],
+            'stock' => ['required', 'numeric'],
         ];
     }
 
@@ -35,6 +39,9 @@ class UpdateProductRequest extends FormRequest
         return [
             'category_id.required' => 'Kategori wajib diisi.',
             'category_id.exists' => 'Kategori tidak valid.',
+            'brand_id.required' => 'Merek wajib diisi.',
+            'brand_id.exists' => 'Merek tidak valid.',
+            'variant_id.exists' => 'Varian tidak valid.',
             'name.required' => 'Nama produk wajib diisi.',
             'name.string' => 'Nama produk harus berupa teks.',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
@@ -43,11 +50,12 @@ class UpdateProductRequest extends FormRequest
             'code.string' => 'Kode produk harus berupa teks.',
             'code.max' => 'Kode produk tidak boleh lebih dari 255 karakter.',
             'code.unique' => 'Kode produk sudah ada, silakan pilih yang lain.',
-            'brand.required' => 'Merek wajib diisi.',
-            'brand.string' => 'Merek harus berupa teks.',
-            'brand.max' => 'Merek tidak boleh lebih dari 255 karakter.',
             'discount.required' => 'Diskon wajib diisi.',
             'discount.numeric' => 'Diskon harus berupa angka.',
+            'buying_price.required' => 'Harga beli wajib diisi.',
+            'selling_price.required' => 'Harga jual wajib diisi.',
+            'stock.required' => 'Stok wajib diisi.',
+            'stock.numeric' => 'Stok harus berupa angka.',
         ];
     }
 }
