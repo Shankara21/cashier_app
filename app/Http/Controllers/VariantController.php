@@ -38,7 +38,7 @@ class VariantController extends Controller
      */
     public function show(Variant $variant)
     {
-        //
+        return response()->json($variant);
     }
 
     /**
@@ -54,7 +54,15 @@ class VariantController extends Controller
      */
     public function update(UpdateVariantRequest $request, Variant $variant)
     {
-        //
+        $data = $request->validated();
+        try {
+            $variant->update($data);
+            Alert::success('Success', 'Varian berhasil diubah');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**

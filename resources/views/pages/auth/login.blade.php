@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="p-4">
                         <div class="mb-3 text-center">
-                            <img src="/assets/images/cashier-machine.png" width="60" alt="" />
+                            <img src="/assets/images/logo-nibras.png" width="130" alt="" />
                         </div>
                         <div class="text-center mb-4">
                             <h5 class="text-white">Kasir Nibras House Wungu</h5>
@@ -21,7 +21,8 @@
                                     <label for="inputEmailAddress" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email')
                                         is-invalid
-                                    @enderror" id="inputEmailAddress" placeholder="Masukkan Alamat Email" name="email" value="{{ old('email') }}">
+                                    @enderror" id="inputEmailAddress" placeholder="Masukkan Alamat Email" name="email"
+                                        value="{{ old('email') }}">
 
                                     @error('email')
                                     <span class="invalid-feedback text-white" role="alert">

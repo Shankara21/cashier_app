@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             CategorySeeder::class,
             SettingSeeder::class,
+            VariantSeeder::class,
+            BrandSeeder::class,
         ]);
         User::factory()->create([
             'name' => 'Admin',
