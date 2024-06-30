@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Variant;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
@@ -90,5 +91,12 @@ class BrandController extends Controller
             Alert::error($th->getMessage());
             return redirect()->back();
         }
+    }
+
+    public function byCategory($id)
+    {
+        $brands = Brand::where('category_id', $id)->get();
+        $variants = Variant::where('category_id', $id)->get();
+        return response()->json(compact('brands', 'variants'));
     }
 }

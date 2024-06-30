@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_details', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
-            $table->foreignId('product_id')->constrained();
-            $table->integer('buying_price');
-            $table->integer('selling_price');
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-        });
+        // Schema::create('product_details', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('code')->unique();
+        //     $table->foreignId('product_id')->constrained();
+        //     $table->integer('buying_price');
+        //     $table->integer('selling_price');
+        //     $table->boolean('is_active')->default(true);
+        //     $table->timestamps();
+        // });
     }
 
     /**

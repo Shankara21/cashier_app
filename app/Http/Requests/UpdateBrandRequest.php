@@ -23,7 +23,7 @@ class UpdateBrandRequest extends FormRequest
     {
         return [
             'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255|unique:brands,name,' . $this->brand->id,
+            'name' => 'required|string|max:255',
         ];
     }
 
@@ -35,7 +35,6 @@ class UpdateBrandRequest extends FormRequest
             'name.required' => 'Nama wajib diisi.',
             'name.string' => 'Nama harus berupa teks.',
             'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
-            'name.unique' => 'Nama sudah ada, silakan pilih yang lain.',
         ];
     }
 }

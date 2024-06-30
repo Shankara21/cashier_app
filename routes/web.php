@@ -41,5 +41,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('variants', VariantController::class);
 
+    Route::get('/brands/category/{id}', [BrandController::class, 'byCategory'])->name('brands.by-category');
     Route::resource('brands', BrandController::class);
 });
