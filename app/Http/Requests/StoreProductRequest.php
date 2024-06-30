@@ -30,7 +30,7 @@ class StoreProductRequest extends FormRequest
             'discount' => ['required', 'numeric'],
             'buying_price' => ['required'],
             'selling_price' => ['required'],
-            'qty' => ['required', 'numeric'],
+            'stock' => ['required', 'numeric'],
         ];
     }
 
@@ -54,8 +54,8 @@ class StoreProductRequest extends FormRequest
             'discount.numeric' => 'Diskon harus berupa angka.',
             'buying_price.required' => 'Harga beli wajib diisi.',
             'selling_price.required' => 'Harga jual wajib diisi.',
-            'qty.required' => 'Stok wajib diisi.',
-            'qty.numeric' => 'Stok harus berupa angka.',
+            'stock.required' => 'Stok wajib diisi.',
+            'stock.numeric' => 'Stok harus berupa angka.',
         ];
     }
 }

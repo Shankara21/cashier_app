@@ -65,7 +65,6 @@ class ProductController extends Controller
         $data = $request->validated();
         $data['buying_price'] = $this->convertToInteger($request['buying_price']);
         $data['selling_price'] = $this->convertToInteger($request['selling_price']);
-
         try {
             Product::create($data);
             Alert::success('Success', 'Produk berhasil ditambahkan');

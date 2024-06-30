@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('discount')->default(0);
             $table->integer('buying_price');
             $table->integer('selling_price');
-            $table->integer('qty');
+            $table->integer('stock');
             $table->timestamps();
         });
     }

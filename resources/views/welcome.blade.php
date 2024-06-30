@@ -87,7 +87,7 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $data->name }}</td>
-                                <td class="text-center">{{ $data->brand }}</td>
+                                <td class="text-center">{{ $data->brand->name }}</td>
                                 <td class="text-center">{{ $data->discount }}%</td>
                             </tr>
                             @endforeach
@@ -104,7 +104,7 @@
 
 @endsection
 
-@section('script')
+@section('script')k
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.49.1/apexcharts.min.js"
     integrity="sha512-qiVW4rNFHFQm0jHli5vkdEwP4GPSzCSp85J7JRHdgzuuaTg31tTMC8+AHdEC5cmyMFDByX639todnt6cxEc1lQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>

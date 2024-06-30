@@ -37,6 +37,7 @@
                 <div class="col-sm-9">
                     <select class="form-select @error('category_id') is-invalid @enderror" id="input39"
                         name="category_id">
+                        <option>Pilih Kategori</option>
                         @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -132,9 +133,9 @@
             <div class="row mb-3">
                 <label for="input40" class="col-sm-3 col-form-label">Stok</label>
                 <div class="col-sm-9">
-                    <input type="number" class="form-control @error('qty') is-invalid @enderror" id="input40"
-                        placeholder="Masukkan Stok" name="qty" value="{{ old('qty') }}">
-                    @error('qty')
+                    <input type="number" class="form-control @error('stock') is-invalid @enderror" id="input40"
+                        placeholder="Masukkan Stok" name="stock" value="{{ old('stock') }}">
+                    @error('stock')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

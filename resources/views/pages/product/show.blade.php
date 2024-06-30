@@ -30,11 +30,15 @@
                 </tr>
                 <tr>
                     <td scope="row">Nama Produk</td>
-                    <th>{{ $product->name }}</th>
+                    <th>{{ $product->name }} </th>
+                </tr>
+                <tr>
+                    <td scope="row">Ukuran Produk</td>
+                    <th>{{ $product->variant->name }} </th>
                 </tr>
                 <tr>
                     <td scope="row">Merk</td>
-                    <th>{{ $product->brand }}</th>
+                    <th>{{ $product->brand->name }}</th>
                 </tr>
                 <tr>
                     <td scope="row">Diskon</td>
@@ -56,32 +60,6 @@
                 @endif
             </tbody>
         </table>
-        @if (count($product->productDetails) > 0)
-        <hr>
-        <h4>Daftar Ukuran</h4>
-        <div class="table-responsive">
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th class="text-center">Ukuran</th>
-                        <th class="text-center">Harga Beli</th>
-                        <th class="text-center">Harga Jual</th>
-                        <th class="text-center">Stok</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($product->productDetails as $item)
-                    <tr>
-                        <td class="text-center">{{ $item->variant }}</td>
-                        <td class="text-center">Rp {{ number_format($item->buying_price, 0, ',', '.') }}</td>
-                        <td class="text-center">Rp {{ number_format($item->selling_price, 0, ',', '.') }}</td>
-                        <td class="text-center">{{ number_format($item->stock, 0, ',', '.') }} </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        @endif
     </div>
 </div>
 
