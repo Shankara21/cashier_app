@@ -192,6 +192,11 @@
         })
         .then((data) => {
         localStorage.removeItem("datas");
+        console.log({
+            status : "OKE",
+        datas: datas,
+
+        });
         Swal.fire({
         icon: "success",
         title: "Success",
@@ -211,12 +216,6 @@
 
         function submitQris(event) {
         event.preventDefault();
-       console.log ({
-        bankName,
-        discount,
-        total,
-        final_price,
-        });
         let datas = JSON.parse(localStorage.getItem("datas")) || [];
         let paymentAmount = final_price;
         let paymentMethod = bankName;
@@ -239,13 +238,18 @@
         }),
         })
         .then((response) => {
-        if (!response.ok) {
+        // if (!response.ok) {
+        // console.log(response);
+        // throw new Error("Network response was not ok");
+        // }
+        // return response.json();
         console.log(response);
-        throw new Error("Network response was not ok");
-        }
-        return response.json();
         })
         .then((data) => {
+            console.log({
+                'status' : "OKE",
+                'data' : data
+            });
         localStorage.removeItem("datas");
         Swal.fire({
         icon: "success",
@@ -255,7 +259,7 @@
         window.location.href = data.redirect;
         })
         .catch((error) => {
-        console.error("Error:", error);
+            console.log(error);
         Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -379,15 +383,7 @@
                 <td class="text-center">${index + 1}</td>
                 <td class="text-center">${product.name}</td>
                 <td class="text-center">
-                    ${details.length ? `
-                    <div class="btn-group" role="group">
-                        ${details.map((detail) => `
-                        <button type="button"
-                            class="btn btn-sm btn-outline-primary  variant-button ${selectedVariant && selectedVariant.id === detail.id ?
-                            'active' : '' }" data-id="${detail.id}" onclick='selectData(${JSON.stringify(detail)})'>
-                            ${detail.variant}
-                        </button>`).join('')}
-                    </div>` : "-"}
+                   ${product.variant.name}
                 </td>
                 <td class="text-center">
                     <div class="btn-group" role="group">
@@ -419,114 +415,113 @@
         }
 
         function calculateTotal(amount, price, discount) {
-        const subtotal = amount * price;
-        const total = discount ? subtotal * (1 - discount / 100) : subtotal;
-        return total;
+            const subtotal = amount * price;
+            const total = discount ? subtotal * (1 - discount / 100) : subtotal;
+            return total;
         }
 
         function updateSummary() {
-        document.getElementById(
-        "total-price"
-        ).innerText = `Rp. ${total.toLocaleString()}`;
-        document.getElementById(
-        "total-discount"
-        ).innerText = `Rp. ${discount.toLocaleString()}`;
-        document.getElementById(
-        "final-price"
-        ).innerText = `Rp. ${final_price.toLocaleString()}`;
-        const paymentInput = document.getElementById("paymentInput");
-        const paymentButton = document.getElementById("paymentButton");
-        const optionBca = document.getElementById("bca-option");
-        const optionMandiri = document.getElementById("mandiri-option");
-        if (selectedPaymentMethod === "cash") {
-        paymentInput.style.display = "block";
-        paymentButton.style.display = "none";
-        optionBca.classList.remove("selected");
-        optionMandiri.classList.remove("selected");
-        bankName = "";
-        } else if (selectedPaymentMethod === "qris") {
-        paymentInput.style.display = "none";
-        paymentButton.style.display = "flex";
-        } else {
-        paymentInput.style.display = "none";
-        }
+            document.getElementById("total-price").innerText = `Rp. ${total.toLocaleString()}`;
+            document.getElementById("total-discount").innerText = `Rp. ${discount.toLocaleString()}`;
+            document.getElementById("final-price").innerText = `Rp. ${final_price.toLocaleString()}`;
+            const paymentInput = document.getElementById("paymentInput");
+            const paymentButton = document.getElementById("paymentButton");
+            const optionBca = document.getElementById("bca-option");
+            const optionMandiri = document.getElementById("mandiri-option");
+            if (selectedPaymentMethod === "cash") {
+                paymentInput.style.display = "block";
+                paymentButton.style.display = "none";
+                optionBca.classList.remove("selected");
+                optionMandiri.classList.remove("selected");
+                bankName = "";
+            } else if (selectedPaymentMethod === "qris") {
+                paymentInput.style.display = "none";
+                paymentButton.style.display = "flex";
+            } else {
+                paymentInput.style.display = "none";
+            }
         }
 
         function removeRow(index) {
-        datas.splice(index, 1);
-        updateTable(datas);
-        saveToLocalStorage();
+            datas.splice(index, 1);
+            updateTable(datas);
+            saveToLocalStorage();
         }
 
         function saveToLocalStorage() {
-        localStorage.setItem("datas", JSON.stringify(datas));
+            localStorage.setItem("datas", JSON.stringify(datas));
         }
 
-        document
-        .getElementById("removeAllButton")
-        .addEventListener("click", function () {
-        datas = [];
-        localStorage.removeItem("datas");
+        document.getElementById("removeAllButton").addEventListener("click", function () {
+            datas = [];
+            localStorage.removeItem("datas");
+            updateTable(datas);
         });
 
         function updateRemoveAllButton() {
-        const removeAllButton = document.getElementById("removeAllButton");
-        if (datas.length > 0) {
-        removeAllButton.style.display = "block";
-        } else {
-        removeAllButton.style.display = "none";
-        }
+            const removeAllButton = document.getElementById("removeAllButton");
+            if (datas.length > 0) {
+            removeAllButton.style.display = "block";
+            } else {
+            removeAllButton.style.display = "none";
+            }
         }
 
         function selectPaymentMethod(method) {
-        selectedPaymentMethod = method;
-        document.getElementById("cash-option").classList.remove("selected");
-        document.getElementById("qris-option").classList.remove("selected");
+            selectedPaymentMethod = method;
+            document.getElementById("cash-option").classList.remove("selected");
+            document.getElementById("qris-option").classList.remove("selected");
 
-        if (method === "cash") {
-        document.getElementById("cash-option").classList.add("selected");
-        } else if (method === "qris") {
-        document.getElementById("qris-option").classList.add("selected");
-        }
-        updateSummary();
+            if (method === "cash") {
+                document.getElementById("cash-option").classList.add("selected");
+            } else if (method === "qris") {
+                document.getElementById("qris-option").classList.add("selected");
+            }
+            updateSummary();
         }
 
         function selectBank(bank) {
-        bankName = bank;
-        document.getElementById("bca-option").classList.remove("selected");
-        document.getElementById("mandiri-option").classList.remove("selected");
+            bankName = bank;
+            document.getElementById("bca-option").classList.remove("selected");
+            document.getElementById("mandiri-option").classList.remove("selected");
 
-        if (bank === "bca") {
-        document.getElementById("bca-option").classList.add("selected");
-        } else if (bank === "mandiri") {
-        document.getElementById("mandiri-option").classList.add("selected");
-        }
-        updateSummary();
+            if (bank === "bca") {
+                document.getElementById("bca-option").classList.add("selected");
+            } else if (bank === "mandiri") {
+                document.getElementById("mandiri-option").classList.add("selected");
+            }
+            updateSummary();
         }
 
         function displayNoDataMessage() {
-        const tableBody = document.getElementById("productTableBody");
-        tableBody.innerHTML = `
-        <tr>
-            <td colspan="10" class="text-center">Tidak ada data</td>
-        </tr>
-        `;
+            const tableBody = document.getElementById("productTableBody");
+            tableBody.innerHTML = `
+            <tr>
+                <td colspan="10" class="text-center">Tidak ada data</td>
+            </tr>
+            `;
         }
 
         function increaseAmount(index, maxStock) {
-        if (datas[index].amount < maxStock) { datas[index].amount +=1; updateTable(datas); } else { Swal.fire({
-            icon: "error" , title: "Oops..." , text: "Stok tidak mencukupi!" , }); } } function decreaseAmount(index) { if
-            (datas[index].amount> 1) {
+            if (datas[index].amount < maxStock) {
+                datas[index].amount +=1; updateTable(datas);
+            } else {
+                Swal.fire({
+            icon: "error" , title: "Oops..." , text: "Stok tidak mencukupi!" , });
+            }
+        }
+        function decreaseAmount(index) {
+            if(datas[index].amount> 1) {
             datas[index].amount -= 1;
             } else {
-            Swal.fire({
-            icon: "warning",
-            title: "Peringatan",
-            text: "Jumlah produk tidak boleh kurang dari 1. Anda dapat menghapus produk jika tidak ingin membelinya.",
-            });
+                Swal.fire({
+                icon: "warning",
+                title: "Peringatan",
+                text: "Jumlah produk tidak boleh kurang dari 1. Anda dapat menghapus produk jika tidak ingin membelinya.",
+                });
             }
             updateTable(datas);
             saveToLocalStorage();
-            }
+        }
 </script>
 @endsection

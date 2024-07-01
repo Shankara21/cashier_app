@@ -37,7 +37,7 @@
 is-invalid
                                         @enderror" id="inputChoosePassword" placeholder="Masukkan Password"
                                             name="password"> <a href="javascript:;"
-                                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                            class="input-group-text bg-transparent text-white"><i class='bx bx-hide'></i></a>
                                     </div>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">

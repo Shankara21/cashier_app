@@ -119,7 +119,6 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        // dd($request->all());
         $datas = $request['datas'];
         $final_price = $request['final_price'];
         $paymentAmount = $request['paymentAmount'];
@@ -147,29 +146,22 @@ class OrderController extends Controller
                 OrderDetails::create([
                     'order_id' => $order->id,
                     'product_id' => $data['id'],
-                    'product_details_id' => $data['selected_variant'] ? $data['selected_variant']['id'] : null,
                     'qty' => $data['amount'],
                     'discount' => $data['discount'],
-                    'buying_price' => $data['selected_variant'] ? $data['selected_variant']['buying_price'] : $data['buying_price'],
-                    'selling_price' => $data['selected_variant'] ? $data['selected_variant']['selling_price'] : $data['selling_price'],
-                    'variant' => $data['selected_variant'] ? $data['selected_variant']['variant'] : null,
+                    'buying_price' =>  $data['buying_price'],
+                    'selling_price' =>  $data['selling_price'],
+                    'variant' => $data['variant']['name'] ?? null,
                     'total' => $data['final_price'],
                 ]);
-                if ($data['selected_variant'] == null) {
-                    $product = Product::find($data['id']);
-                    $product->stock -= $data['amount'];
-                    $product->save();
-                } else {
-                    $productDetail = ProductDetail::find($data['selected_variant']['id']);
-                    $productDetail->stock -= $data['amount'];
-                    $productDetail->save();
-                }
+                $product = Product::find($data['id']);
+                $product->stock -= $data['amount'];
+                $product->save();
             }
 
             Alert::success('Success', 'Order berhasil ditambahkan');
             return response()->json([
                 'success' => true,
-                'redirect' => route('invoice', $order->id)
+                'redirect' => '/invoice/' . $order->id
             ]);
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
