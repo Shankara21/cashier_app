@@ -162,113 +162,134 @@
     }
     });
 
-    document
-    .getElementById("confirmPaymentButton")
-    .addEventListener("click", function (event) {
+    document.getElementById("confirmPaymentButton").addEventListener("click", function (event) {
     event.preventDefault();
 
     if (document.getElementById("valueAmount").value == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Pembayaran tidak boleh 0!",
+        });
+        return;
+    }
+
+    if (document.getElementById("valueAmount").value < final_price) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Jumlah pembayaran kurang dari total bayar!",
+        });
+        return;
+    }
+
+    let datas = JSON.parse(localStorage.getItem("datas")) || [];
+    document.getElementById("datas").value = JSON.stringify(datas);
+    let paymentAmount = document.getElementById("paymentAmount").value;
+
+    fetch('{{ route("orders.store") }}', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+        },
+        body: JSON.stringify({
+            datas: datas,
+            paymentAmount: currencyToInt(paymentAmount),
+            paymentMethod: selectedPaymentMethod,
+            total_discount: discount,
+            final_price: final_price,
+            total_price: total,
+        }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                console.log(response);
+                throw new Error("Network response was not ok");
+            }
+            return response.json(); // Ubah respons ke JSON
+        })
+        .then((data) => {
+            // Di sini Anda seharusnya menggunakan data, bukan response
+            localStorage.removeItem("datas");
+            console.log({
+                status: "OKE CASH",
+                data: data.redirect,
+                redirect : data.redirect // Gunakan data, bukan response
+            });
+            Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: "Order has been placed successfully!",
+            });
+            window.location.href = data.redirect;
+            // window.location.href = '/invoice/' + data.id; // Misalnya, dapatkan ID dari respons data
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        });
+});
+
+
+       function submitQris(event) {
+    event.preventDefault();
+    let datas = JSON.parse(localStorage.getItem("datas")) || [];
+    let paymentAmount = final_price;
+    let paymentMethod = bankName;
+    let total_discount = discount;
+    let total_price = total;
+
+    fetch('{{ route("orders.store") }}', {
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json",
+    "X-CSRF-TOKEN": document.querySelector("input[name=_token]").value,
+    },
+    body: JSON.stringify({
+    datas: datas,
+    paymentAmount: paymentAmount,
+    paymentMethod,
+    total_discount: discount,
+    final_price,
+    total_price: total,
+    }),
+    })
+    .then((response) => {
+    if (!response.ok) {
+    console.log(response);
+    throw new Error("Network response was not ok");
+    }
+    return response.json(); // Ubah respons ke JSON
+    })
+    .then((data) => {
+    console.log({
+    status: "OKE QRIS",
+    data: data
+    });
+    localStorage.removeItem("datas");
+    Swal.fire({
+    icon: "success",
+    title: "Success",
+    text: "Order has been placed successfully!",
+    });
+    if (data.redirect) {
+    window.location.href = data.redirect; // Gunakan data.redirect untuk mengarahkan
+    }
+    })
+    .catch((error) => {
+    console.error("Error:", error);
     Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "Pembayaran tidak boleh 0!",
+    text: "Something went wrong!",
     });
-    return;
+    });
     }
-    if (document.getElementById("valueAmount").value < final_price) {
-        Swal.fire({ icon: "error" , title: "Oops..." ,
-        text: "Jumlah pembayaran kurang dari total bayar!" , }); return; } let
-        datas=JSON.parse(localStorage.getItem("datas")) || []; document.getElementById("datas").value=JSON.stringify(datas);
-        let paymentAmount=document.getElementById("paymentAmount").value; fetch('{{ route("orders.store") }}', {
-        method: "POST" , headers: { "Content-Type" : "application/json" , "X-CSRF-TOKEN" :
-        document.querySelector("input[name=_token]").value, }, body: JSON.stringify({ datas: datas, paymentAmount:
-        currencyToInt(paymentAmount), paymentMethod: selectedPaymentMethod, total_discount: discount, final_price:
-        final_price, total_price: total, }), }) .then((response)=> {
-        if (!response.ok) {
-        console.log(response);
-        throw new Error("Network response was not ok");
-        }
-
-        })
-        .then((data) => {
-        localStorage.removeItem("datas");
-        console.log({
-            status : "OKE",
-        datas: data,
-
-        });
-        Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Order has been placed successfully!",
-        });
-        window.location.href = data.redirect;
-        })
-        .catch((error) => {
-        console.error("Error:", error);
-        Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-        });
-        });
-        });
-
-        function submitQris(event) {
-        event.preventDefault();
-        let datas = JSON.parse(localStorage.getItem("datas")) || [];
-        let paymentAmount = final_price;
-        let paymentMethod = bankName;
-        let total_discount = discount;
-        let total_price = total;
-
-        fetch('{{ route("orders.store") }}', {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-TOKEN": document.querySelector("input[name=_token]").value,
-        },
-        body: JSON.stringify({
-        datas: datas,
-        paymentAmount: paymentAmount,
-        paymentMethod,
-        total_discount: discount,
-        final_price,
-        total_price: total,
-        }),
-        })
-        .then((response) => {
-        // if (!response.ok) {
-        // console.log(response);
-        // throw new Error("Network response was not ok");
-        // }
-        // return response.json();
-        console.log(response);
-        })
-        .then((data) => {
-            console.log({
-                'status' : "OKE",
-                'data' : data
-            });
-        localStorage.removeItem("datas");
-        Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Order has been placed successfully!",
-        });
-        window.location.href = data.redirect;
-        })
-        .catch((error) => {
-            console.log({
-                'error' : error
-            });
-        Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-        });
-        });
-        }
 
         document
         .getElementById("paymentAmount")
@@ -300,9 +321,7 @@
         return parseInt(value);
         }
 
-        document
-        .getElementById("productForm")
-        .addEventListener("submit", function (event) {
+        document.getElementById("productForm").addEventListener("submit", function (event) {
         event.preventDefault();
         const code = document.getElementById("input1").value;
 
@@ -310,8 +329,7 @@
         method: "POST",
         headers: {
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN":
-        document.querySelector("input[name=_token]").value,
+        "X-CSRF-TOKEN": document.querySelector("input[name=_token]").value,
         },
         body: JSON.stringify({ code: code }),
         };
@@ -331,6 +349,14 @@
         if (existingProductIndex !== -1) {
         datas[existingProductIndex].amount += 1;
         } else {
+        if (data.data.stock <= 0) {
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Stok sudah habis!",
+        });
+        return;
+        }
         datas.push({ ...data.data, amount: 1 });
         }
         updateTable(datas);
