@@ -141,28 +141,28 @@ class OrderController extends Controller
                 'change' => $change,
                 'payment_amount' => $paymentAmount,
             ]);
-
-            foreach ($datas as $data) {
-                OrderDetails::create([
-                    'order_id' => $order->id,
-                    'product_id' => $data['id'],
-                    'qty' => $data['amount'],
-                    'discount' => $data['discount'],
-                    'buying_price' =>  $data['buying_price'],
-                    'selling_price' =>  $data['selling_price'],
-                    'variant' => $data['variant']['name'] ?? null,
-                    'total' => $data['final_price'],
+            if (count($datas) > 0) {
+                foreach ($datas as $data) {
+                    $processedData = [
+                        'order_id' => $order->id,
+                        'product_id' => $data['id'],
+                        'qty' => $data['amount'],
+                        'discount' => $data['discount'],
+                        'buying_price' =>  $data['buying_price'],
+                        'selling_price' =>  $data['selling_price'],
+                        'total' => $data['final_price'],
+                    ];
+                    OrderDetails::create($processedData);
+                    $product = Product::find($data['id']);
+                    $product->stock -= $data['amount'];
+                    $product->save();
+                }
+                Alert::success('Success', 'Order berhasil ditambahkan');
+                return response()->json([
+                    'success' => true,
+                    'redirect' => '/invoice/' . $order->id
                 ]);
-                $product = Product::find($data['id']);
-                $product->stock -= $data['amount'];
-                $product->save();
             }
-
-            Alert::success('Success', 'Order berhasil ditambahkan');
-            return response()->json([
-                'success' => true,
-                'redirect' => '/invoice/' . $order->id
-            ]);
         } catch (\Throwable $th) {
             Alert::error('Error', $th->getMessage());
             return redirect()->back();

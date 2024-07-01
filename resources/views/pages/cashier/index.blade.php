@@ -188,13 +188,13 @@
         console.log(response);
         throw new Error("Network response was not ok");
         }
-        return response.json();
+
         })
         .then((data) => {
         localStorage.removeItem("datas");
         console.log({
             status : "OKE",
-        datas: datas,
+        datas: data,
 
         });
         Swal.fire({
@@ -259,7 +259,9 @@
         window.location.href = data.redirect;
         })
         .catch((error) => {
-            console.log(error);
+            console.log({
+                'error' : error
+            });
         Swal.fire({
         icon: "error",
         title: "Oops...",

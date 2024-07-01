@@ -1,7 +1,7 @@
 <header>
     <div class="topbar d-flex align-items-center" style="background: #511f5a">
         <nav class="navbar navbar-expand gap-3">
-            <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
+            <div class="mobile-toggle-menu text-white"><i class='bx bx-menu'></i>
             </div>
             <div class="top-menu ms-auto">
                 <ul class="navbar-nav align-items-center gap-1">
