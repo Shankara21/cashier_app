@@ -144,9 +144,9 @@
 <body>
     <header>
         <!-- <div id="logo" class="media" data-src="logo.jpeg" src="./logo.jpeg"></div> -->
-        <p style="font-size: 24px;font-weight: bolder">{{ $setting->name }}</p>
-        <p>{{ $setting->address  }}</p>
-        <p>{{ $setting->phone  }}</p>
+        <p style="font-size: 20px;font-weight: bolder">{{ $setting->name }}</p>
+        <p style="font-size: 14px">{{ $setting->address  }}</p>
+
     </header>
     <table class="bill-details">
         <tbody>
@@ -183,8 +183,8 @@
             <tr>
                 <th class="heading name">Item</th>
                 <th class="heading qty">Jumlah</th>
-                <th class="heading rate">Diskon</th>
                 <th class="heading amount">Harga</th>
+                <th class="amount" style="color:white;">as</th>
             </tr>
         </thead>
 
@@ -194,52 +194,35 @@
                 <td>{{ $item->product->name }}
                     {{ $item->product->variant ? '(' . $item->product->variant->name . ')' : '' }}</td>
                 <td>{{ $item->qty }}</td>
-                <td class="price">{{ $item->discount }}%</td>
                 <td class="price">{{ number_format($item->total, 0, ',', '.') }}</td>
+                <td class="" style="color: white"> as</td>
             </tr>
             @endforeach
-            {{-- <tr>
-                <td>Lorem ipsum dolor sit amet.</td>
-                <td>2</td>
-                <td class="price">300.00</td>
-                <td class="price">600.00</td>
-            </tr>
             <tr>
-                <td>Lorem ipsum dolor sit amet.</td>
-                <td>1</td>
-                <td class="price">800.00</td>
-                <td class="price">800.00</td>
-            </tr>
-            <tr>
-                <td>Lorem ipsum dolor sit amet.</td>
-                <td>1</td>
-                <td class="price">500.00</td>
-                <td class="price">500.00</td>
-            </tr> --}}
-            <tr>
-                <td colspan="3" class="sum-up line">Total Sebelum Diskon</td>
+                <td colspan="2" class="sum-up line">Sebelum Diskon</td>
                 <td class="line price">{{ number_format($order->total_price, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="sum-up">Diskon</td>
+                <td colspan="2" class="sum-up">Diskon</td>
                 <td class="price">{{ number_format($order->total_discount, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="sum-up">Jumlah Bayar</td>
+                <td colspan="2" class="sum-up">Jumlah Bayar</td>
                 <td class="price">{{ number_format($order->payment_amount, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <th colspan="3" class="total text">Kembalian</th>
+                <th colspan="2" class="total text">Kembalian</th>
                 <th class="total price">{{ number_format($order->change, 0, ',', '.') }}</th>
             </tr>
             <tr>
-                <th colspan="3" class="total text">Total</th>
+                <th colspan="2" class="total text">Total</th>
                 <th class="total price">{{ number_format($order->final_price, 0, ',', '.') }}</th>
             </tr>
         </tbody>
     </table>
     <section>
         <p style="text-align: center;font-size: 22px;">Thank you for your visit!</p>
+
     </section>
     <footer style="text-align: center;margin-top: 10px;">
         <div style="
@@ -268,6 +251,7 @@
         </div>
         {{-- <p>{{ $setting->name }}</p>
         <p>www.dotworld.in</p> --}}
+        <p>Tel: {{ $setting->phone  }}</p>
     </footer>
 </body>
 
