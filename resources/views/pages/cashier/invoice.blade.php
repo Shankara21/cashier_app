@@ -182,9 +182,9 @@
         <thead>
             <tr>
                 <th class="heading name">Item</th>
-                <th class="heading qty">Qty</th>
-                <th class="heading rate">Rate</th>
-                <th class="heading amount">Amount</th>
+                <th class="heading qty">Jumlah</th>
+                <th class="heading rate">Diskon</th>
+                <th class="heading amount">Harga</th>
             </tr>
         </thead>
 
@@ -194,8 +194,8 @@
                 <td>{{ $item->product->name }}
                     {{ $item->product->variant ? '(' . $item->product->variant->name . ')' : '' }}</td>
                 <td>{{ $item->qty }}</td>
-                <td class="price">200.00</td>
-                <td class="price">200.00</td>
+                <td class="price">{{ $item->discount }}%</td>
+                <td class="price">{{ number_format($item->total, 0, ',', '.') }}</td>
             </tr>
             @endforeach
             {{-- <tr>
@@ -217,20 +217,24 @@
                 <td class="price">500.00</td>
             </tr> --}}
             <tr>
-                <td colspan="3" class="sum-up line">Subtotal</td>
-                <td class="line price">12112.00</td>
+                <td colspan="3" class="sum-up line">Total Sebelum Diskon</td>
+                <td class="line price">{{ number_format($order->total_price, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="sum-up">CGST</td>
-                <td class="price">10.00</td>
+                <td colspan="3" class="sum-up">Diskon</td>
+                <td class="price">{{ number_format($order->total_discount, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="sum-up">SGST</td>
-                <td class="price">10.00</td>
+                <td colspan="3" class="sum-up">Jumlah Bayar</td>
+                <td class="price">{{ number_format($order->payment_amount, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <th colspan="3" class="total text">Kembalian</th>
+                <th class="total price">{{ number_format($order->change, 0, ',', '.') }}</th>
             </tr>
             <tr>
                 <th colspan="3" class="total text">Total</th>
-                <th class="total price">12132.00</th>
+                <th class="total price">{{ number_format($order->final_price, 0, ',', '.') }}</th>
             </tr>
         </tbody>
     </table>
