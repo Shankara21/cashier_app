@@ -233,7 +233,7 @@
                 text: "Something went wrong!",
             });
         });
-});
+    });
 
 
        function submitQris(event) {

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Setting;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
@@ -203,8 +204,9 @@ class OrderController extends Controller
 
     public function invoice($id)
     {
+        $setting = Setting::first();
         $order = Order::find($id);
-        return view('pages.cashier.invoice', compact('order'));
+        return view('pages.cashier.invoice', compact('order', 'setting'));
     }
 
     function convertToInteger($month)

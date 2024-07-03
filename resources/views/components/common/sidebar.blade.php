@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper " style="background: #ec1271" data-simplebar="true">
     <div class="sidebar-header" style="background: #ec1271">
         <div>
-            <img src="/assets/images/logo-nibras.png" class="logo-icon" alt="logo icon" >
+            <img src="/assets/images/logo-nibras.png" class="logo-icon" alt="logo icon">
         </div>
         <div>
             <h4 class="logo-text">Cashier</h4>
@@ -42,6 +42,21 @@
                 <div class="menu-title">Kategori</div>
             </a>
         </li>
+
+        <li>
+            <a href="{{ route('brands.index') }}">
+                <div class="parent-icon"><i class='bx bx-receipt'></i>
+                </div>
+                <div class="menu-title">Merk</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('products.index') }}">
+                <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
+                </div>
+                <div class="menu-title">Produk</div>
+            </a>
+        </li>
         <li>
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-user"></i>
@@ -62,20 +77,6 @@
             </ul>
         </li>
         <li>
-            <a href="{{ route('brands.index') }}">
-                <div class="parent-icon"><i class='bx bx-receipt'></i>
-                </div>
-                <div class="menu-title">Merk</div>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('products.index') }}">
-                <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
-                </div>
-                <div class="menu-title">Produk</div>
-            </a>
-        </li>
-        <li>
             <a href="{{ route('settings.index') }}">
                 <div class="parent-icon"><i class='bx bx-cog'></i>
                 </div>
@@ -90,6 +91,13 @@
                 <div class="parent-icon"><i class='bx bx-category-alt'></i>
                 </div>
                 <div class="menu-title">Kategori</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('brands.index') }}">
+                <div class="parent-icon"><i class='bx bx-receipt'></i>
+                </div>
+                <div class="menu-title">Merk</div>
             </a>
         </li>
         <li>
