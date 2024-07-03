@@ -210,20 +210,16 @@
             return response.json(); // Ubah respons ke JSON
         })
         .then((data) => {
-            // Di sini Anda seharusnya menggunakan data, bukan response
             localStorage.removeItem("datas");
-            console.log({
-                status: "OKE CASH",
-                data: data.redirect,
-                redirect : data.redirect // Gunakan data, bukan response
-            });
             Swal.fire({
                 icon: "success",
-                title: "Success",
-                text: "Order has been placed successfully!",
+                title: "Pembayaran Berhasil!",
+                text: "Total Kembalian: " + formatIDR(data.order.change),
+                confirmButtonText: "Cetak Struk",
+                willClose: () => {
+                    window.location.href = data.redirect
+                }
             });
-            window.location.href = data.redirect;
-            // window.location.href = '/invoice/' + data.id; // Misalnya, dapatkan ID dari respons data
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -235,7 +231,14 @@
         });
     });
 
-
+    function formatIDR(value) {
+    const number = parseInt(value, 10);
+    return number.toLocaleString("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    });
+    }
        function submitQris(event) {
     event.preventDefault();
     let datas = JSON.parse(localStorage.getItem("datas")) || [];
@@ -274,12 +277,13 @@
     localStorage.removeItem("datas");
     Swal.fire({
     icon: "success",
-    title: "Success",
-    text: "Order has been placed successfully!",
-    });
-    if (data.redirect) {
-    window.location.href = data.redirect; // Gunakan data.redirect untuk mengarahkan
+    title: "Pembayaran Berhasil!",
+    text: "Total Kembalian: " + formatIDR(data.order.change),
+        confirmButtonText: "Cetak Struk",
+    willClose: () => {
+    window.location.href = data.redirect
     }
+    });
     })
     .catch((error) => {
     console.error("Error:", error);

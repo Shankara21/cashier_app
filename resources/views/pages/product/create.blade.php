@@ -107,10 +107,10 @@
             </div>
 
             <div class="row mb-3">
-                <label for="buying" class="col-sm-3 col-form-label">Harga Jual</label>
+                <label for="buying" class="col-sm-3 col-form-label">Harga Beli</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control @error('buying_price') is-invalid @enderror" id="buying"
-                        placeholder="Masukkan Harga Jual" name="buying_price" value="{{ old('buying_price') }}">
+                        placeholder="Masukkan Harga Beli" name="buying_price" value="{{ old('buying_price') }}">
                     @error('buying_price')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -119,10 +119,10 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="selling" class="col-sm-3 col-form-label">Harga Beli</label>
+                <label for="selling" class="col-sm-3 col-form-label">Harga Jual</label>
                 <div class="col-sm-9">
                     <input id="selling" type="text" class="form-control @error('selling_price') is-invalid @enderror"
-                        placeholder="Masukkan Harga Beli" name="selling_price" value="{{ old('selling_price') }}">
+                        placeholder="Masukkan Harga Jual" name="selling_price" value="{{ old('selling_price') }}">
                     @error('selling_price')
                     <div class="invalid-feedback">
                         {{ $message }}

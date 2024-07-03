@@ -161,7 +161,8 @@ class OrderController extends Controller
                 Alert::success('Success', 'Order berhasil ditambahkan');
                 return response()->json([
                     'success' => true,
-                    'redirect' => '/invoice/' . $order->id
+                    'redirect' => '/invoice/' . $order->id,
+                    'order' => $order
                 ]);
             }
         } catch (\Throwable $th) {
