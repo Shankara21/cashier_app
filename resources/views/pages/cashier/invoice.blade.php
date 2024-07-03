@@ -57,7 +57,7 @@
         }
 
         .bill-details td {
-            font-size: 12px;
+            font-size: 15px;
         }
 
         .receipt {
@@ -65,7 +65,7 @@
         }
 
         .items .heading {
-            font-size: 12.5px;
+            font-size: 15px;
             text-transform: uppercase;
             border-top: 1px solid black;
             margin-bottom: 4px;
@@ -83,7 +83,7 @@
         }
 
         .items td {
-            font-size: 12px;
+            font-size: 15px;
             text-align: right;
             vertical-align: bottom;
         }
@@ -99,7 +99,7 @@
         }
 
         .total {
-            font-size: 13px;
+            font-size: 15px;
             border-top: 1px dashed black !important;
             border-bottom: 1px dashed black !important;
         }
@@ -136,17 +136,58 @@
 
         section,
         footer {
-            font-size: 12px;
+            font-size: 15px;
+        }
+
+        /* CSS */
+        .button-1 {
+            background-color: #EA4C89;
+            border-radius: 8px;
+            border-style: none;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            height: 40px;
+            line-height: 20px;
+            list-style: none;
+            margin: 0;
+            outline: none;
+            padding: 10px 16px;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: color 100ms;
+            vertical-align: baseline;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .button-1:hover,
+        .button-1:focus {
+            background-color: #F082AC;
+        }
+        .button-1 a {
+            color: #FFFFFF;
+            text-decoration: none;
         }
     </style>
-    
+
 </head>
 
 <body>
-    <header>
-        <!-- <div id="logo" class="media" data-src="logo.jpeg" src="./logo.jpeg"></div> -->
-        <p style="font-size: 20px;font-weight: bolder">{{ $setting->name }}</p>
-        <p style="font-size: 14px">{{ $setting->address  }}</p>
+    <div class="" style="display: flex;gap: 10px">
+        <div class="button-1"><a href="{{ route('orders.index') }}">Kembali</a></div>
+    </div>
+    <div style="display: flex;justify-content: center;align-content: center;">
+        <img src="{{ asset('assets/images/logo-nibras.jpeg') }}" width="300px" alt="">
+    </div>
+    <header style="margin-bottom: 20px">
+        <p style="font-size: 15px">{{ $setting->address  }}</p>
 
     </header>
     <table class="bill-details">
@@ -185,7 +226,7 @@
                 <th class="heading name">Item</th>
                 <th class="heading qty">Jumlah</th>
                 <th class="heading amount">Harga</th>
-                <th class="amount" style="color:white;">as</th>
+                <th class="amount" style="width: 10%"></th>
             </tr>
         </thead>
 
@@ -196,7 +237,6 @@
                     {{ $item->product->variant ? '(' . $item->product->variant->name . ')' : '' }}</td>
                 <td>{{ $item->qty }}</td>
                 <td class="price">{{ number_format($item->total, 0, ',', '.') }}</td>
-                <td class="" style="color: white"> as</td>
             </tr>
             @endforeach
             <tr>
