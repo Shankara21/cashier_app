@@ -171,24 +171,26 @@
         .button-1:focus {
             background-color: #F082AC;
         }
+
         .button-1 a {
             color: #FFFFFF;
             text-decoration: none;
         }
-    </style>
 
+        /* CSS for hiding elements during print */
+    </style>
 </head>
 
 <body>
-    <div class="" style="display: flex;gap: 10px">
-        <div class="button-1"><a href="{{ route('orders.index') }}">Kembali</a></div>
+    <div style="display: flex; gap: 10px" id="hidden">
+        <button class="button-1"><a href="{{ route('orders.index') }}">Kembali</a></button>
+        <button class="button-1" onclick="printReceipt()">Print</button>
     </div>
-    <div style="display: flex;justify-content: center;align-content: center;">
+    <div style="display: flex; justify-content: center; align-content: center;">
         <img src="{{ asset('assets/images/logo-nibras.jpeg') }}" width="300px" alt="">
     </div>
     <header style="margin-bottom: 20px">
         <p style="font-size: 15px">{{ $setting->address  }}</p>
-
     </header>
     <table class="bill-details">
         <tbody>
@@ -219,7 +221,6 @@
             </tr>
         </tbody>
     </table>
-
     <table class="items">
         <thead>
             <tr>
@@ -229,7 +230,6 @@
                 <th class="amount" style="width: 10%"></th>
             </tr>
         </thead>
-
         <tbody>
             @foreach ($order->orderDetails as $item)
             <tr>
@@ -262,38 +262,31 @@
         </tbody>
     </table>
     <section>
-        <p style="text-align: center;font-size: 22px;">Thank you for your visit!</p>
-
+        <p style="text-align: center; font-size: 22px;">Thank you for your visit!</p>
     </section>
-    <footer style="text-align: center;margin-top: 10px;">
-        <div style="
-          display: flex;
-          justify-content: center;
-          gap: 10px;
-          margin-bottom: 5px;
-          align-items: center;
-        ">
+    <footer style="text-align: center; margin-top: 10px;">
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; align-items: center;">
             <img width="35px"
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1000px-Instagram_logo_2022.svg.png"
                 alt="" />
             <p style="font-size: 14px;">NibrasHouse</p>
         </div>
-        <div style="
-          display: flex;
-          justify-content: center;
-          gap: 10px;
-          margin-bottom: 5px;
-          align-items: center;
-        ">
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; align-items: center;">
             <img width="35px"
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1280px-Facebook_f_logo_%282019%29.svg.png"
                 alt="" />
             <p style="font-size: 14px;">NibrasHouse</p>
         </div>
-        {{-- <p>{{ $setting->name }}</p>
-        <p>www.dotworld.in</p> --}}
         <p>Tel: {{ $setting->phone  }}</p>
     </footer>
+    <script>
+        function printReceipt() {
+            const hidden = document.getElementById('hidden');
+            hidden.style.display = 'none';
+            window.print();
+            hidden.style.display = 'block';
+        }
+    </script>
 </body>
 
 </html>
