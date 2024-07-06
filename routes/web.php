@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Order
     Route::resource('orders', OrderController::class);
+    Route::post('orders/export', [OrderController::class, 'export'])->name('orders.export');
 
     Route::resource('product-detail', ProductDetailController::class);
     Route::get('/product-detail/product/{id}', [ProductDetailController::class, 'byProduct'])->name('product-detail.by-product');

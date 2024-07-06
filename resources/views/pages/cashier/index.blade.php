@@ -270,10 +270,6 @@
     return response.json(); // Ubah respons ke JSON
     })
     .then((data) => {
-    console.log({
-    status: "OKE QRIS",
-    data: data
-    });
     localStorage.removeItem("datas");
     Swal.fire({
     icon: "success",

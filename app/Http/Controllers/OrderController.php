@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrderExport;
+use App\Exports\ReportExport;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
@@ -9,6 +11,9 @@ use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Setting;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
@@ -28,32 +33,32 @@ class OrderController extends Controller
         $formattedMonth = $this->translateMonth($month);
         $date = $this->translateMonth($month) . ' ' . date('Y');
 
-        $orderDetails = OrderDetails::query();
+        $orderDetailsQuery = OrderDetails::with(['product.variant', 'product.brand', 'product.category']);
 
         $reqMonth = $this->convertToInteger($reqMonth);
 
         if ($reqMonth && $reqYear && $reqDate) {
-            $orderDetails->whereDate('created_at', $reqYear . '-' . $reqMonth . '-' . $reqDate);
+            $orderDetailsQuery->whereDate('created_at', $reqYear . '-' . $reqMonth . '-' . $reqDate);
             $selectedYear = $reqYear;
             $formattedMonth = $this->convertToMonth($reqMonth);
         } elseif ($reqMonth && $reqYear) {
-            $orderDetails->whereYear('created_at', $reqYear)->whereMonth('created_at', $reqMonth);
+            $orderDetailsQuery->whereYear('created_at', $reqYear)->whereMonth('created_at', $reqMonth);
             $selectedYear = $reqYear;
             $formattedMonth = $this->convertToMonth($reqMonth);
         } elseif ($reqDate) {
-            $orderDetails->whereDate('created_at', $reqDate);
+            $orderDetailsQuery->whereDate('created_at', $reqDate);
         } elseif ($reqMonth) {
-            $orderDetails->whereMonth('created_at', $reqMonth);
+            $orderDetailsQuery->whereMonth('created_at', $reqMonth);
             $formattedMonth = $this->convertToMonth($reqMonth);
         } elseif ($reqYear) {
-            $orderDetails->whereYear('created_at', $reqYear);
+            $orderDetailsQuery->whereYear('created_at', $reqYear);
             $selectedYear = $reqYear;
         } else {
-            $orderDetails->whereYear('created_at', $selectedYear)
+            $orderDetailsQuery->whereYear('created_at', $selectedYear)
                 ->whereMonth('created_at', $monthNumber);
         }
 
-        $orderDetails = $orderDetails->get();
+        $orderDetails = $orderDetailsQuery->get();
 
         $years = [];
         $monthNames = [
@@ -106,6 +111,7 @@ class OrderController extends Controller
             'selectedDate'
         ));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -303,6 +309,23 @@ class OrderController extends Controller
                 return 'Desember';
             default:
                 return $month;
+        }
+    }
+
+    public function export(Request $request)
+    {
+        $type = $request->input('type');
+        $data = json_decode($request->input('data'), true);
+        $sum = array_sum(array_column($data, 'total'));
+        $month = $request->input('month');
+        if ($type == 'daily') {
+            $month = $request->input('month');
+            $month = date('d F Y', strtotime($month));
+        }
+        if ($type == 'month') {
+            return Excel::download(new OrderExport($data, $sum), 'Report-' . $month . '.xlsx');
+        } else {
+            return Excel::download(new ReportExport($data, $sum), 'Report-' . $month . '.xlsx');
         }
     }
 }
