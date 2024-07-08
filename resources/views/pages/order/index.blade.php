@@ -58,7 +58,7 @@ use Carbon\Carbon;
             <input type="hidden" name="type" value="month">
             <input type="hidden" name="data" id="data">
             <input type="hidden" name="month" value="{{ $formattedMonth }} {{ $selectedYear }}">
-            <button type="submit" class="btn btn-success"><i class='bx bxs-download me-0'></i> Excel</button>
+            <button type="submit" class="btn btn-danger"><i class='bx bxs-file me-0'></i> PDF</button>
         </form>
     </div>
     <h5 class="mb-3">Cari Laporan Per Hari</h5>
@@ -82,7 +82,7 @@ use Carbon\Carbon;
         <input type="hidden" name="type" value="daily">
         <input type="hidden" name="data" id="daily-data">
         <input type="hidden" name="month" value="{{ $selectedDate }}">
-        <button type="submit" class="btn btn-success"><i class='bx bxs-download me-0'></i> Excel</button>
+        <button type="submit" class="btn btn-danger"><i class='bx bxs-file me-0'></i> PDF</button>
     </form>
 </div>
 <hr>
