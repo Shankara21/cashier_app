@@ -88,7 +88,7 @@ class OrderController extends Controller
         $profit = 0;
         foreach ($orderDetails as $orderDetail) {
             $orderAmount += $orderDetail->qty;
-            $capital += $orderDetail->product->buying_price;
+            $capital += $orderDetail->buying_price;
             $total += $orderDetail->total;
         }
         $profit = $total - $capital;
@@ -155,7 +155,7 @@ class OrderController extends Controller
                         'product_id' => $data['id'],
                         'qty' => $data['amount'],
                         'discount' => $data['discount'],
-                        'buying_price' =>  $data['buying_price'],
+                        'buying_price' =>  $data['buying_price'] * $data['amount'],
                         'selling_price' =>  $data['selling_price'],
                         'total' => $data['final_price'],
                     ];
@@ -314,6 +314,11 @@ class OrderController extends Controller
 
     public function export(Request $request)
     {
+        $mpdf = new \Mpdf\Mpdf();
+        $orderAmount = $request->input('orderAmount');
+        $capital = $request->input('capital');
+        $total = $request->input('total');
+        $profit = $request->input('profit');
         $type = $request->input('type');
         $data = json_decode($request->input('data'), true);
         $sum = array_sum(array_column($data, 'total'));
@@ -322,10 +327,26 @@ class OrderController extends Controller
             $month = $request->input('month');
             $month = date('d F Y', strtotime($month));
         }
-        if ($type == 'month') {
-            return Excel::download(new OrderExport($data, $sum), 'Report-' . $month . '.xlsx');
-        } else {
-            return Excel::download(new ReportExport($data, $sum), 'Report-' . $month . '.xlsx');
-        }
+        // return view('pages.order.report', [
+        //     'data' => $data,
+        //     'capital' => $capital,
+        //     'total' => $total,
+        //     'orderAmount' => $orderAmount,
+        //     'profit' => $profit,
+        // ]);
+        $html = view('pages.order.report', [
+            'data' => $data,
+            'capital' => $capital,
+            'total' => $total,
+            'orderAmount' => $orderAmount,
+            'profit' => $profit,
+        ])->render();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('Report-' . $month . '.pdf', 'D');
+        // if ($type == 'month') {
+        //     return Excel::download(new OrderExport($data, $sum), 'Report-' . $month . '.xlsx');
+        // } else {
+        //     return Excel::download(new ReportExport($data, $sum), 'Report-' . $month . '.xlsx');
+        // }
     }
 }

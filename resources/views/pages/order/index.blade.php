@@ -1,7 +1,3 @@
-@php
-use Carbon\Carbon;
-@endphp
-
 @extends('layouts.app')
 @section('title', 'Report')
 
@@ -20,7 +16,7 @@ use Carbon\Carbon;
 </div>
 <h5 class="mb-0 text-uppercase">Daftar laporan penjualan
     @if($selectedDate != '')
-    {{ Carbon::parse($selectedDate)->translatedFormat('d F Y') }}
+    {{ Carbon\Carbon::parse($selectedDate)->translatedFormat('d F Y') }}
     @else
     {{ $formattedMonth }} {{ $selectedYear }}
     @endif
@@ -56,8 +52,12 @@ use Carbon\Carbon;
         <form action="{{ route('orders.export') }}" method="POST">
             @csrf
             <input type="hidden" name="type" value="month">
-            <input type="hidden" name="data" id="data">
+            <input type="hidden" name="data" id="monthly-data">
             <input type="hidden" name="month" value="{{ $formattedMonth }} {{ $selectedYear }}">
+            <input type="hidden" name="orderAmount" class="monthly-order-amount">
+            <input type="hidden" name="capital" class="monthly-capital">
+            <input type="hidden" name="total" class="monthly-total">
+            <input type="hidden" name="profit" class="monthly-profit">
             <button type="submit" class="btn btn-danger"><i class='bx bxs-file me-0'></i> PDF</button>
         </form>
     </div>
@@ -81,6 +81,10 @@ use Carbon\Carbon;
         @csrf
         <input type="hidden" name="type" value="daily">
         <input type="hidden" name="data" id="daily-data">
+        <input type="hidden" name="orderAmount" class="daily-order-amount">
+        <input type="hidden" name="capital" class="daily-capital">
+        <input type="hidden" name="total" class="daily-total">
+        <input type="hidden" name="profit" class="daily-profit">
         <input type="hidden" name="month" value="{{ $selectedDate }}">
         <button type="submit" class="btn btn-danger"><i class='bx bxs-file me-0'></i> PDF</button>
     </form>
@@ -108,15 +112,11 @@ use Carbon\Carbon;
                 <td>{{ $order->product->code }}</td>
                 <td>{{ $order->product->name }} {{ $order->variant ? '(' . $order->variant . ')' : '' }}</td>
                 <td>{{ number_format($order->qty, 0, ',', '.') }}</td>
-                @if ($order->product_details_id == null)
-                <td>Rp. {{ number_format($order->product->buying_price, 0, ',', '.') }}</td>
-                @else
-                <td>Rp. {{ number_format($order->product_detail->buying_price, 0, ',', '.') }}</td>
-                @endif
+                <td>Rp. {{ number_format($order->buying_price, 0, ',', '.') }}</td>
                 <td>Rp. {{ number_format($order->total, 0, ',', '.') }}</td>
                 <td>{{ $order->order->user->name }}</td>
                 <td style="text-transform: capitalize">{{ $order->order->payment_method }}</td>
-                <td>{{ Carbon::parse($order->created_at)->translatedFormat('d F Y, H:i') }}</td>
+                <td>{{ Carbon\Carbon::parse($order->created_at)->translatedFormat('d F Y, H:i') }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -135,7 +135,17 @@ use Carbon\Carbon;
 </div>
 
 <script>
-    document.getElementById('data').value = JSON.stringify(@json($orderDetails));
+    document.getElementById('monthly-data').value = JSON.stringify(@json($orderDetails));
     document.getElementById('daily-data').value = JSON.stringify(@json($orderDetails));
+
+    document.querySelector('.monthly-order-amount').value = @json($orderAmount);
+    document.querySelector('.monthly-capital').value = @json($capital);
+    document.querySelector('.monthly-total').value = @json($total);
+    document.querySelector('.monthly-profit').value = @json($profit);
+
+    document.querySelector('.daily-order-amount').value = @json($orderAmount);
+    document.querySelector('.daily-capital').value = @json($capital);
+    document.querySelector('.daily-total').value = @json($total);
+    document.querySelector('.daily-profit').value = @json($profit);
 </script>
 @endsection

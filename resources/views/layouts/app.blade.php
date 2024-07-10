@@ -42,6 +42,9 @@
 <body>
     @include('sweetalert::alert')
     <!--wrapper-->
+    @if (Request::is('*orders/export'))
+    @yield('content')
+    @else
     <div class="wrapper">
         @if (Request::is('*invoice*'))
         <!-- Tampilkan hanya content -->
@@ -73,6 +76,7 @@
         @include('components.common.footer')
         @endif
     </div>
+    @endif
 
     <!-- Bootstrap JS -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
