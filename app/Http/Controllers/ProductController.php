@@ -19,7 +19,8 @@ class ProductController extends Controller
     public function index()
     {
         $datas = Product::all();
-        return view('pages.product.index', compact('datas'));
+        $categories = Category::all();
+        return view('pages.product.index', compact('datas', 'categories'));
     }
 
     public function getProductByCode(Request $request)

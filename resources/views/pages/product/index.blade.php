@@ -26,6 +26,20 @@
 <hr />
 <div class="card">
     <div class="card-body">
+        <div class="d-flex mb-3 gap-3 w-50">
+            <select id="input21" class="form-select" name="category">
+                <option value="">All Category</option>
+                @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+            <select id="input21" class="form-select" name="category">
+                <option value="">All Category</option>
+                @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="table-responsive">
             <table id="example" class="table table-hover " style="width:100%">
                 <thead>
@@ -36,6 +50,7 @@
                         <th class="text-center">Merk</th>
                         <th class="text-center">Diskon</th>
                         <th class="text-center">Kategori</th>
+                        <th class="text-center">Stok</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -48,6 +63,7 @@
                         <td class="text-center">{{ $data->brand->name }}</td>
                         <td class="text-center">{{ $data->discount }}%</td>
                         <td class="text-center">{{ $data->category->name }}</td>
+                        <td class="text-center">{{ $data->stock }}</td>
                         <td class="text-center">
                             <a href="{{ route('products.show', $data->id) }}" class="btn btn-outline-info"><i
                                     class='bx bx-show me-0'></i>
