@@ -16,7 +16,7 @@
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <a href="{{ route('products.create', ) }}" class="btn btn-primary">Buat Data Baru</a>
+            <a href="{{ route('products.create') }}" class="btn btn-primary">Buat Data Baru</a>
         </div>
     </div>
 </div>
@@ -26,22 +26,28 @@
 <hr />
 <div class="card">
     <div class="card-body">
-        <div class="d-flex mb-3 gap-3 w-50">
-            <select id="input21" class="form-select" name="category">
-                <option value="">All Category</option>
-                @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-            <select id="input21" class="form-select" name="category">
-                <option value="">All Category</option>
-                @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        <form id="filterForm" action="{{ route('products.index') }}" method="GET">
+            <div class="d-flex mb-3 gap-3 w-75">
+                <div class="col-4">
+                    <label for="select-category" class="form-label">Kategori</label>
+                    <select id="select-category" class="form-select" name="category" onchange="fetchBrands(this.value)">
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for="select-brand" class="form-label">Brand</label>
+                    <select id="select-brand" class="form-select" name="brand" onchange="submitForm()">
+                        <option value="">Pilih Brand</option>
+                    </select>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive">
-            <table id="example" class="table table-hover " style="width:100%">
+            <table id="example" class="table table-hover" style="width:100%">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
@@ -66,14 +72,11 @@
                         <td class="text-center">{{ $data->stock }}</td>
                         <td class="text-center">
                             <a href="{{ route('products.show', $data->id) }}" class="btn btn-outline-info"><i
-                                    class='bx bx-show me-0'></i>
-                            </a>
+                                    class='bx bx-show me-0'></i></a>
                             <a href="{{ route('products.edit', $data->id) }}" class="btn btn-outline-warning"><i
-                                    class='bx bx-edit me-0'></i>
-                            </a>
+                                    class='bx bx-edit me-0'></i></a>
                             <button onclick="confirmDelete({{ $data->id }})" type="button"
-                                class="btn btn-outline-danger"><i class='bx bx-trash me-0'></i>
-                            </button>
+                                class="btn btn-outline-danger"><i class='bx bx-trash me-0'></i></button>
                         </td>
                     </tr>
                     @endforeach
@@ -88,25 +91,62 @@
 </form>
 <script>
     function confirmDelete(id) {
-    Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#003285',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-    if (result.isConfirmed) {
-    var form = document.getElementById('deleteForm');
-    if (form) {
-    form.action = '/products/' + id;
-    form.submit();
-    } else {
-    console.error("Form with ID 'deleteForm' not found.");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#003285',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = document.getElementById('deleteForm');
+                if (form) {
+                    form.action = '/products/' + id;
+                    form.submit();
+                } else {
+                    console.error("Form with ID 'deleteForm' not found.");
+                }
+            }
+        });
     }
+
+    function fetchBrands(categoryId) {
+        if (categoryId) {
+            $.ajax({
+                url: '/brands/category/' + categoryId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var brands = data.brands;
+                    var selectedBrand = "{{ request('brand') }}";
+                    $('#select-brand').empty();
+                    $('#select-brand').append('<option value="">Pilih Brand</option>');
+                    $.each(brands, function(key, value) {
+                        $('#select-brand').append('<option value="' + value.id + '"' + (selectedBrand == value.id ? ' selected' : '') + '>' + value.name + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching brands:', error);
+                }
+            });
+        } else {
+            $('#select-brand').empty();
+            $('#select-brand').append('<option value="">Pilih Brand</option>');
+        }
     }
+
+    function submitForm() {
+        document.getElementById('filterForm').submit();
+    }
+
+    // Initialize brands on page load if a category is already selected
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectedCategory = document.getElementById('select-category').value;
+        if (selectedCategory) {
+            fetchBrands(selectedCategory);
+        }
     });
-    }
 </script>
 @endsection

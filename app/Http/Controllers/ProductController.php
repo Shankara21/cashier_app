@@ -18,9 +18,21 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $category = request()->query('category');
+        $brand = request()->query('brand');
         $datas = Product::all();
         $categories = Category::all();
-        return view('pages.product.index', compact('datas', 'categories'));
+        if ($category) {
+            $datas = Product::where('category_id', $category)->get();
+        }
+        if ($brand) {
+            $datas = Product::where('brand_id', $brand)->get();
+        }
+        if ($category && $brand) {
+            $datas = Product::where('category_id', $category)->where('brand_id', $brand)->get();
+        }
+
+        return view('pages.product.index', compact('datas', 'categories', 'brand'));
     }
 
     public function getProductByCode(Request $request)
