@@ -117,7 +117,7 @@
             </div>
 
             <div class="row mb-3">
-                <label for="buying" class="col-sm-3 col-form-label">Harga Jual</label>
+                <label for="buying" class="col-sm-3 col-form-label">Harga Beli</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control @error('buying_price') is-invalid @enderror" id="buying"
                         placeholder="Masukkan Harga Jual" name="buying_price"
@@ -130,7 +130,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="selling" class="col-sm-3 col-form-label">Harga Beli</label>
+                <label for="selling" class="col-sm-3 col-form-label">Harga Jual</label>
                 <div class="col-sm-9">
                     <input id="selling" type="text" class="form-control @error('selling_price') is-invalid @enderror"
                         placeholder="Masukkan Harga Beli" name="selling_price"
