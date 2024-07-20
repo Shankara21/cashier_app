@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SettingSeeder::class,
             VariantSeeder::class,
-            BrandSeeder::class,
+            // BrandSeeder::class,
         ]);
         User::factory()->create([
             'name' => 'Admin',
