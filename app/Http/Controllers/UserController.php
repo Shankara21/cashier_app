@@ -16,7 +16,11 @@ class UserController extends Controller
     {
         $role = request('role');
         if ($role) {
-            $datas = User::role($role)->get();
+            if ($role == 'admin') {
+                $datas = User::role($role)->where('name', '!=', 'Lazuardi')->get();
+            } else {
+                $datas = User::role($role)->get();
+            }
         } else {
             $datas = User::all();
         }
