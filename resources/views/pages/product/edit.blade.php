@@ -18,7 +18,8 @@
     </div>
 </div>
 
-<a href="{{ route('products.index') }}" class="btn btn-light"><i class="bx bx-arrow-back"></i> Kembali</a>
+<a href="{{ route('products.index') }}" class="btn btn-light"><i class="bx bx-arrow-back"></i>
+    Kembali {{ $product->category_id }}</a>
 <hr />
 <div class="card">
     <div class="card-body">
@@ -215,13 +216,14 @@
             document.getElementById('buying').value = parseRupiah(document.getElementById('buying').value);
             document.getElementById('selling').value = parseRupiah(document.getElementById('selling').value);
         });
-        const variant_id = {{ $product->variant_id }};
+        const variant_id = '{{$product->variant_id}}' ?? '';
 if ({{$product->category_id}}) {
     $.ajax({
         url: '/brands/category/' + {{$product->category_id}},
         type: 'GET',
         dataType: 'json',
         success: function(data) {
+            console.log(data);
             $('#input37').empty();
             $('#input37').append('<option value="">Pilih Merk</option>');
             $.each(data.brands, function(key, value) {

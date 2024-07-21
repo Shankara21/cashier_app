@@ -36,11 +36,13 @@ class CategoryController extends Controller
         $variants = json_decode($request->input('variants'), true);
         try {
             $category =  Category::create($data);
-            foreach ($variants as $key => $value) {
-                Variant::create([
-                    'category_id' => $category->id,
-                    'name' => $value,
-                ]);
+            if ($variants) {
+                foreach ($variants as $key => $value) {
+                    Variant::create([
+                        'category_id' => $category->id,
+                        'name' => $value,
+                    ]);
+                }
             }
             Alert::success('Success', 'Kategori berhasil ditambahkan');
             return redirect()->route('categories.index');

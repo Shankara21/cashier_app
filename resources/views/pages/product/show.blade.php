@@ -32,10 +32,12 @@
                     <td scope="row">Nama Produk</td>
                     <th>{{ $product->name }} </th>
                 </tr>
+                @if ($product->variant)
                 <tr>
                     <td scope="row">Ukuran Produk</td>
                     <th>{{ $product->variant->name }} </th>
                 </tr>
+                @endif
                 <tr>
                     <td scope="row">Merk</td>
                     <th>{{ $product->brand->name }}</th>

@@ -411,7 +411,7 @@
                 <td class="text-center">${index + 1}</td>
                 <td class="text-center">${product.name}</td>
                 <td class="text-center">
-                   ${product.variant.name}
+                   ${product.variant ? product.variant.name : "-"}
                 </td>
                 <td class="text-center">
                     <div class="btn-group" role="group">
