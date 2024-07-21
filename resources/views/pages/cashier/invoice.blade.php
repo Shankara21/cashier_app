@@ -209,8 +209,8 @@
                     Tunai
                     @elseif ($order->payment_method == 'bca')
                     QRIS BCA
-                    @elseif ($order->payment_method == 'bri')
-                    QRIS BRI
+                    @elseif ($order->payment_method == 'mandiri')
+                    QRIS Mandiri
                     @endif
                 </td>
             </tr>
