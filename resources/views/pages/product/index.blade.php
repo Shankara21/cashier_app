@@ -65,7 +65,8 @@
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center">{{ $data->code }}</td>
-                        <td class="text-center">{{ $data->name }}-{{ $data->variant->name }}</td>
+                        <td class="text-center">{{ $data->name }} {{ $data->variant ? '(' . $data->variant->name . ')' : '' }}
+                        </td>
                         <td class="text-center">{{ $data->brand->name }}</td>
                         <td class="text-center">{{ $data->discount }}%</td>
                         <td class="text-center">{{ $data->category->name }}</td>
