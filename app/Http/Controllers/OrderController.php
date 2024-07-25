@@ -136,6 +136,13 @@ class OrderController extends Controller
         foreach ($datas as $data) {
             $amount += $data['amount'];
         }
+        $orderToday = Order::whereDate('created_at', Carbon::today())->count();
+        $date = Carbon::today()->format('Ymd');
+        $sequenceNumber = str_pad($orderToday + 1, 4, '0', STR_PAD_LEFT);
+        $invoiceCode = "#INVNBRS" . $date . $sequenceNumber;
+
+
+
         $change = $paymentAmount - $final_price;
         try {
             $order =   Order::create([
@@ -147,6 +154,7 @@ class OrderController extends Controller
                 'final_price' => $final_price,
                 'change' => $change,
                 'payment_amount' => $paymentAmount,
+                'code' => $invoiceCode
             ]);
             if (count($datas) > 0) {
                 foreach ($datas as $data) {

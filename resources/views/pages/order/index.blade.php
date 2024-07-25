@@ -95,6 +95,7 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Invoice</th>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Jumlah</th>
@@ -109,6 +110,7 @@
             @foreach ($orderDetails as $order)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $order->order->code }}</td>
                 <td>{{ $order->product->code }}</td>
                 <td>{{ $order->product->name }} {{ $order->variant ? '(' . $order->variant . ')' : '' }}</td>
                 <td>{{ number_format($order->qty, 0, ',', '.') }}</td>

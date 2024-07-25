@@ -215,6 +215,12 @@
                 </td>
             </tr>
             <tr>
+                <td>Invoice : </td>
+                <td>
+                    {{ $order->code }}
+                </td>
+            </tr>
+            <tr>
                 <th class="center-align" colspan="2">
                     <span class="receipt">Daftar Belanja</span>
                 </th>

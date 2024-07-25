@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('code')->unique();
             $table->integer('qty');
             $table->string('payment_method');
             $table->integer('total_price'); // Harga awal
