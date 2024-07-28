@@ -9,54 +9,55 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">List Modal</li>
+                <li class="breadcrumb-item active" aria-current="page">Detail Modal</li>
             </ol>
         </nav>
     </div>
-    <div class="ms-auto">
-        <div class="btn-group">
-            <a href="{{ route('modals.create') }}" class="btn btn-primary">Buat Data Baru</a>
-        </div>
-    </div>
 </div>
 <!--end breadcrumb-->
-<h6 class="mb-0 text-uppercase">List Modal</h6>
+<h6 class="mb-0 text-uppercase">Detail Modal</h6>
 <hr />
 <div class="card">
     <div class="card-body">
-        <h1>Modal Awal : {{ $modal->total_modal }}</h1>
-        <h1>Modal Akhir : {{ $modal->final_modal }}</h1>
+        <h5 class="mb-3">Nama Kasir : {{ $modal->user->name }}</h5>
         <div class="table-responsive">
             <table id="example" class="table table-hover " style="width:100%">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
-                        <th class="text-center">Nama Kasir</th>
-                        <th class="text-center">Modal Hari Ini</th>
-                        <th class="text-center">Total Pemasukan</th>
-                        <th class="text-center">Total Pengeluaran</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">Invoice</th>
+                        <th class="text-center">Jumlah</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($modal->modal_details as $data)
+                    @foreach ($modal->modal_details as $data)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center">{{ $data->order->code }}</td>
-                        <td class="text-center">Rp. {{ number_format($data->amount, 0, ',', '.')}}</td>
-                        <td class="text-center">{{ $data->type }}</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">
-                            <a href="{{ route('modals.edit', $data->id) }}" class="btn btn-outline-warning"><i
-                                    class='bx bx-edit me-0'></i>
-                            </a>
-                            <button onclick="confirmDelete({{ $data->id }})" type="button"
-                                class="btn btn-outline-danger"><i class='bx bx-trash me-0'></i>
-                            </button>
+                        <td class="text-center {{ $data->type == 'income' ? 'text-success' : 'text-danger' }}">Rp. {{ number_format($data->amount, 0, ',', '.')}}
+                            @if ($data->type == 'income')
+                            <span><i class='bx bx-trending-up text-success'></i></span>
+                            @else
+                            <span><i class='bx bx-trending-down text-danger'></i></span>
+                            @endif
+
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-center">Modal Awal</td>
+                        <th class="text-center bg-success text-white">Rp.
+                            {{ number_format($modal->total_modal, 0, ',', '.')}}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">Modal Akhir</td>
+                        <th class="text-center bg-success text-white">Rp.
+                            {{ number_format($modal->final_modal, 0, ',', '.')}}</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

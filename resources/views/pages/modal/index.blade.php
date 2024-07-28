@@ -13,11 +13,6 @@
             </ol>
         </nav>
     </div>
-    <div class="ms-auto">
-        <div class="btn-group">
-            <a href="{{ route('modals.create') }}" class="btn btn-primary">Buat Data Baru</a>
-        </div>
-    </div>
 </div>
 <!--end breadcrumb-->
 <h6 class="mb-0 text-uppercase">List Modal</h6>
