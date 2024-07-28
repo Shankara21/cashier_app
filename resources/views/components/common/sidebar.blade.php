@@ -33,6 +33,13 @@
                 <div class="menu-title">Laporan</div>
             </a>
         </li>
+        <li>
+            <a class="" href="{{ route('orders.index') }}">
+                <div class="parent-icon"><i class="bx bx-file"></i>
+                </div>
+                <div class="menu-title">Modal</div>
+            </a>
+        </li>
         @role('admin')
         <li class="menu-label" style="color: #EEEEEE">Master Data</li>
         <li>
