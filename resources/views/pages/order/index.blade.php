@@ -124,7 +124,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="3">Total Terjual</th>
+                <th colspan="4">Total Terjual</th>
                 <th>{{ number_format($orderAmount, 0, ',', '.') }}</th>
                 <th>Rp. {{ number_format($capital, 0, ',', '.') }}</th>
                 <th>Rp. {{ number_format($total, 0, ',', '.') }}</th>

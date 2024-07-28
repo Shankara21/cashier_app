@@ -4,6 +4,10 @@
 <div class="row">
     <div class="col-9">
         <div class="card p-3">
+            <div class="d-flex gap-2 align-items-center">
+                <h5 class="">Sisa Modal Hari Ini : </h5>
+                <h4 id="totalModal" class="text-success"></h4>
+            </div>
             <div class="d-flex justify-content-end">
                 <button id="removeAllButton" class="btn btn-danger my-3" style="display: none;">Hapus semua</button>
             </div>
@@ -156,17 +160,19 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         fetch('{{ route("modals.today") }}') .then((response) => response.json()) .then((data) => {
-            if(!data){
-                console.log('halo');
-                // munculkan error swal error kemudian ada tombol di bawahnya jika di klik maka akan diarahkan ke halaman modals.create
+            if(!data.success){
                 Swal.fire({
-                    icon: "error",
+                    icon: "info",
                     title: "Oops...",
-                    text: "Tidak ada data transaksi hari ini!",
+                    text: "Anda belum menambahkan modal hari ini!",
+                    confirmButtonText: "Tambah Modal",
+                    willClose: () => {
+                    window.location.href = '{{ route("modals.create") }}'
+                    }
                 });
                 return;
             }
-            console.log('ini data');
+            document.getElementById("totalModal").innerText = ` Rp. ${data.data.final_modal ? data.data.final_modal.toLocaleString() : data.data.total_modal.toLocaleString()}`;
         })
     if (datas.length > 0) {
     updateTable(datas);

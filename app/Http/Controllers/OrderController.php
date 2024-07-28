@@ -6,6 +6,8 @@ use App\Exports\OrderExport;
 use App\Exports\ReportExport;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Modal;
+use App\Models\ModalDetail;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
@@ -156,6 +158,8 @@ class OrderController extends Controller
                 'payment_amount' => $paymentAmount,
                 'code' => $invoiceCode
             ]);
+
+
             if (count($datas) > 0) {
                 foreach ($datas as $data) {
                     $processedData = [
@@ -171,6 +175,53 @@ class OrderController extends Controller
                     $product = Product::find($data['id']);
                     $product->stock -= $data['amount'];
                     $product->save();
+                }
+                if ($paymentMethod == 'cash') {
+                    $modalToday = Modal::whereDate('created_at', date('Y-m-d'))->where('user_id', auth()->user()->id)->first();
+                    $finalModal = 0;
+                    if ($modalToday->final_modal == 0) {
+                        if ($final_price == $paymentAmount) {
+                            $finalModal = $modalToday->total_modal + $paymentAmount;
+                        } else {
+                            $finalModal = $modalToday->total_modal - $change;
+                        }
+
+                        if ($modalToday->total_modal < $finalModal) {
+                            $type = 'income';
+                            $amount = $finalModal - $modalToday->total_modal;
+                        } else {
+                            $type = 'expense';
+                            $amount = $modalToday->total_modal - $finalModal;
+                        }
+                    } else {
+                        if ($final_price == $paymentAmount) {
+                            $finalModal = $modalToday->final_modal + $paymentAmount;
+                        } else {
+                            $finalModal = $modalToday->final_modal - $change;
+                        }
+
+                        if ($modalToday->final_modal < $finalModal) {
+                            $type = 'income';
+                            $amount = $finalModal - $modalToday->final_modal;
+                        } else {
+                            $type = 'expense';
+                            $amount = $modalToday->final_modal - $finalModal;
+                        }
+                    }
+                    $dataModalDetail = [
+                        'modal_id' => $modalToday->id,
+                        'order_id' => $order->id,
+                        'amount' => $amount,
+                        'type' => $type
+                    ];
+                    ModalDetail::create($dataModalDetail);
+
+                    $modalDetailIncomeToday = ModalDetail::whereDate('created_at', date('Y-m-d'))->where('type', 'income')->where('modal_id', $modalToday->id)->sum('amount');
+                    $modalDetailExpenseToday = ModalDetail::whereDate('created_at', date('Y-m-d'))->where('type', 'expense')->where('modal_id', $modalToday->id)->sum('amount');
+                    $modalToday->total_income = $modalDetailIncomeToday;
+                    $modalToday->total_expense = $modalDetailExpenseToday;
+                    $modalToday->final_modal = $finalModal;
+                    $modalToday->save();
                 }
                 Alert::success('Success', 'Order berhasil ditambahkan');
                 return response()->json([

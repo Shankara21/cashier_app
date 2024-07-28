@@ -24,32 +24,29 @@
 <hr />
 <div class="card">
     <div class="card-body">
+        <h1>Modal Awal : {{ $modal->total_modal }}</h1>
+        <h1>Modal Akhir : {{ $modal->final_modal }}</h1>
         <div class="table-responsive">
             <table id="example" class="table table-hover " style="width:100%">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
                         <th class="text-center">Nama Kasir</th>
-                        <th class="text-center">Modal Awal</th>
+                        <th class="text-center">Modal Hari Ini</th>
                         <th class="text-center">Total Pemasukan</th>
                         <th class="text-center">Total Pengeluaran</th>
-                        <th class="text-center">Modal Akhir</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($datas as $data)
+                @foreach ($modal->modal_details as $data)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td class="text-center">{{ $data->user->name }}</td>
-                        <td class="text-center">Rp. {{ number_format($data->total_modal, 0, ',', '.')}}</td>
-                        <td class="text-center">Rp. {{ number_format($data->total_income, 0, ',', '.')}}</td>
-                        <td class="text-center">Rp. {{ number_format($data->total_expense, 0, ',', '.')}}</td>
-                        <td class="text-center">Rp. {{ number_format($data->final_modal, 0, ',', '.')}}</td>
+                        <td class="text-center">{{ $data->order->code }}</td>
+                        <td class="text-center">Rp. {{ number_format($data->amount, 0, ',', '.')}}</td>
+                        <td class="text-center">{{ $data->type }}</td>
+                        <td class="text-center"></td>
                         <td class="text-center">
-                            <a href="{{ route('modals.show', $data->id) }}" class="btn btn-outline-info"><i
-                                    class='bx bx-show me-0'></i>
-                            </a>
                             <a href="{{ route('modals.edit', $data->id) }}" class="btn btn-outline-warning"><i
                                     class='bx bx-edit me-0'></i>
                             </a>

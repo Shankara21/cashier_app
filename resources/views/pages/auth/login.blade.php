@@ -22,7 +22,7 @@
                                     <input type="email" class="form-control @error('email')
                                         is-invalid
                                     @enderror" id="inputEmailAddress" placeholder="Masukkan Alamat Email" name="email"
-                                        value="{{ old('email') }}">
+                                        value="{{ old('email', 'admin@gmail.com') }}">
 
                                     @error('email')
                                     <span class="invalid-feedback text-white" role="alert">
@@ -36,7 +36,7 @@
                                         <input type="password" class="form-control border-end-0 @error('password')
 is-invalid
                                         @enderror" id="inputChoosePassword" placeholder="Masukkan Password"
-                                            name="password"> <a href="javascript:;"
+                                            name="password" value="password"> <a href="javascript:;"
                                             class="input-group-text bg-transparent text-white"><i class='bx bx-hide'></i></a>
                                     </div>
                                     @error('password')

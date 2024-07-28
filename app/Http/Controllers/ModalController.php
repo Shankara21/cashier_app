@@ -21,7 +21,17 @@ class ModalController extends Controller
     public function modalToday()
     {
         $datas = Modal::whereDate('created_at', date('Y-m-d'))->where('user_id', auth()->user()->id)->first();
-        return response()->json($datas);
+        if ($datas) {
+            return response()->json([
+                'data' => $datas,
+                'success' => true
+            ]);
+        } else {
+            return response()->json([
+                'data' => null,
+                'success' => false
+            ]);
+        }
     }
 
     /**
@@ -35,11 +45,16 @@ class ModalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    function convertToInteger($formattedCurrency)
+    {
+        return (int) preg_replace('/[^0-9]/', '', $formattedCurrency);
+    }
     public function store(StoreModalRequest $request)
     {
         try {
             $data = $request->validated();
-            $data['user_id'] = auth()->user()->id;
+            $data['total_modal'] = $this->convertToInteger($data['total_modal']);
             Modal::create($data);
             Alert::success('Success', 'Modal created successfully');
             return redirect()->route('modals.index');

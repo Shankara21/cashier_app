@@ -183,7 +183,7 @@
 
 <body>
     <div style="display: flex; gap: 10px" id="hidden">
-        <button class="button-1"><a href="{{ route('orders.index') }}">Kembali</a></button>
+        <a class="button-1" href="{{ route('orders.index') }}">Kembali</a>
         <button class="button-1" onclick="printReceipt()">Print</button>
     </div>
     <div style="display: flex; justify-content: center; align-content: center;">

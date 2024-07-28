@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('total_modal');
             $table->integer('total_income')->nullable();
             $table->integer('total_expense')->nullable();
+            $table->integer('final_modal')->nullable();
             $table->timestamps();
         });
     }
