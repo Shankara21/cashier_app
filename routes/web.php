@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ModalController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\VariantController;
 use App\Models\Category;
@@ -26,6 +27,10 @@ Route::middleware(['auth'])->group(function () {
 
     // User
     Route::resource('users', UserController::class);
+
+    // Modal
+    Route::get('/modals/today', [ModalController::class, 'modalToday'])->name('modals.today');
+    Route::resource('modals', ModalController::class);
 
     // Product
     Route::resource('products', ProductController::class);

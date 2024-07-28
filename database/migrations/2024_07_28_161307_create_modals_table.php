@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->integer('total_modal');
-            $table->integer('total_income');
-            $table->integer('total_expense');
+            $table->integer('total_income')->nullable();
+            $table->integer('total_expense')->nullable();
             $table->timestamps();
         });
     }

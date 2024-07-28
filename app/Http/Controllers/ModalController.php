@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreModalRequest;
 use App\Http\Requests\UpdateModalRequest;
 use App\Models\Modal;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ModalController extends Controller
 {
@@ -13,7 +14,14 @@ class ModalController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Modal::all();
+        return view('pages.modal.index', compact('datas'));
+    }
+
+    public function modalToday()
+    {
+        $datas = Modal::whereDate('created_at', date('Y-m-d'))->where('user_id', auth()->user()->id)->first();
+        return response()->json($datas);
     }
 
     /**
@@ -21,7 +29,7 @@ class ModalController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.modal.create');
     }
 
     /**
@@ -29,7 +37,15 @@ class ModalController extends Controller
      */
     public function store(StoreModalRequest $request)
     {
-        //
+        try {
+            $data = $request->validated();
+            $data['user_id'] = auth()->user()->id;
+            Modal::create($data);
+            Alert::success('Success', 'Modal created successfully');
+            return redirect()->route('modals.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+        }
     }
 
     /**
@@ -37,7 +53,7 @@ class ModalController extends Controller
      */
     public function show(Modal $modal)
     {
-        //
+        return view('pages.modal.show', compact('modal'));
     }
 
     /**
@@ -45,7 +61,7 @@ class ModalController extends Controller
      */
     public function edit(Modal $modal)
     {
-        //
+        return view('pages.modal.edit', compact('modal'));
     }
 
     /**
@@ -53,7 +69,6 @@ class ModalController extends Controller
      */
     public function update(UpdateModalRequest $request, Modal $modal)
     {
-        //
     }
 
     /**
@@ -61,6 +76,13 @@ class ModalController extends Controller
      */
     public function destroy(Modal $modal)
     {
-        //
+        try {
+            $modal->modal_details()->delete();
+            $modal->delete();
+            Alert::success('Success', 'Modal deleted successfully');
+            return redirect()->route('modals.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+        }
     }
 }

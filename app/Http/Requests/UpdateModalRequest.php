@@ -22,7 +22,15 @@ class UpdateModalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'total_modal' => 'required|numeric',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'total_modal.required' => 'Total modal wajib diisi.',
+            'total_modal.numeric' => 'Total modal harus berupa angka.',
         ];
     }
 }

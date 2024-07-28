@@ -22,7 +22,18 @@ class StoreModalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'total_modal' => 'required|numeric',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'User ID wajib diisi.',
+            'user_id.exists' => 'User ID tidak ditemukan.',
+            'total_modal.required' => 'Total modal wajib diisi.',
+            'total_modal.numeric' => 'Total modal harus berupa angka.',
         ];
     }
 }

@@ -155,6 +155,19 @@
     let bankName = "";
 
     document.addEventListener("DOMContentLoaded", function () {
+        fetch('{{ route("modals.today") }}') .then((response) => response.json()) .then((data) => {
+            if(!data){
+                console.log('halo');
+                // munculkan error swal error kemudian ada tombol di bawahnya jika di klik maka akan diarahkan ke halaman modals.create
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Tidak ada data transaksi hari ini!",
+                });
+                return;
+            }
+            console.log('ini data');
+        })
     if (datas.length > 0) {
     updateTable(datas);
     } else {

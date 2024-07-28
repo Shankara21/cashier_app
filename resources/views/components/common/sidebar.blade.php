@@ -34,8 +34,8 @@
             </a>
         </li>
         <li>
-            <a class="" href="{{ route('orders.index') }}">
-                <div class="parent-icon"><i class="bx bx-file"></i>
+            <a class="" href="{{ route('modals.index') }}">
+                <div class="parent-icon"><i class="bx bx-transfer-alt"></i>
                 </div>
                 <div class="menu-title">Modal</div>
             </a>
